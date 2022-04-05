@@ -23,7 +23,7 @@ public class MainView extends HorizontalLayout {
 
         setMargin(true);
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
-
+        System.out.println("HALLO");
         add(name, sayHello);
     }
 
