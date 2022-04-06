@@ -1,8 +1,19 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, css } from 'lit';
 import { createRef, ref } from 'lit/directives/ref';
 
 class MyCanvas extends LitElement {
-
+    static get styles() {
+        return css`
+            canvas {
+                width: 500px;
+                height: 500px;
+                image-rendering: -moz-crisp-edges;
+                image-rendering: -webkit-crisp-edges;
+                image-rendering: pixelated;
+                image-rendering: crisp-edges;
+            }
+        `;
+    }
     constructor() {
         super();
         this.canvasRef = createRef();
@@ -10,13 +21,12 @@ class MyCanvas extends LitElement {
 
     render() {
         return html`
-            <canvas style="transform: scale(20)" width="2px" height="2px" ${ref(this.canvasRef)}></canvas>
+            <canvas width="2px" height="2px" ${ref(this.canvasRef)}></canvas>
     `;
     }
 
     async setImageData(jsonData) {
-        // TODO: komplettes ImageData Objekt von Server an Client senden
-        // TODO: Hier Dokumentation für ImageData: https://developer.mozilla.org/en-US/docs/Web/API/ImageData
+        // TODO: komplettes ImageData Objekt (https://developer.mozilla.org/en-US/docs/Web/API/ImageData) von Server an Client senden
         // TODO: Scaling Mechanismus auf Browserseite implementieren
         const imageFromServer = JSON.parse(jsonData);
         const ctx = this.canvasRef.value.getContext('2d');
