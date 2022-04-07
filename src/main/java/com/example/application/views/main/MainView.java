@@ -10,7 +10,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("Main")
-@Route(value = "")
+@Route(value = "/simulation")
 public class MainView extends VerticalLayout {
     private FeederThread thread;
     private Canvas canvas;
