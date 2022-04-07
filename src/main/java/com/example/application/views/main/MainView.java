@@ -19,7 +19,7 @@ public class MainView extends VerticalLayout {
     protected void onAttach(AttachEvent attachEvent) {
         canvas = new Canvas();
         add(canvas);
-        thread = new FeederThread(attachEvent.getUI(), canvas,this);
+        thread = new FeederThread(attachEvent.getUI(), canvas, this);
         thread.start();
     }
 
@@ -64,7 +64,7 @@ public class MainView extends VerticalLayout {
             String frame4 = "[" +
                     "0, 255, 0, 255," +
                     "0, 0, 0, 255," +
-                    "255, 0, 0, 255,"+
+                    "255, 0, 0, 255," +
                     "0, 0, 255, 255" +
                     "]";
             try {
@@ -73,7 +73,7 @@ public class MainView extends VerticalLayout {
                     Thread.sleep(500);
 
                     int mod4 = count % 4;
-                    if (mod4 == 0){
+                    if (mod4 == 0) {
                         ui.access(() -> canvas.setImageData(frame1));
                     } else if (mod4 == 1) {
                         ui.access(() -> canvas.setImageData(frame2));
