@@ -19,7 +19,9 @@ class MyCanvas extends LitElement {
             initialY: 0,
             xOffset: 0,
             yOffset: 0
-        }
+        };
+        this.addEventListener('mousemove', this.onMouseMove);
+        this.addEventListener('mouseup', this.onMouseUp);
     }
 
     static get properties() {
@@ -35,8 +37,7 @@ class MyCanvas extends LitElement {
     static get styles() {
         return css`
             canvas {
-                width: 500px;
-                height: 500px;
+                width: 50vh;
                 image-rendering: -moz-crisp-edges;
                 image-rendering: -webkit-crisp-edges;
                 image-rendering: pixelated;
@@ -75,16 +76,10 @@ class MyCanvas extends LitElement {
         return html`
             <canvas
                     @wheel=${this.onWheel}
-                    @mousemove=${this.onMouseMove}
                     @mousedown=${(event) => {
                         this.mousePosition.initialX = event.clientX - this.mousePosition.xOffset;
                         this.mousePosition.initialY = event.clientY - this.mousePosition.yOffset;
                         this.isGrabbing = true
-                    }}
-                    @mouseup=${() => {
-                        this.mousePosition.initialX = this.x;
-                        this.mousePosition.initialY = this.y;
-                        this.isGrabbing = false
                     }}
                     width="2px"
                     height="2px"
@@ -92,6 +87,12 @@ class MyCanvas extends LitElement {
                     ${ref(this.canvasRef)}
             ></canvas>
         `;
+    }
+
+    onMouseUp() {
+        this.mousePosition.initialX = this.x;
+        this.mousePosition.initialY = this.y;
+        this.isGrabbing = false
     }
 
     onMouseMove(event) {
@@ -119,7 +120,25 @@ class MyCanvas extends LitElement {
         const ratio = 1 - (zoomingOut ? -deltaY : deltaY) / 300;
         const scaleDiff = zoomingOut ? 1 / ratio : ratio;
 
-        this.scale = this.scale * scaleDiff;
+        const newScale = this.scale * scaleDiff;
+        const currentRect = this.canvasRef.value.getBoundingClientRect();
+        const originX = event.clientX - currentRect.left;
+        const originY = event.clientY - currentRect.top;
+        let matrix = document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGMatrix();
+
+        matrix = matrix
+            .translate(originX, originY)
+            .translate(this.x, this.y)
+            .scale(scaleDiff)
+            .translate(-originX, -originY)
+            .scale(newScale);
+
+        this.mousePosition.xOffset = matrix.e;
+        this.mousePosition.yOffset = matrix.f;
+
+        this.scale = newScale;
+        this.x = matrix.e;
+        this.y = matrix.f;
     }
 
     async setImageData(jsonData) {
