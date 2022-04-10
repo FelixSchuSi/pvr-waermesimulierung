@@ -20,6 +20,8 @@ class MyCanvas extends LitElement {
             xOffset: 0,
             yOffset: 0
         };
+        this.imageDataHeight = 0;
+        this.imageDataWidth = 0;
         this.addEventListener('mousemove', this.onMouseMove);
         this.addEventListener('mouseup', this.onMouseUp);
     }
@@ -31,13 +33,15 @@ class MyCanvas extends LitElement {
             canvasStyleMap: {state: true},
             x: {state: true},
             y: {state: true},
+            imageDataWidth: {state: true},
+            imageDataHeight: {state: true},
         }
     };
 
     static get styles() {
         return css`
             canvas {
-                width: 50vh;
+                height: 50vh;
                 image-rendering: -moz-crisp-edges;
                 image-rendering: -webkit-crisp-edges;
                 image-rendering: pixelated;
@@ -81,8 +85,8 @@ class MyCanvas extends LitElement {
                         this.mousePosition.initialY = event.clientY - this.mousePosition.yOffset;
                         this.isGrabbing = true
                     }}
-                    width="2px"
-                    height="2px"
+                    width="${this.imageDataWidth}px"
+                    height="${this.imageDataHeight}px"
                     style=${styleMap(this.canvasStyleMap)}
                     ${ref(this.canvasRef)}
             ></canvas>
@@ -143,6 +147,15 @@ class MyCanvas extends LitElement {
 
     async setImageData(jsonData) {
         const {width, height, data} = JSON.parse(jsonData);
+        if (width !== this.imageDataWidth || height !== this.imageDataHeight) {
+            this.imageDataWidth = width;
+            this.imageDataHeight = height;
+            // Es wird ein Update durch das Setzen von this.imageDataWidth und this.imageDataHeight ausgelöst.
+            // Wir müssen sicherstellen, dass das Canvas Element bereits die neue Größe bekommen hat, sonst
+            // wird das Bild nicht richtig dargestellt.
+            await this.updateComplete;
+        }
+
         const ctx = this.canvasRef.value.getContext('2d');
         ctx.clearRect(0, 0, width, height);
         const imageData = new ImageData(Uint8ClampedArray.from(data), width, height);
