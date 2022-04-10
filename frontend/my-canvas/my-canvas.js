@@ -142,22 +142,10 @@ class MyCanvas extends LitElement {
     }
 
     async setImageData(jsonData) {
-        // TODO: komplettes ImageData Objekt (https://developer.mozilla.org/en-US/docs/Web/API/ImageData) von Server an Client senden
-        // TODO: Scaling Mechanismus auf Browserseite implementieren
-        const imageFromServer = JSON.parse(jsonData);
+        const {width, height, data} = JSON.parse(jsonData);
         const ctx = this.canvasRef.value.getContext('2d');
-        ctx.clearRect(0, 0, 2, 2);
-        // https://github.com/GoogleChromeLabs/squoosh/blob/dev/src/client/lazy-app/util/canvas.ts
-        // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createImageData
-        const imageData = ctx.createImageData(2, 2);
-
-        for (let i = 0; i < imageData.data.length; i += 4) {
-            // Modify pixel data
-            imageData.data[i] = imageFromServer[i];          // R value
-            imageData.data[i + 1] = imageFromServer[i + 1];  // G value
-            imageData.data[i + 2] = imageFromServer[i + 2];  // B value
-            imageData.data[i + 3] = imageFromServer[i + 3];  // A value
-        }
+        ctx.clearRect(0, 0, width, height);
+        const imageData = new ImageData(Uint8ClampedArray.from(data), width, height);
         ctx.putImageData(imageData, 0, 0);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.application.views.main;
 
 import com.example.application.compontents.canvas.Canvas;
+import com.example.application.entity.ImageData;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -9,7 +12,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@PageTitle("Main")
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+@PageTitle("Simulation")
 @Route(value = "/simulation")
 public class MainView extends VerticalLayout {
     private FeederThread thread;
@@ -33,6 +39,7 @@ public class MainView extends VerticalLayout {
         private final UI ui;
         private final MainView view;
         private final Canvas canvas;
+        private final ObjectMapper objectMapper = new ObjectMapper();
         private int count = 0;
 
         public FeederThread(UI ui, Canvas canvas, MainView view) {
@@ -43,30 +50,39 @@ public class MainView extends VerticalLayout {
 
         @Override
         public void run() {
-            String frame1 = "[" +
-                    "255, 0, 0, 255," +
-                    "0, 255, 0, 255," +
-                    "0, 0, 255, 255," +
-                    "0, 0, 0, 255" +
-                    "]";
-            String frame2 = "[" +
-                    "0, 0, 255, 255," +
-                    "255, 0, 0, 255," +
-                    "0, 0, 0, 255," +
-                    "0, 255, 0, 255" +
-                    "]";
-            String frame3 = "[" +
-                    "0, 0, 0, 255," +
-                    "0, 0, 255, 255," +
-                    "0, 255, 0, 255," +
-                    "255, 0, 0, 255" +
-                    "]";
-            String frame4 = "[" +
-                    "0, 255, 0, 255," +
-                    "0, 0, 0, 255," +
-                    "255, 0, 0, 255," +
-                    "0, 0, 255, 255" +
-                    "]";
+            String frame1 = null;
+            String frame2 = null;
+            String frame3 = null;
+            String frame4 = null;
+
+            try {
+                frame1 = objectMapper.writeValueAsString(new ImageData(2, 2, Stream.of(
+                        255, 0, 0, 255,
+                        0, 255, 0, 255,
+                        0, 0, 255, 255,
+                        0, 0, 0, 255
+                ).map(Integer::shortValue).collect(Collectors.toList())));
+                frame2 = objectMapper.writeValueAsString(new ImageData(2, 2, Stream.of(
+                        0, 0, 255, 255,
+                        255, 0, 0, 255,
+                        0, 0, 0, 255,
+                        0, 255, 0, 255
+                ).map(Integer::shortValue).collect(Collectors.toList())));
+                frame3 = objectMapper.writeValueAsString(new ImageData(2, 2, Stream.of(
+                        0, 0, 0, 255,
+                        0, 0, 255, 255,
+                        0, 255, 0, 255,
+                        255, 0, 0, 255
+                ).map(Integer::shortValue).collect(Collectors.toList())));
+                frame4 = objectMapper.writeValueAsString(new ImageData(2, 2, Stream.of(
+                        0, 255, 0, 255,
+                        0, 0, 0, 255,
+                        255, 0, 0, 255,
+                        0, 0, 255, 255
+                ).map(Integer::shortValue).collect(Collectors.toList())));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
             try {
                 while (count < 200) {
                     // TODO: Hier die Berechnung des nächsten Schrittes durchführen
@@ -74,13 +90,17 @@ public class MainView extends VerticalLayout {
 
                     int mod4 = count % 4;
                     if (mod4 == 0) {
-                        ui.access(() -> canvas.setImageData(frame1));
+                        String finalFrame = frame1;
+                        ui.access(() -> canvas.setImageData(finalFrame));
                     } else if (mod4 == 1) {
-                        ui.access(() -> canvas.setImageData(frame2));
+                        String finalFrame = frame2;
+                        ui.access(() -> canvas.setImageData(finalFrame));
                     } else if (mod4 == 2) {
-                        ui.access(() -> canvas.setImageData(frame3));
+                        String finalFrame = frame3;
+                        ui.access(() -> canvas.setImageData(finalFrame));
                     } else if (mod4 == 3) {
-                        ui.access(() -> canvas.setImageData(frame4));
+                        String finalFrame = frame4;
+                        ui.access(() -> canvas.setImageData(finalFrame));
                     }
                     count++;
                 }
