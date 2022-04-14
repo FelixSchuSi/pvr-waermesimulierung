@@ -24,6 +24,7 @@ build-job:       # This job runs in the build stage, which runs first.
   script:
     - date > date.txt
     - hostname >> date.txt
+    - whoami >> date.txt
     - echo "Compile complete."
   artifacts:
     paths:
