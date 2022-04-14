@@ -1,5 +1,8 @@
 package com.example.application.entity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.validation.constraints.Min;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import java.util.List;
  * Wird an das Frontend gesendet und dann in einem HTML-Canvas-Element dargestellt.
  */
 public class ImageData {
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Min(0)
     private Integer width;
     @Min(0)
@@ -21,6 +25,14 @@ public class ImageData {
         this.width = width;
         this.height = height;
         this.data = pixels;
+    }
+
+    public String toString() {
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return "{}";
+        }
     }
 
     public Integer getWidth() {

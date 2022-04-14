@@ -28,7 +28,7 @@ public class MainView extends VerticalLayout {
         playPauseButton.addClickListener((e) -> {
             System.out.println("isPlaying: " + playPauseButton.isPlaying());
         });
-        
+
         thread = new FeederThread(attachEvent.getUI(), canvas, this);
         thread.start();
     }
@@ -57,7 +57,7 @@ public class MainView extends VerticalLayout {
             try {
                 while (count < 200) {
                     Thread.sleep(500);
-                    String nextImage = imageProducerService.next();
+                    String nextImage = imageProducerService.next().toString();
                     ui.access(() -> canvas.setImageData(nextImage));
                     count++;
                 }
