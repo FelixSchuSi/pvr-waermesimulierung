@@ -22,8 +22,13 @@ build-job:       # This job runs in the build stage, which runs first.
     - pvr-test-runner
   stage: build
   script:
+    - date > date.txt
     - echo "Compiling the code..."
     - echo "Compile complete."
+  artifacts:
+    paths:
+      - date.txt
+    expire_in: 1 week
 
 test-job:   # This job runs in the test stage.
   tags:
