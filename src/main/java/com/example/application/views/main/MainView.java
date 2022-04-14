@@ -1,6 +1,7 @@
 package com.example.application.views.main;
 
 import com.example.application.compontents.canvas.Canvas;
+import com.example.application.compontents.playpausebutton.PlayPauseButton;
 import com.example.application.service.ImageProducerService;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
@@ -15,13 +16,19 @@ import static com.example.application.entity.ConfigEntity.getDefaultConfig;
 @PageTitle("Simulation")
 @Route(value = "/simulation")
 public class MainView extends VerticalLayout {
+    private final Canvas canvas = new Canvas();
+    private final PlayPauseButton playPauseButton = new PlayPauseButton(true);
     private FeederThread thread;
-    private Canvas canvas;
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        canvas = new Canvas();
         add(canvas);
+        add(playPauseButton);
+
+        playPauseButton.addClickListener((e) -> {
+            System.out.println("isPlaying: " + playPauseButton.isPlaying());
+        });
+        
         thread = new FeederThread(attachEvent.getUI(), canvas, this);
         thread.start();
     }
