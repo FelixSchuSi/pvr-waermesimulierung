@@ -22,7 +22,7 @@ build-job: # This job runs in the build stage, which runs first.
     - pvr-test-runner
   stage: build
   script:
-    - mvnw test
+    - ./mvnw test
     - date > metadata.txt
     - hostname >> metadata.txt
     - whoami >> metadata.txt
