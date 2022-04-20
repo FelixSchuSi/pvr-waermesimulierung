@@ -1,6 +1,6 @@
 package com.example.application.service;
 
-import com.example.application.entity.ConfigEntity;
+import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ImageData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import helper.CsvReport;
@@ -16,7 +16,7 @@ class ImageProducerServiceTest {
     private final ImageProducerService imageProducerService;
 
     public ImageProducerServiceTest() {
-        this.imageProducerService = new ImageProducerService(ConfigEntity.getDefaultConfig());
+        this.imageProducerService = new ImageProducerService(BaseConfigEntity.getDefaultConfig());
     }
 
     @Test
