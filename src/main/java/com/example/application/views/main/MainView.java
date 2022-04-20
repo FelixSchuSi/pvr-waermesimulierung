@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import static com.example.application.entity.ConfigEntity.getDefaultConfig;
+import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
 
 @PageTitle("Simulation")
 @Route(value = "/simulation")

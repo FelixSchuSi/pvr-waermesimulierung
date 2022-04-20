@@ -1,6 +1,6 @@
 package com.example.application.service;
 
-import com.example.application.entity.ConfigEntity;
+import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ImageData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -12,7 +12,7 @@ public class ImageProducerService {
     private final Integer width;
     private final Integer height;
 
-    public ImageProducerService(ConfigEntity config) {
+    public ImageProducerService(BaseConfigEntity config) {
         this.width = config.getWidth();
         this.height = config.getHeight();
     }

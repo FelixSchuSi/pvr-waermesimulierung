@@ -12,8 +12,6 @@ public class ConfigEntityBuilder {
     private Double sideTempRight;
     private Double alpha;
     private Double deltaX;
-    private Double deltaT;
-    private Double gamma;
 
     public ConfigEntityBuilder setLength(int length) {
         this.length = length;
@@ -69,14 +67,8 @@ public class ConfigEntityBuilder {
         this.deltaX = deltaX;
         return this;
     }
-    
-    
 
     public BaseConfigEntity createConfigEntity() {
-        return new BaseConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, deltaT, gamma);
-    }
-
-    public void setDeltaT(Double deltaT) {
-        this.deltaT = deltaT;
+        return new BaseConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX);
     }
 }

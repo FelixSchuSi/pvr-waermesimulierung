@@ -2,27 +2,29 @@ package com.example.application.service;
 
 import com.example.application.entity.BaseConfigEntity;
 
-public class HeatCalculationBase {
+public class HeatCalculationBaseService {
 
     BaseConfigEntity configEntity;
+    Double[][][] oldData;
 
     //Default Constructor with DefaultConfig
-    public HeatCalculationBase() {
+    public HeatCalculationBaseService() {
         configEntity = BaseConfigEntity.getDefaultConfig();
     }
 
     //Constructor for explicit ConfigEntity from Frontend
-    public HeatCalculationBase(BaseConfigEntity configEntity) {
+    public HeatCalculationBaseService(BaseConfigEntity configEntity) {
         this.configEntity = configEntity;
     }
 
-    public void calculateHeatEquation(){
+    public Double[][][] calculateHeatEquation(){
 
-        double alpha = configEntity.getAlpha();
-        double delta_x = configEntity.getDeltaX();
+        if (this.oldData == null) {
+            return this.getFirstImage();
+        }
 
-        double delta_t = ((Math.pow(delta_x, 2)) / (4 * alpha));
-        double gamma = (alpha * delta_t) / (Math.pow(delta_x, 2));
+        double deltaT = configEntity.getDeltaT();
+        double gamma = configEntity.getGamma();
 
         int x_width = configEntity.getWidth();
         int z_height = configEntity.getHeight();
@@ -42,17 +44,27 @@ public class HeatCalculationBase {
         Double sideTemp_left = configEntity.getStartTemp();
         Double sideTemp_right = configEntity.getSideTempRight();
 
+
+
         //Start Calculation
         for (int x = 0; x < x_width-1; x++) {
-            for (int y = 0; y < y_height-1; y++) {
-                for (int z = 0; z < z_length; z++) {
+            for (int y = 0; y < y_length-1; y++) {
+                for (int z = 0; z < z_height-1; z++) {
+
+                    //Sende Bild next()
+                    //Berechnung
 
                 }
             }
         }
 
+        this.oldData = data;
 
+        return data;
+    }
 
+    private Double[][][] getFirstImage(){
+        return new Double[configEntity.getWidth()][configEntity.getHeight()][configEntity.getLength()];
     }
 
 

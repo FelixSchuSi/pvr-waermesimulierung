@@ -2,7 +2,7 @@ package com.example.application.entity;
 
 import javax.validation.constraints.Min;
 
-public class ConfigEntity {
+public class BaseConfigEntity {
     @Min(1)
     private int length;
     @Min(1)
@@ -19,8 +19,10 @@ public class ConfigEntity {
 
     private Double alpha;
     private Double deltaX;
+    private Double deltaT;
+    private Double gamma;
 
-    public ConfigEntity(int length, int width, int height, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX) {
+    public BaseConfigEntity(int length, int width, int height, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -32,9 +34,11 @@ public class ConfigEntity {
         this.sideTempRight = sideTempRight;
         this.alpha = alpha;
         this.deltaX = deltaX;
+        this.deltaT = ((Math.pow(deltaX, 2)) / (4 * alpha));
+        this.gamma = (alpha * deltaT) / (Math.pow(deltaX, 2));
     }
 
-    public static ConfigEntity getDefaultConfig() {
+    public static BaseConfigEntity getDefaultConfig() {
         return new ConfigEntityBuilder()
                 .setLength(100)
                 .setWidth(100)
@@ -132,9 +136,17 @@ public class ConfigEntity {
 
     public void setDeltaX(Double deltaX) { this.deltaX = deltaX; }
 
+    public Double getDeltaT() {
+        return deltaT;
+    }
+
+    public Double getGamma() {
+        return gamma;
+    }
+
     @Override
     public String toString() {
-        return "ConfigEntity{" +
+        return "BaseConfigEntity{" +
                 "length=" + length +
                 ", width=" + width +
                 ", height=" + height +
@@ -146,6 +158,8 @@ public class ConfigEntity {
                 ", sideTempRight=" + sideTempRight +
                 ", alpha=" + alpha +
                 ", deltaX=" + deltaX +
+                ", deltaT=" + deltaT +
+                ", gamma=" + gamma +
                 '}';
     }
 }

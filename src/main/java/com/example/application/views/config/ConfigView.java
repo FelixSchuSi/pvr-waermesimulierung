@@ -1,6 +1,6 @@
 package com.example.application.views.config;
 
-import com.example.application.entity.ConfigEntity;
+import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -8,7 +8,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import static com.example.application.entity.ConfigEntity.getDefaultConfig;
+import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
 
 @PageTitle("Konfiguration")
 @Route(value = "")
@@ -48,7 +48,7 @@ public class ConfigView extends VerticalLayout {
         add(startSimulation);
     }
 
-    private void setConfig(ConfigEntity config) {
+    private void setConfig(BaseConfigEntity config) {
         length.setValue((double) config.getLength());
         width.setValue((double) config.getWidth());
         height.setValue((double) config.getHeight());
@@ -61,7 +61,7 @@ public class ConfigView extends VerticalLayout {
         alpha.setValue(config.getAlpha());
     }
 
-    private ConfigEntity getConfig() {
+    private BaseConfigEntity getConfig() {
         return new ConfigEntityBuilder()
                 .setLength(length.getValue().intValue())
                 .setWidth(width.getValue().intValue())

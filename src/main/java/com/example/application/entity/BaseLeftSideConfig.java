@@ -1,2 +1,5 @@
-package com.example.application.entity;public class BaseLeftSideConfig {
+package com.example.application.entity;
+
+public class BaseLeftSideConfig {
+
 }
