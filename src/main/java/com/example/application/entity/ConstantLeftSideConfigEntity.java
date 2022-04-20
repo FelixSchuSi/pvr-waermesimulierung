@@ -15,4 +15,11 @@ public class ConstantLeftSideConfigEntity extends BaseConfigEntity {
     public void setSideTempLeft(Double sideTempLeft) {
         this.sideTempLeft = sideTempLeft;
     }
+
+    @Override
+    public String toString() {
+        return "ConstantLeftSideConfigEntity{" +
+                "sideTempLeft=" + sideTempLeft +
+                "} " + super.toString();
+    }
 }

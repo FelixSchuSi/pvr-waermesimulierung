@@ -12,6 +12,54 @@ public class ConfigEntityBuilder {
     private Double sideTempRight;
     private Double alpha;
     private Double deltaX;
+    private LeftSideStrategyEnum leftSideStrategy;
+
+    /**
+     * Only relevant for {@link ConstantLeftSideConfigEntity}
+     */
+    private Double sideTempLeft;
+
+    /**
+     * Only relevant for {@link LinearLeftSideConfigEntity}
+     */
+    private Double sideTempLeftCenter;
+    private Double sideTempLeftBorder;
+
+    /**
+     * Only relevant for {@link SinusLeftSideConfigEntity}
+     */
+    private Double sideTempLeftBase;
+    private Double sideTempLeftMaxDifference;
+
+    public ConfigEntityBuilder setSideTempLeftBase(Double sideTempLeftBase) {
+        this.sideTempLeftBase = sideTempLeftBase;
+        return this;
+    }
+
+    public ConfigEntityBuilder setSideTempLeftMaxDifference(Double sideTempLeftMaxDifference) {
+        this.sideTempLeftMaxDifference = sideTempLeftMaxDifference;
+        return this;
+    }
+
+    public ConfigEntityBuilder setSideTempLeft(Double sideTempLeft) {
+        this.sideTempLeft = sideTempLeft;
+        return this;
+    }
+
+    public ConfigEntityBuilder setSideTempLeftCenter(Double sideTempLeftCenter) {
+        this.sideTempLeftCenter = sideTempLeftCenter;
+        return this;
+    }
+
+    public ConfigEntityBuilder setSideTempLeftBorder(Double sideTempLeftBorder) {
+        this.sideTempLeftBorder = sideTempLeftBorder;
+        return this;
+    }
+
+    public ConfigEntityBuilder setLeftSideStrategy(LeftSideStrategyEnum leftSideStrategy) {
+        this.leftSideStrategy = leftSideStrategy;
+        return this;
+    }
 
     public ConfigEntityBuilder setLength(int length) {
         this.length = length;
@@ -69,6 +117,15 @@ public class ConfigEntityBuilder {
     }
 
     public BaseConfigEntity createConfigEntity() {
-        return new BaseConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX);
+        switch (leftSideStrategy) {
+            case SINUS:
+                return new SinusLeftSideConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftBase, sideTempLeftMaxDifference);
+            case LINEAR:
+                return new LinearLeftSideConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftCenter, sideTempLeftBorder);
+            default:
+            case CONSTANT:
+                return new ConstantLeftSideConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeft);
+        }
+
     }
 }

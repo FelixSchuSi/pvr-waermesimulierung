@@ -25,4 +25,12 @@ public class LinearLeftSideConfigEntity extends BaseConfigEntity {
     public void setSideTempLeftBorder(Double sideTempLeftBorder) {
         this.sideTempLeftBorder = sideTempLeftBorder;
     }
+
+    @Override
+    public String toString() {
+        return "LinearLeftSideConfigEntity{" +
+                "sideTempLeftCenter=" + sideTempLeftCenter +
+                ", sideTempLeftBorder=" + sideTempLeftBorder +
+                "} " + super.toString();
+    }
 }

@@ -3,24 +3,22 @@ package com.example.application.entity;
 import javax.validation.constraints.Min;
 
 public class BaseConfigEntity {
+    private final Double deltaT;
+    private final Double gamma;
     @Min(1)
     private int length;
     @Min(1)
     private int width;
     @Min(1)
     private int height;
-
     private Double startTemp;
     private Double sideTempFront;
     private Double sideTempBack;
     private Double sideTempBottom;
     private Double sideTempTop;
     private Double sideTempRight;
-
     private Double alpha;
     private Double deltaX;
-    private Double deltaT;
-    private Double gamma;
 
     public BaseConfigEntity(int length, int width, int height, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX) {
         this.length = length;
@@ -34,8 +32,8 @@ public class BaseConfigEntity {
         this.sideTempRight = sideTempRight;
         this.alpha = alpha;
         this.deltaX = deltaX;
-        this.deltaT = ((Math.pow(deltaX, 2)) / (4 * alpha));
-        this.gamma = (alpha * deltaT) / (Math.pow(deltaX, 2));
+        this.deltaT = Math.pow(deltaX, 2) / (4 * alpha);
+        this.gamma = (alpha * deltaT) / Math.pow(deltaX, 2);
     }
 
     public static BaseConfigEntity getDefaultConfig() {
@@ -51,6 +49,8 @@ public class BaseConfigEntity {
                 .setSideTempRight(0.0)
                 .setAlpha(1.0)
                 .setDeltaX(1.0)
+                .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
+                .setSideTempLeft((double) 100)
                 .createConfigEntity();
     }
 
@@ -62,7 +62,9 @@ public class BaseConfigEntity {
         this.length = length;
     }
 
-    public int getWidth() { return width; }
+    public int getWidth() {
+        return width;
+    }
 
     public void setWidth(int width) {
         this.width = width;
@@ -132,9 +134,13 @@ public class BaseConfigEntity {
         this.alpha = alpha;
     }
 
-    public Double getDeltaX() { return deltaX; }
+    public Double getDeltaX() {
+        return deltaX;
+    }
 
-    public void setDeltaX(Double deltaX) { this.deltaX = deltaX; }
+    public void setDeltaX(Double deltaX) {
+        this.deltaX = deltaX;
+    }
 
     public Double getDeltaT() {
         return deltaT;

@@ -1,6 +1,6 @@
 package com.example.application.entity;
 
-public class SinusLeftSideConfigEntity extends BaseConfigEntity{
+public class SinusLeftSideConfigEntity extends BaseConfigEntity {
 
     private Double sideTempLeftBase;
     private Double sideTempLeftMaxDifference;
@@ -25,5 +25,13 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity{
 
     public void setSideTempLeftMaxDifference(Double sideTempLeftMaxDifference) {
         this.sideTempLeftMaxDifference = sideTempLeftMaxDifference;
+    }
+
+    @Override
+    public String toString() {
+        return "SinusLeftSideConfigEntity{" +
+                "sideTempLeftBase=" + sideTempLeftBase +
+                ", sideTempLeftMaxDifference=" + sideTempLeftMaxDifference +
+                "} " + super.toString();
     }
 }
