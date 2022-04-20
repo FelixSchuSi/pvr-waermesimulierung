@@ -18,8 +18,9 @@ public class ConfigEntity {
     private Double sideTempRight;
 
     private Double alpha;
+    private Double deltaX;
 
-    public ConfigEntity(int length, int width, int height, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha) {
+    public ConfigEntity(int length, int width, int height, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -30,6 +31,7 @@ public class ConfigEntity {
         this.sideTempTop = sideTempTop;
         this.sideTempRight = sideTempRight;
         this.alpha = alpha;
+        this.deltaX = deltaX;
     }
 
     public static ConfigEntity getDefaultConfig() {
@@ -44,6 +46,7 @@ public class ConfigEntity {
                 .setSideTempTop(0.0)
                 .setSideTempRight(0.0)
                 .setAlpha(1.0)
+                .setDeltaX(1.0)
                 .createConfigEntity();
     }
 
@@ -55,9 +58,7 @@ public class ConfigEntity {
         this.length = length;
     }
 
-    public int getWidth() {
-        return width;
-    }
+    public int getWidth() { return width; }
 
     public void setWidth(int width) {
         this.width = width;
@@ -127,6 +128,10 @@ public class ConfigEntity {
         this.alpha = alpha;
     }
 
+    public Double getDeltaX() { return deltaX; }
+
+    public void setDeltaX(Double deltaX) { this.deltaX = deltaX; }
+
     @Override
     public String toString() {
         return "ConfigEntity{" +
@@ -140,6 +145,7 @@ public class ConfigEntity {
                 ", sideTempTop=" + sideTempTop +
                 ", sideTempRight=" + sideTempRight +
                 ", alpha=" + alpha +
+                ", deltaX=" + deltaX +
                 '}';
     }
 }
