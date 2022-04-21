@@ -5,8 +5,9 @@ import com.example.application.compontents.playpausebutton.PlayPauseButton;
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
 import com.example.application.entity.LeftSideStrategyEnum;
+import com.example.application.service.CubeToStringMapper;
 import com.example.application.service.ImageProducerService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.application.service.SimpleSimulationService;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -106,6 +107,8 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         private final MainView view;
         private final Canvas canvas;
         private final ImageProducerService imageProducerService;
+        private final SimpleSimulationService simpleSimulationService;
+        private final CubeToStringMapper cubeToStringMapper = new CubeToStringMapper();
         private int count = 0;
 
         public FeederThread(UI ui, Canvas canvas, BaseConfigEntity config, MainView view) {
@@ -113,6 +116,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.canvas = canvas;
             this.view = view;
             this.imageProducerService = new ImageProducerService(config);
+            this.simpleSimulationService = new SimpleSimulationService(config);
         }
 
         @Override
@@ -120,12 +124,8 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             try {
                 while (count < 200) {
                     CompletableFuture<String> nextImage = supplyAsync(() -> {
-                        try {
-                            return imageProducerService.next().toString();
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                            return "";
-                        }
+                        Double[][][] cube = simpleSimulationService.next();
+                        return cubeToStringMapper.apply(cube, 50);
                     });
                     CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(500, TimeUnit.MILLISECONDS));
                     allOf(nextImage, wait).get();

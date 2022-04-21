@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BaseConfigEntity {
+public abstract class BaseConfigEntity {
     private final Double deltaT;
     private final Double gamma;
     @Min(1)
