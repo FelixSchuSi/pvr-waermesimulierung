@@ -27,6 +27,9 @@ import static java.util.concurrent.CompletableFuture.*;
 public class MainView extends VerticalLayout implements BeforeEnterObserver {
     private final Canvas canvas = new Canvas();
     private final PlayPauseButton playPauseButton = new PlayPauseButton(true);
+    // This is an already completed future.
+    // calling `.get()` will immediately return.
+    public CompletableFuture shouldPlay = completedFuture(true);
     private FeederThread thread;
     private BaseConfigEntity config;
 
@@ -39,6 +42,16 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
 
         playPauseButton.addClickListener((e) -> {
             System.out.println("isPlaying: " + playPauseButton.isPlaying());
+            if (playPauseButton.isPlaying()) {
+                // Here, the future is manually completed.
+                // calling `.get()` will immediately return.
+                shouldPlay.complete(true);
+            } else {
+                // This is an incompletable future.
+                // calling `.get()` will never return.
+                shouldPlay = new CompletableFuture();
+            }
+
         });
 
         thread = new FeederThread(attachEvent.getUI(), canvas, config, this);
@@ -116,6 +129,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                     });
                     CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(500, TimeUnit.MILLISECONDS));
                     allOf(nextImage, wait).get();
+                    view.shouldPlay.get();
                     String finishedImage = nextImage.get();
                     ui.access(() -> canvas.setImageData(finishedImage));
                     count++;
