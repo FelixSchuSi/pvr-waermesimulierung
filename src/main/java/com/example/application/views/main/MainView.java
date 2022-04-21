@@ -6,6 +6,7 @@ import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
 import com.example.application.entity.LeftSideStrategyEnum;
 import com.example.application.service.ImageProducerService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -15,9 +16,11 @@ import com.vaadin.flow.router.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
+import static java.util.concurrent.CompletableFuture.*;
 
 @PageTitle("Simulation")
 @Route(value = "/simulation")
@@ -38,7 +41,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             System.out.println("isPlaying: " + playPauseButton.isPlaying());
         });
 
-        thread = new FeederThread(attachEvent.getUI(), canvas, this);
+        thread = new FeederThread(attachEvent.getUI(), canvas, config, this);
         thread.start();
     }
 
@@ -89,22 +92,32 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         private final UI ui;
         private final MainView view;
         private final Canvas canvas;
-        private final ImageProducerService imageProducerService = new ImageProducerService(getDefaultConfig());
+        private final ImageProducerService imageProducerService;
         private int count = 0;
 
-        public FeederThread(UI ui, Canvas canvas, MainView view) {
+        public FeederThread(UI ui, Canvas canvas, BaseConfigEntity config, MainView view) {
             this.ui = ui;
             this.canvas = canvas;
             this.view = view;
+            this.imageProducerService = new ImageProducerService(config);
         }
 
         @Override
         public void run() {
             try {
                 while (count < 200) {
-                    Thread.sleep(500);
-                    String nextImage = imageProducerService.next().toString();
-                    ui.access(() -> canvas.setImageData(nextImage));
+                    CompletableFuture<String> nextImage = supplyAsync(() -> {
+                        try {
+                            return imageProducerService.next().toString();
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                            return "";
+                        }
+                    });
+                    CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(500, TimeUnit.MILLISECONDS));
+                    allOf(nextImage, wait).get();
+                    String finishedImage = nextImage.get();
+                    ui.access(() -> canvas.setImageData(finishedImage));
                     count++;
                 }
                 ui.access(() -> view.add(new Span("Done updating")));
