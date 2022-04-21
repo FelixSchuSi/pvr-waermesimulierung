@@ -1,5 +1,8 @@
 package com.example.application.entity;
 
+import java.util.List;
+import java.util.Map;
+
 public class SinusLeftSideConfigEntity extends BaseConfigEntity {
 
     private Double sideTempLeftBase;
@@ -33,5 +36,13 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity {
                 "sideTempLeftBase=" + sideTempLeftBase +
                 ", sideTempLeftMaxDifference=" + sideTempLeftMaxDifference +
                 "} " + super.toString();
+    }
+
+    public Map<String, List<String>> toMap() {
+        Map<String, List<String>> map = super.toMap();
+        map.put("leftSideStrategy", List.of(LeftSideStrategyEnum.SINUS.toString()));
+        map.put("sideTempLeftBase", List.of(sideTempLeftBase.toString()));
+        map.put("sideTempLeftMaxDifference", List.of(sideTempLeftMaxDifference.toString()));
+        return map;
     }
 }

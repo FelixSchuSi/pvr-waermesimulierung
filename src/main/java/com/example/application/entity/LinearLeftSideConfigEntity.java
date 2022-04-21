@@ -1,5 +1,8 @@
 package com.example.application.entity;
 
+import java.util.List;
+import java.util.Map;
+
 public class LinearLeftSideConfigEntity extends BaseConfigEntity {
     private Double sideTempLeftCenter;
     private Double sideTempLeftBorder;
@@ -32,5 +35,13 @@ public class LinearLeftSideConfigEntity extends BaseConfigEntity {
                 "sideTempLeftCenter=" + sideTempLeftCenter +
                 ", sideTempLeftBorder=" + sideTempLeftBorder +
                 "} " + super.toString();
+    }
+
+    public Map<String, List<String>> toMap() {
+        Map<String, List<String>> map = super.toMap();
+        map.put("leftSideStrategy", List.of(LeftSideStrategyEnum.LINEAR.toString()));
+        map.put("sideTempLeftCenter", List.of(sideTempLeftCenter.toString()));
+        map.put("sideTempLeftBorder", List.of(sideTempLeftBorder.toString()));
+        return map;
     }
 }

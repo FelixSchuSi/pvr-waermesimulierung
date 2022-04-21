@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 
 import java.util.Objects;
@@ -35,8 +36,9 @@ public class ConfigView extends VerticalLayout {
 
 
     Button startSimulation = new Button("Simulation starten", (e) -> {
-        System.out.println(getConfig());
-        e.getSource().getUI().ifPresent(ui -> ui.navigate("simulation"));
+        BaseConfigEntity config = getConfig();
+        QueryParameters queryParams = new QueryParameters(config.toMap());
+        e.getSource().getUI().ifPresent(ui -> ui.navigate("simulation", queryParams));
     });
 
     public ConfigView() {

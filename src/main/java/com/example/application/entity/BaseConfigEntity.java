@@ -1,6 +1,9 @@
 package com.example.application.entity;
 
 import javax.validation.constraints.Min;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BaseConfigEntity {
     private final Double deltaT;
@@ -52,6 +55,22 @@ public class BaseConfigEntity {
                 .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
                 .setSideTempLeft((double) 100)
                 .createConfigEntity();
+    }
+
+    public Map<String, List<String>> toMap() {
+        Map<String, List<String>> map = new HashMap<>();
+        map.put("length", List.of(Integer.toString(length)));
+        map.put("width", List.of(Integer.toString(width)));
+        map.put("height", List.of(Integer.toString(height)));
+        map.put("startTemp", List.of(startTemp.toString()));
+        map.put("sideTempFront", List.of(sideTempFront.toString()));
+        map.put("sideTempBack", List.of(sideTempBack.toString()));
+        map.put("sideTempBottom", List.of(sideTempBottom.toString()));
+        map.put("sideTempTop", List.of(sideTempTop.toString()));
+        map.put("sideTempRight", List.of(sideTempRight.toString()));
+        map.put("alpha", List.of(alpha.toString()));
+        map.put("deltaX", List.of(deltaX.toString()));
+        return map;
     }
 
     public int getLength() {
