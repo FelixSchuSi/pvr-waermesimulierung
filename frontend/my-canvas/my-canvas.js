@@ -1,6 +1,7 @@
 import {css, html, LitElement} from 'lit';
 import {createRef, ref} from 'lit/directives/ref';
 import {styleMap} from 'lit/directives/style-map.js';
+import '../temperature-scale/temperature-scale';
 
 class MyCanvas extends LitElement {
     constructor() {
@@ -23,6 +24,7 @@ class MyCanvas extends LitElement {
         };
         this.imageDataHeight = 0;
         this.imageDataWidth = 0;
+        this.steps = {};
         this.addEventListener('mousemove', this.onMouseMove);
         this.addEventListener('mouseup', this.onMouseUp);
     }
@@ -36,6 +38,7 @@ class MyCanvas extends LitElement {
             y: {state: true},
             imageDataWidth: {state: true},
             imageDataHeight: {state: true},
+            steps: {state: true}
         }
     };
 
@@ -98,12 +101,7 @@ class MyCanvas extends LitElement {
                     height="${this.imageDataHeight}px"
                     ${ref(this.canvasRef)}
                 ></canvas>
-                <div class="temp">
-                    <div class="bar">
-                    </div>
-                    <div class="legend">
-                    </div>
-                </div>
+                <temperature-scale ></temperature-scale>
             </div>
         `;
     }
@@ -175,6 +173,10 @@ class MyCanvas extends LitElement {
         ctx.clearRect(0, 0, width, height);
         const imageData = new ImageData(Uint8ClampedArray.from(data), width, height);
         ctx.putImageData(imageData, 0, 0);
+    }
+
+    async setTemperatureScaleData(jsonData) {
+        this.steps = JSON.parse(jsonData);
     }
 }
 

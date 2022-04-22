@@ -14,4 +14,10 @@ public class Canvas extends Component {
 
         canvasElement.callJsFunction("setImageData", imageData);
     }
+
+    public void setTemperatureScaleData(String temperatureScaleData) {
+        Element canvasElement = getElement();
+
+        canvasElement.callJsFunction("setTemperatureScaleData", temperatureScaleData);
+    }
 }
