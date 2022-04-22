@@ -6,6 +6,7 @@ class MyCanvas extends LitElement {
     constructor() {
         super();
         this.canvasRef = createRef();
+        this.canvasWrapperRef = createRef();
         this.scale = 1;
         this.x = 0;
         this.y = 0;
@@ -41,15 +42,20 @@ class MyCanvas extends LitElement {
     static get styles() {
         return css`
             canvas {
-                height: 50vh;
                 image-rendering: -moz-crisp-edges;
                 image-rendering: -webkit-crisp-edges;
                 image-rendering: pixelated;
                 image-rendering: crisp-edges;
-                cursor: grab;
+            }
+            
+            .canvas-wrapper {
+                height: 50vh;
+                display: flex;
+                flex-wrap: nowrap;
                 transform-origin: 0 0;
                 will-change: transform;
             }
+            
             :host {
                 position: absolute;
                 top: 0;
@@ -78,18 +84,27 @@ class MyCanvas extends LitElement {
 
     render() {
         return html`
-            <canvas
-                    @wheel=${this.onWheel}
-                    @mousedown=${(event) => {
-                        this.mousePosition.initialX = event.clientX - this.mousePosition.xOffset;
-                        this.mousePosition.initialY = event.clientY - this.mousePosition.yOffset;
-                        this.isGrabbing = true
-                    }}
+            <div class="canvas-wrapper" 
+                 @mousedown=${(event) => {
+                    this.mousePosition.initialX = event.clientX - this.mousePosition.xOffset;
+                    this.mousePosition.initialY = event.clientY - this.mousePosition.yOffset;
+                    this.isGrabbing = true
+                 }}
+                 @wheel=${this.onWheel}
+                 ${ref(this.canvasWrapperRef)}
+                 style=${styleMap(this.canvasStyleMap)}>
+                <canvas
                     width="${this.imageDataWidth}px"
                     height="${this.imageDataHeight}px"
-                    style=${styleMap(this.canvasStyleMap)}
                     ${ref(this.canvasRef)}
-            ></canvas>
+                ></canvas>
+                <div class="temp">
+                    <div class="bar">
+                    </div>
+                    <div class="legend">
+                    </div>
+                </div>
+            </div>
         `;
     }
 
@@ -125,7 +140,7 @@ class MyCanvas extends LitElement {
         const scaleDiff = zoomingOut ? 1 / ratio : ratio;
 
         const newScale = this.scale * scaleDiff;
-        const currentRect = this.canvasRef.value.getBoundingClientRect();
+        const currentRect = this.canvasWrapperRef.value.getBoundingClientRect();
         const originX = event.clientX - currentRect.left;
         const originY = event.clientY - currentRect.top;
         let matrix = document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGMatrix();
