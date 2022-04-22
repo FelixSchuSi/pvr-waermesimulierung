@@ -8,7 +8,9 @@ import net.mahdilamb.colormap.FluidColormap;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,18 +37,18 @@ public class CubeToStringMapper implements BiFunction<Double[][][], Integer, Str
     }
 
     private void findMinAndMax(Double[][][] cube) {
-        Stream<Double> flatStream = Arrays.stream(cube).flatMap(rect -> Arrays.stream(rect).flatMap(Arrays::stream));
-        flatStream.max(Double::compare).ifPresent(optionalMax -> this.max = optionalMax);
-        flatStream.min(Double::compare).ifPresent(optionalMin -> this.min = optionalMin);
+        Supplier<Stream<Double>> flatStream = () -> Arrays.stream(cube).flatMap(Arrays::stream).flatMap(Arrays::stream);
+        flatStream.get().max(Double::compare).ifPresent(optionalMax -> this.max = optionalMax);
+        flatStream.get().min(Double::compare).ifPresent(optionalMin -> this.min = optionalMin);
     }
 
     private List<Short> getColorFromValues(Stream<Double> values) {
         return values.flatMap((value) -> {
             float[] rgba = colormap.get(value).getRGBComponents(null);
-            Short r = (short) Math.round(rgba[0]);
-            Short g = (short) Math.round(rgba[1]);
-            Short b = (short) Math.round(rgba[2]);
-            Short a = (short) Math.round(rgba[3]);
+            Short r = (short) Math.round(rgba[0] * 255);
+            Short g = (short) Math.round(rgba[1] * 255);
+            Short b = (short) Math.round(rgba[2] * 255);
+            Short a = (short) Math.round(rgba[3] * 255);
             return Stream.of(r, g, b, a);
         }).collect(Collectors.toList());
     }

@@ -37,9 +37,9 @@ class SimpleSimulationServiceTest {
         Double[][][] firstImage = simpleSimulationService.next();
 
         ConstantLeftSideConfigEntity c = (ConstantLeftSideConfigEntity) config;
-        for (int x = 0; x < c.getWidth() - 1; x++) {
-            for (int y = 0; y < c.getLength() - 1; y++) {
-                for (int z = 0; z < c.getHeight() - 1; z++) {
+        for (int x = 0; x < c.getWidth(); x++) {
+            for (int y = 0; y < c.getLength(); y++) {
+                for (int z = 0; z < c.getHeight(); z++) {
                     if (y == 0) {
                         assertThat(firstImage[x][y][z]).isEqualTo(c.getSideTempLeft());
                     } else {

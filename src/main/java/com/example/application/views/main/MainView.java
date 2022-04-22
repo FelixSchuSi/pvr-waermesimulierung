@@ -69,6 +69,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
     public void beforeEnter(BeforeEnterEvent event) {
         QueryParameters queryParameters = event.getLocation().getQueryParameters();
         config = parseConfig(queryParameters);
+        System.out.println(config);
     }
 
     private BaseConfigEntity parseConfig(QueryParameters queryParameters) {
@@ -94,7 +95,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 .setAlpha(Double.valueOf(map.get("alpha").get(0)))
                 .setDeltaX(Double.valueOf(map.get("deltaX").get(0)))
                 .setLeftSideStrategy(LeftSideStrategyEnum.get(map.get("leftSideStrategy").get(0)))
-                .setSideTempLeft(getIfPresent.apply("sideTempFront"))
+                .setSideTempLeft(getIfPresent.apply("sideTempLeft"))
                 .setSideTempLeftCenter(getIfPresent.apply("sideTempLeftCenter"))
                 .setSideTempLeftBorder(getIfPresent.apply("sideTempLeftBorder"))
                 .setSideTempLeftBase(getIfPresent.apply("sideTempLeftBase"))
