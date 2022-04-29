@@ -101,7 +101,7 @@ class MyCanvas extends LitElement {
                     height="${this.imageDataHeight}px"
                     ${ref(this.canvasRef)}
                 ></canvas>
-                <temperature-scale ></temperature-scale>
+                <temperature-scale .steps=${this.steps}></temperature-scale>
             </div>
         `;
     }
@@ -176,7 +176,7 @@ class MyCanvas extends LitElement {
     }
 
     async setTemperatureScaleData(jsonData) {
-        this.steps = JSON.parse(jsonData);
+        this.steps = JSON.parse(jsonData).data;
     }
 }
 

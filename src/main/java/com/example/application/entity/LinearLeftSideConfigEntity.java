@@ -44,4 +44,14 @@ public class LinearLeftSideConfigEntity extends BaseConfigEntity {
         map.put("sideTempLeftBorder", List.of(sideTempLeftBorder.toString()));
         return map;
     }
+
+    @Override
+    public Double getMinTemp() {
+        return null;
+    }
+
+    @Override
+    public Double getMaxTemp() {
+        return null;
+    }
 }

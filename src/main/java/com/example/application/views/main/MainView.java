@@ -5,6 +5,7 @@ import com.example.application.compontents.playpausebutton.PlayPauseButton;
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
 import com.example.application.entity.LeftSideStrategyEnum;
+import com.example.application.entity.TemperatureScaleDto;
 import com.example.application.service.CubeToStringMapper;
 import com.example.application.service.ImageProducerService;
 import com.example.application.service.SimpleSimulationService;
@@ -111,6 +112,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         private final SimpleSimulationService simpleSimulationService;
         private final CubeToStringMapper cubeToStringMapper = new CubeToStringMapper();
         private int count = 0;
+        private final TemperatureScaleDto temperatureScaleDto;
 
         public FeederThread(UI ui, Canvas canvas, BaseConfigEntity config, MainView view) {
             this.ui = ui;
@@ -118,11 +120,13 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.view = view;
             this.imageProducerService = new ImageProducerService(config);
             this.simpleSimulationService = new SimpleSimulationService(config);
+            this.temperatureScaleDto = TemperatureScaleDto.fromConfig(config);
         }
 
         @Override
         public void run() {
             try {
+                ui.access(() -> canvas.setTemperatureScaleData(temperatureScaleDto.toJson()));
                 while (count < 200) {
                     CompletableFuture<String> nextImage = supplyAsync(() -> {
                         Double[][][] cube = simpleSimulationService.next();

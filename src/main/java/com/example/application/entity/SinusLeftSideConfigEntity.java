@@ -45,4 +45,14 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity {
         map.put("sideTempLeftMaxDifference", List.of(sideTempLeftMaxDifference.toString()));
         return map;
     }
+
+    @Override
+    public Double getMinTemp() {
+        return null;
+    }
+
+    @Override
+    public Double getMaxTemp() {
+        return null;
+    }
 }

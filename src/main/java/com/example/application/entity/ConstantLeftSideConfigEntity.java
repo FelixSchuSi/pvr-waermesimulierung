@@ -2,6 +2,7 @@ package com.example.application.entity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class ConstantLeftSideConfigEntity extends BaseConfigEntity {
     private Double sideTempLeft;
@@ -31,5 +32,33 @@ public class ConstantLeftSideConfigEntity extends BaseConfigEntity {
         map.put("leftSideStrategy", List.of(LeftSideStrategyEnum.CONSTANT.toString()));
         map.put("sideTempLeft", List.of(sideTempLeft.toString()));
         return map;
+    }
+
+    @Override
+    public Double getMinTemp() {
+        Stream<Double> allTemps = Stream.of(
+            this.getSideTempLeft(),
+            this.getStartTemp(),
+            this.getSideTempBack(),
+            this.getSideTempBottom(),
+            this.getSideTempFront(),
+            this.getSideTempRight(),
+            this.getSideTempTop()
+        );
+        return allTemps.min(Double::compare).orElse((double) 0);
+    }
+
+    @Override
+    public Double getMaxTemp() {
+        Stream<Double> allTemps = Stream.of(
+                this.getSideTempLeft(),
+                this.getStartTemp(),
+                this.getSideTempBack(),
+                this.getSideTempBottom(),
+                this.getSideTempFront(),
+                this.getSideTempRight(),
+                this.getSideTempTop()
+        );
+        return allTemps.max(Double::compare).orElse((double) 0);
     }
 }

@@ -169,6 +169,10 @@ public abstract class BaseConfigEntity {
         return gamma;
     }
 
+    public abstract Double getMinTemp();
+
+    public abstract Double getMaxTemp();
+
     @Override
     public String toString() {
         return "BaseConfigEntity{" +

@@ -4,15 +4,8 @@ import {styleMap} from 'lit/directives/style-map.js';
 class TemperatureScale extends LitElement {
     constructor() {
         super();
-        this.steps = {
-            '0': 'rgb(255, 0, 0)',
-            '25': 'green',
-            '50': 'blue',
-            '75': 'yellow',
-            '100': 'black',
-        };
         this.temperatureBarStyleMap = {
-            background: `linear-gradient(red, yellow, blue, orange)`
+            background: `black`
         };
     }
 
@@ -35,6 +28,8 @@ class TemperatureScale extends LitElement {
             
             .bar {
                 width: 16px;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
             }
             
             .legend {
@@ -42,10 +37,11 @@ class TemperatureScale extends LitElement {
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: stretch;
+                padding-left: 4px;
             }
             
-            .legend {
-                padding-left: 8px;
+            .legend > span::before {
+                content: "- ";
             }
         `;
     }
@@ -66,7 +62,7 @@ class TemperatureScale extends LitElement {
                 <div class="bar" style=${styleMap(this.temperatureBarStyleMap)}>
                 </div>
                 <div class="legend">
-                    ${Object.keys(this.steps).map(step => html`<span>${step}</span>`)}
+                    ${Object.keys(this.steps).map(step => html`<span>${step} °C</span>`)}
                 </div>
             </div>
         `;
