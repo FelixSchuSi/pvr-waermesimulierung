@@ -32,5 +32,5 @@ build-job: # This job runs in the build stage, which runs first.
   artifacts:
     paths:
       - metadata.txt
-      - measurements.csv
+      - measurements.txt
     expire_in: 52 weeks
