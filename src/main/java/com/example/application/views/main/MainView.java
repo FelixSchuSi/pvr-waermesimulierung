@@ -110,9 +110,9 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         private final Canvas canvas;
         private final ImageProducerService imageProducerService;
         private final SimpleSimulationService simpleSimulationService;
-        private final CubeToStringMapper cubeToStringMapper = new CubeToStringMapper();
-        private int count = 0;
+        private final CubeToStringMapper cubeToStringMapper;
         private final TemperatureScaleDto temperatureScaleDto;
+        private int count = 0;
 
         public FeederThread(UI ui, Canvas canvas, BaseConfigEntity config, MainView view) {
             this.ui = ui;
@@ -121,6 +121,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.imageProducerService = new ImageProducerService(config);
             this.simpleSimulationService = new SimpleSimulationService(config);
             this.temperatureScaleDto = TemperatureScaleDto.fromConfig(config);
+            this.cubeToStringMapper = new CubeToStringMapper(config);
         }
 
         @Override

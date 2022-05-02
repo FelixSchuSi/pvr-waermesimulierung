@@ -28,8 +28,8 @@ class TemperatureScale extends LitElement {
             
             .bar {
                 width: 16px;
-                margin-top: 0.5rem;
-                margin-bottom: 0.5rem;
+                margin-top: 0.8rem;
+                margin-bottom: 0.65rem;
             }
             
             .legend {

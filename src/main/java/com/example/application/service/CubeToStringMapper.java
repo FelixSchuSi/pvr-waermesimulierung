@@ -1,5 +1,6 @@
 package com.example.application.service;
 
+import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ImageData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,9 +9,7 @@ import net.mahdilamb.colormap.FluidColormap;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,25 +21,21 @@ import java.util.stream.Stream;
  */
 public class CubeToStringMapper implements BiFunction<Double[][][], Integer, String> {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final FluidColormap colormap = Colormaps.fluidColormap(Colormaps.get("Inferno"));
-    private Double min = Double.MIN_VALUE;
-    private Double max = Double.MAX_VALUE;
+    private final FluidColormap colormap;
+
+    public CubeToStringMapper(BaseConfigEntity config) {
+        this.colormap = Colormaps.fluidColormap(Colormaps.get("Inferno"));
+        colormap.set(config.getMinTemp().floatValue(), config.getMaxTemp().floatValue(), false);
+    }
 
     @Override
     public String apply(Double[][][] cube, Integer z) {
-        this.findMinAndMax(cube);
-        colormap.set(this.min.floatValue(), this.max.floatValue(), false);
         Stream<Double> values = Arrays.stream(cube).flatMap(rect -> Arrays.stream(rect).map(row -> row[z]));
         List<Short> colorValues = this.getColorFromValues(values);
         ImageData imageData = new ImageData(cube.length, cube[0].length, colorValues);
         return toJson(imageData);
     }
 
-    private void findMinAndMax(Double[][][] cube) {
-        Supplier<Stream<Double>> flatStream = () -> Arrays.stream(cube).flatMap(Arrays::stream).flatMap(Arrays::stream);
-        flatStream.get().max(Double::compare).ifPresent(optionalMax -> this.max = optionalMax);
-        flatStream.get().min(Double::compare).ifPresent(optionalMin -> this.min = optionalMin);
-    }
 
     private List<Short> getColorFromValues(Stream<Double> values) {
         return values.flatMap((value) -> {
