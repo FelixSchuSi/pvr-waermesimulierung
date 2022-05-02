@@ -30,7 +30,7 @@ class ImageProducerServiceTest {
     void measurePerformance() throws IOException {
         CsvReport report = new CsvReport(Stream.of("totalExecutionTime (ms)", "totalExecutionTime2 (ms)"));
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             long t0 = System.nanoTime();
             ImageData output = imageProducerService.next();
             long t1 = System.nanoTime();
