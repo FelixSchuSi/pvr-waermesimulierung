@@ -22,6 +22,7 @@ public class CsvReport {
     public void writeFile(String filename) throws IOException {
         File csvOutputFile = new File(filename);
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            pw.println("sep=,");
             dataLines.map(this::convertToCSV)
                     .forEach(pw::println);
         }
