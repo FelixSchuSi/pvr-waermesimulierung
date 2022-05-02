@@ -51,7 +51,7 @@ class TemperatureScale extends LitElement {
         super.willUpdate(_changedProperties);
         if (_changedProperties.has('steps')) {
             this.temperatureBarStyleMap = {
-                background: `linear-gradient(${Object.values(this.steps).join(',')})`
+                background: `linear-gradient(${Object.values(this.steps).reverse().join(',')})`
             };
         }
     }
@@ -62,7 +62,7 @@ class TemperatureScale extends LitElement {
                 <div class="bar" style=${styleMap(this.temperatureBarStyleMap)}>
                 </div>
                 <div class="legend">
-                    ${Object.keys(this.steps).map(step => html`<span>${step} °C</span>`)}
+                    ${Object.keys(this.steps).reverse().map(step => html`<span>${step} °C</span>`)}
                 </div>
             </div>
         `;
