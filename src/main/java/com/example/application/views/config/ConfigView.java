@@ -3,6 +3,9 @@ package com.example.application.views.config;
 import com.example.application.compontents.strategypicker.StrategyPicker;
 import com.example.application.entity.*;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.PageTitle;
@@ -13,9 +16,13 @@ import java.util.Objects;
 
 import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
 
-@PageTitle("Konfiguration")
+@PageTitle("Konfiguration Wärmesimulierung")
 @Route(value = "")
-public class ConfigView extends VerticalLayout {
+public class ConfigView extends HorizontalLayout {
+    H1 header = new H1("Konfiguration Wärmesimulierung");
+
+    Paragraph description = new Paragraph("Konfigurieren Sie die Startparameter der Simulation. Durch einen Klick auf 'Simulation starten' kann die Simulation begonnen werden.");
+
     // dimensions
     NumberField length = new NumberField("Länge (QL)");
     NumberField width = new NumberField("Breite (QB)");
@@ -44,6 +51,9 @@ public class ConfigView extends VerticalLayout {
 
     public ConfigView() {
         setConfig(getDefaultConfig());
+        VerticalLayout heading = new VerticalLayout(header, description);
+        heading.setPadding(false);
+        add(heading);
         add(length);
         add(width);
         add(height);

@@ -16,6 +16,7 @@ public class StrategyPicker extends VerticalLayout {
     public RadioButtonGroup<String> sideTempLeftStrategy = new RadioButtonGroup<>();
 
     public StrategyPicker() {
+        setPadding(false);
         add(sideTempLeftStrategy);
         sideTempLeftStrategy.setLabel("Simulationsstrategie");
         sideTempLeftStrategy.setItems("Konstant", "Linear", "Sinus");
