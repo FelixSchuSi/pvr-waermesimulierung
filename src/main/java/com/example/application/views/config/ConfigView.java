@@ -20,6 +20,7 @@ public class ConfigView extends VerticalLayout {
     NumberField length = new NumberField("Länge (QL)");
     NumberField width = new NumberField("Breite (QB)");
     NumberField height = new NumberField("Höhe (QH)");
+    NumberField zIndex = new NumberField("Z-Index des Quaderschnitts");
 
     // temps
     NumberField startTemp = new NumberField("Starttemperatur (TS)");
@@ -46,6 +47,7 @@ public class ConfigView extends VerticalLayout {
         add(length);
         add(width);
         add(height);
+        add(zIndex);
         add(startTemp);
         add(sideTempFront);
         add(sideTempBack);
@@ -70,6 +72,7 @@ public class ConfigView extends VerticalLayout {
                 .setLength(length.getValue().intValue())
                 .setWidth(width.getValue().intValue())
                 .setHeight(height.getValue().intValue())
+                .setZIndex(zIndex.getValue().intValue())
                 .setStartTemp(startTemp.getValue())
                 .setSideTempFront(sideTempFront.getValue())
                 .setSideTempBack(sideTempBack.getValue())
@@ -91,6 +94,7 @@ public class ConfigView extends VerticalLayout {
         length.setValue((double) config.getLength());
         width.setValue((double) config.getWidth());
         height.setValue((double) config.getHeight());
+        zIndex.setValue((double) config.getzIndex());
         startTemp.setValue(config.getStartTemp());
         sideTempFront.setValue(config.getSideTempFront());
         sideTempBack.setValue(config.getSideTempBack());

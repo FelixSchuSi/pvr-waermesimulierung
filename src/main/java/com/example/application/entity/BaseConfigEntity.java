@@ -14,6 +14,8 @@ public abstract class BaseConfigEntity {
     private int width;
     @Min(1)
     private int height;
+    @Min(0)
+    private int zIndex;
     private Double startTemp;
     private Double sideTempFront;
     private Double sideTempBack;
@@ -23,10 +25,11 @@ public abstract class BaseConfigEntity {
     private Double alpha;
     private Double deltaX;
 
-    public BaseConfigEntity(int length, int width, int height, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX) {
+    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX) {
         this.length = length;
         this.width = width;
         this.height = height;
+        this.zIndex = zIndex;
         this.startTemp = startTemp;
         this.sideTempFront = sideTempFront;
         this.sideTempBack = sideTempBack;
@@ -44,6 +47,7 @@ public abstract class BaseConfigEntity {
                 .setLength(100)
                 .setWidth(100)
                 .setHeight(100)
+                .setZIndex(50)
                 .setStartTemp(10.0)
                 .setSideTempFront(0.0)
                 .setSideTempBack(0.0)
@@ -71,6 +75,14 @@ public abstract class BaseConfigEntity {
         map.put("alpha", List.of(alpha.toString()));
         map.put("deltaX", List.of(deltaX.toString()));
         return map;
+    }
+
+    public int getzIndex() {
+        return zIndex;
+    }
+
+    public void setzIndex(int zIndex) {
+        this.zIndex = zIndex;
     }
 
     public int getLength() {
@@ -176,9 +188,12 @@ public abstract class BaseConfigEntity {
     @Override
     public String toString() {
         return "BaseConfigEntity{" +
-                "length=" + length +
+                "deltaT=" + deltaT +
+                ", gamma=" + gamma +
+                ", length=" + length +
                 ", width=" + width +
                 ", height=" + height +
+                ", zIndex=" + zIndex +
                 ", startTemp=" + startTemp +
                 ", sideTempFront=" + sideTempFront +
                 ", sideTempBack=" + sideTempBack +
@@ -187,8 +202,6 @@ public abstract class BaseConfigEntity {
                 ", sideTempRight=" + sideTempRight +
                 ", alpha=" + alpha +
                 ", deltaX=" + deltaX +
-                ", deltaT=" + deltaT +
-                ", gamma=" + gamma +
                 '}';
     }
 }

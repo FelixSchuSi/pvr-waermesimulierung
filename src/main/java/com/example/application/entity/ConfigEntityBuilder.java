@@ -4,6 +4,7 @@ public class ConfigEntityBuilder {
     private int length;
     private int width;
     private int height;
+    private int zIndex;
     private Double startTemp;
     private Double sideTempFront;
     private Double sideTempBack;
@@ -116,15 +117,20 @@ public class ConfigEntityBuilder {
         return this;
     }
 
+    public ConfigEntityBuilder setZIndex(int zIndex) {
+        this.zIndex = zIndex;
+        return this;
+    }
+
     public BaseConfigEntity createConfigEntity() {
         switch (leftSideStrategy) {
             case SINUS:
-                return new SinusLeftSideConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftBase, sideTempLeftMaxDifference);
+                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftBase, sideTempLeftMaxDifference);
             case LINEAR:
-                return new LinearLeftSideConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftCenter, sideTempLeftBorder);
+                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftCenter, sideTempLeftBorder);
             default:
             case CONSTANT:
-                return new ConstantLeftSideConfigEntity(length, width, height, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeft);
+                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeft);
         }
 
     }

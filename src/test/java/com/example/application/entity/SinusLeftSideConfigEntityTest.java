@@ -19,6 +19,7 @@ class SinusLeftSideConfigEntityTest {
                 .setLength(100)
                 .setWidth(100)
                 .setHeight(100)
+                .setZIndex(50)
                 .setStartTemp(10.0)
                 .setSideTempFront(0.0)
                 .setSideTempBack(0.0)
