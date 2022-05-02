@@ -38,6 +38,6 @@ class ImageProducerServiceTest {
             report.appendRow(Stream.of(Long.toString((t1 - t0) / 1000), Long.toString((t1 - t0) / 1000)));
         }
 
-        report.writeFile("measurements.csv");
+        report.writeFile("measurements.txt");
     }
 }
