@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Objekt das ein Frame beschreibt.
- * In Anlehnung and https://developer.mozilla.org/en-US/docs/Web/API/ImageData
+ * In Anlehnung an https://developer.mozilla.org/en-US/docs/Web/API/ImageData
  * Wird an das Frontend gesendet und dann in einem HTML-Canvas-Element dargestellt.
  */
 public class ImageData {

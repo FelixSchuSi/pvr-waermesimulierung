@@ -2,6 +2,7 @@ package com.example.application.entity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class LinearLeftSideConfigEntity extends BaseConfigEntity {
     private Double sideTempLeftCenter;
@@ -47,11 +48,31 @@ public class LinearLeftSideConfigEntity extends BaseConfigEntity {
 
     @Override
     public Double getMinTemp() {
-        return null;
+        Stream<Double> allTemps = Stream.of(
+                this.getSideTempLeftBorder(),
+                this.getSideTempLeftCenter(),
+                this.getStartTemp(),
+                this.getSideTempBack(),
+                this.getSideTempBottom(),
+                this.getSideTempFront(),
+                this.getSideTempRight(),
+                this.getSideTempTop()
+        );
+        return allTemps.min(Double::compare).orElse((double) 0);
     }
 
     @Override
     public Double getMaxTemp() {
-        return null;
+        Stream<Double> allTemps = Stream.of(
+                this.getSideTempLeftBorder(),
+                this.getSideTempLeftCenter(),
+                this.getStartTemp(),
+                this.getSideTempBack(),
+                this.getSideTempBottom(),
+                this.getSideTempFront(),
+                this.getSideTempRight(),
+                this.getSideTempTop()
+        );
+        return allTemps.max(Double::compare).orElse((double) 0);
     }
 }

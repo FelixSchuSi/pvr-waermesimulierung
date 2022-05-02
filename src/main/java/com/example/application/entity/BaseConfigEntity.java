@@ -53,7 +53,7 @@ public abstract class BaseConfigEntity {
                 .setAlpha(1.0)
                 .setDeltaX(1.0)
                 .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
-                .setSideTempLeft((double) 100)
+                .setSideTempLeft(100.0)
                 .createConfigEntity();
     }
 
