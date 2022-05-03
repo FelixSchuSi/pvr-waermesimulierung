@@ -12,7 +12,9 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.*;
 
 import java.util.List;
@@ -28,6 +30,7 @@ import static java.util.concurrent.CompletableFuture.*;
 public class MainView extends VerticalLayout implements BeforeEnterObserver {
     private final Canvas canvas = new Canvas();
     private final PlayPauseButton playPauseButton = new PlayPauseButton(true);
+    private final NumberField stepCounter = new NumberField("aktueller Simulationsschritt");
     // This is an already completed future.
     // calling `.get()` will immediately return.
     public CompletableFuture shouldPlay = completedFuture(true);
@@ -39,7 +42,14 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         System.out.println("Folgende Parameter wurden geladen:");
         System.out.println(config);
         add(canvas);
-        add(playPauseButton);
+        HorizontalLayout bar = new HorizontalLayout(playPauseButton, stepCounter);
+        bar.getStyle().set("padding", "0");
+        bar.getStyle().set("align-items", "center");
+        stepCounter.getStyle().set("padding", "0");
+
+        add(bar);
+        stepCounter.setValue(0.0);
+        stepCounter.setReadOnly(true);
 
         playPauseButton.addClickListener((e) -> {
             System.out.println("isPlaying: " + playPauseButton.isPlaying());
@@ -55,7 +65,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
 
         });
 
-        thread = new FeederThread(attachEvent.getUI(), canvas, config, this);
+        thread = new FeederThread(attachEvent.getUI(), canvas, stepCounter, config, this);
         thread.start();
     }
 
@@ -113,9 +123,11 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         private final SimpleSimulationService simpleSimulationService;
         private final CubeToStringMapper cubeToStringMapper;
         private final TemperatureScaleDto temperatureScaleDto;
+
+        private final NumberField stepCounter;
         private int count = 0;
 
-        public FeederThread(UI ui, Canvas canvas, BaseConfigEntity config, MainView view) {
+        public FeederThread(UI ui, Canvas canvas, NumberField stepCoutner, BaseConfigEntity config, MainView view) {
             this.ui = ui;
             this.canvas = canvas;
             this.view = view;
@@ -123,6 +135,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.temperatureScaleDto = TemperatureScaleDto.fromConfig(config);
             this.cubeToStringMapper = new CubeToStringMapper(config);
             this.config = config;
+            this.stepCounter = stepCoutner;
         }
 
         @Override
@@ -138,7 +151,10 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                     allOf(nextImage, wait).get();
                     view.shouldPlay.get();
                     String finishedImage = nextImage.get();
-                    ui.access(() -> canvas.setImageData(finishedImage));
+                    ui.access(() -> {
+                        canvas.setImageData(finishedImage);
+                        stepCounter.setValue(stepCounter.getValue() + 1.0);
+                    });
                     count++;
                 }
                 ui.access(() -> view.add(new Span("Done updating")));
