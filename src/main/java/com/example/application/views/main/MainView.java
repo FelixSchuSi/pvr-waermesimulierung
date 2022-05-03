@@ -142,12 +142,12 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         public void run() {
             try {
                 ui.access(() -> canvas.setTemperatureScaleData(temperatureScaleDto.toJson()));
-                while (count < 200) {
+                while (count < 2000) {
                     CompletableFuture<String> nextImage = supplyAsync(() -> {
                         Double[][][] cube = simpleSimulationService.next();
                         return cubeToStringMapper.apply(cube, config.getzIndex());
                     });
-                    CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(200, TimeUnit.MILLISECONDS));
+                    CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(100, TimeUnit.MILLISECONDS));
                     allOf(nextImage, wait).get();
                     view.shouldPlay.get();
                     String finishedImage = nextImage.get();

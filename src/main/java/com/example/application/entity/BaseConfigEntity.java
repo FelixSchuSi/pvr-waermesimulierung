@@ -38,7 +38,7 @@ public abstract class BaseConfigEntity {
         this.sideTempRight = sideTempRight;
         this.alpha = alpha;
         this.deltaX = deltaX;
-        this.deltaT = Math.pow(deltaX, 2) / (4 * alpha);
+        this.deltaT = Math.pow(deltaX, 2) / (6 * alpha);
         this.gamma = (alpha * deltaT) / Math.pow(deltaX, 2);
     }
 
