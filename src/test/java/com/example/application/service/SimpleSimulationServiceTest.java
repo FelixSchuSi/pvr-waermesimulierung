@@ -42,6 +42,16 @@ class SimpleSimulationServiceTest {
                 for (int z = 0; z < c.getHeight(); z++) {
                     if (y == 0) {
                         assertThat(firstImage[x][y][z]).isEqualTo(c.getSideTempLeft());
+                    } else if (y == c.getLength() - 1) {
+                        assertThat(firstImage[x][y][z]).isEqualTo(c.getSideTempRight());
+                    } else if (z == c.getHeight() - 1) {
+                        assertThat(firstImage[x][y][z]).isEqualTo(c.getSideTempTop());
+                    } else if (z == 0) {
+                        assertThat(firstImage[x][y][z]).isEqualTo(c.getSideTempBottom());
+                    } else if (x == c.getWidth() - 1) {
+                        assertThat(firstImage[x][y][z]).isEqualTo(c.getSideTempFront());
+                    } else if (x == 0) {
+                        assertThat(firstImage[x][y][z]).isEqualTo(c.getSideTempBack());
                     } else {
                         assertThat(firstImage[x][y][z]).isEqualTo(c.getStartTemp());
                     }

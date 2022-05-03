@@ -53,13 +53,18 @@ public class SimpleSimulationService {
 
         ConstantLeftSideConfigEntity config = (ConstantLeftSideConfigEntity) configEntity;
         //Start Calculation
-        for (int x = 0; x < x_width; x++) {
-            for (int y = 0; y < y_length; y++) {
-                for (int z = 0; z < z_height; z++) {
-                    // TODO: Implement correct calculation of new temp
-                    // this is a placeholder that randomly changes the previous state
-                    double potentialNewValue = oldData[x][y][z] + Math.random() * 10;
-                    data[x][y][z] = potentialNewValue < config.getSideTempLeft() ? potentialNewValue : config.getSideTempLeft();
+        for (int x = 1; x < x_width-1; x++) {
+            for (int y = 1; y < y_length-1; y++) {
+                for (int z = 1; z < z_height-1; z++) {
+                    data[x][y][z] = oldData[x][y][z] + gamma * (oldData[x+1][y][z] + oldData[x-1][y][z] +
+                            oldData[x][y+1][z] + oldData[x][y-1][z] +
+                            oldData[x][y][z+1] + oldData[x][y][z-1] -
+                            6*oldData[x][y][z]);
+                    if(data[x][y][z] != null){
+                        System.out.println("data ["+x+"]["+y+"]["+z+"]: " + data[x][y][z].toString());
+                    } else {
+                        System.out.println("*****Null******");
+                    }
                 }
             }
         }
@@ -75,6 +80,16 @@ public class SimpleSimulationService {
                 for (int z = 0; z < config.getHeight(); z++) {
                     if (y == 0) {
                         firstImage[x][y][z] = config.getSideTempLeft();
+                    }else if (y == config.getLength() - 1) {
+                        firstImage[x][y][z]= config.getSideTempRight();
+                    } else if (z == config.getHeight() - 1) {
+                        firstImage[x][y][z] = config.getSideTempTop();
+                    } else if (z == 0) {
+                        firstImage[x][y][z] = config.getSideTempBottom();
+                    } else if (x == config.getWidth() - 1) {
+                        firstImage[x][y][z] = config.getSideTempFront();
+                    } else if (x == 0) {
+                        firstImage[x][y][z] = config.getSideTempBack();
                     } else {
                         firstImage[x][y][z] = config.getStartTemp();
                     }
