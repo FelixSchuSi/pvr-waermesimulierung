@@ -7,7 +7,6 @@ import com.example.application.entity.ConfigEntityBuilder;
 import com.example.application.entity.LeftSideStrategyEnum;
 import com.example.application.entity.TemperatureScaleDto;
 import com.example.application.service.CubeToStringMapper;
-import com.example.application.service.ImageProducerService;
 import com.example.application.service.SimpleSimulationService;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
@@ -87,6 +86,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 .setLength(Integer.parseInt(map.get("length").get(0)))
                 .setWidth(Integer.parseInt(map.get("width").get(0)))
                 .setHeight(Integer.parseInt(map.get("height").get(0)))
+                .setZIndex(Integer.parseInt(map.get("zIndex").get(0)))
                 .setStartTemp(Double.valueOf(map.get("startTemp").get(0)))
                 .setSideTempFront(Double.valueOf(map.get("sideTempFront").get(0)))
                 .setSideTempBack(Double.valueOf(map.get("sideTempBack").get(0)))
@@ -110,7 +110,6 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         private final Canvas canvas;
 
         private final BaseConfigEntity config;
-        private final ImageProducerService imageProducerService;
         private final SimpleSimulationService simpleSimulationService;
         private final CubeToStringMapper cubeToStringMapper;
         private final TemperatureScaleDto temperatureScaleDto;
@@ -120,7 +119,6 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.ui = ui;
             this.canvas = canvas;
             this.view = view;
-            this.imageProducerService = new ImageProducerService(config);
             this.simpleSimulationService = new SimpleSimulationService(config);
             this.temperatureScaleDto = TemperatureScaleDto.fromConfig(config);
             this.cubeToStringMapper = new CubeToStringMapper(config);
@@ -136,7 +134,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                         Double[][][] cube = simpleSimulationService.next();
                         return cubeToStringMapper.apply(cube, config.getzIndex());
                     });
-                    CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(500, TimeUnit.MILLISECONDS));
+                    CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(200, TimeUnit.MILLISECONDS));
                     allOf(nextImage, wait).get();
                     view.shouldPlay.get();
                     String finishedImage = nextImage.get();

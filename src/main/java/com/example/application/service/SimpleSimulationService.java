@@ -26,7 +26,6 @@ public class SimpleSimulationService {
             return this.oldData;
         }
 
-        double deltaT = configEntity.getDeltaT();
         double gamma = configEntity.getGamma();
 
         int x_width = configEntity.getWidth();
@@ -35,17 +34,14 @@ public class SimpleSimulationService {
 
         Double[][][] data = this.getFirstImage();
 
-        ConstantLeftSideConfigEntity config = (ConstantLeftSideConfigEntity) configEntity;
         //Start Calculation
         for (int x = 1; x < x_width - 1; x++) {
             for (int y = 1; y < y_length - 1; y++) {
                 for (int z = 1; z < z_height - 1; z++) {
-//                    data[x][y][z] = oldData[x][y][z] + gamma * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
-//                            oldData[x][y + 1][z] + oldData[x][y - 1][z] +
-//                            oldData[x][y][z + 1] + oldData[x][y][z - 1] -
-//                            6 * oldData[x][y][z]);
-                    double potentialNewValue = oldData[x][y][z] + Math.random() * 10;
-                    data[x][y][z] = Math.min(config.getSideTempLeft(), potentialNewValue);
+                    data[x][y][z] = oldData[x][y][z] + gamma * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
+                            oldData[x][y + 1][z] + oldData[x][y - 1][z] +
+                            oldData[x][y][z + 1] + oldData[x][y][z - 1] -
+                            6 * oldData[x][y][z]);
                 }
             }
         }

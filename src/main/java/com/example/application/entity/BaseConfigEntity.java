@@ -66,6 +66,7 @@ public abstract class BaseConfigEntity {
         map.put("length", List.of(Integer.toString(length)));
         map.put("width", List.of(Integer.toString(width)));
         map.put("height", List.of(Integer.toString(height)));
+        map.put("zIndex", List.of(Integer.toString(zIndex)));
         map.put("startTemp", List.of(startTemp.toString()));
         map.put("sideTempFront", List.of(sideTempFront.toString()));
         map.put("sideTempBack", List.of(sideTempBack.toString()));
