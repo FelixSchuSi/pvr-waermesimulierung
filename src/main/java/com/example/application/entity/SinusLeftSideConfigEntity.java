@@ -9,8 +9,8 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity {
     private Double sideTempLeftBase;
     private Double sideTempLeftMaxDifference;
 
-    public SinusLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX, Double sideTempLeftBase, Double sideTempLeftMaxDifference) {
-        super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX);
+    public SinusLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double sideTempLeftBase, Double sideTempLeftMaxDifference) {
+        super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha);
         this.sideTempLeftBase = sideTempLeftBase;
         this.sideTempLeftMaxDifference = sideTempLeftMaxDifference;
     }

@@ -38,12 +38,14 @@ public class ConfigView extends HorizontalLayout {
     NumberField sideTempRight = new NumberField("Randtemperatur rechts (RTR)");
 
     NumberField alpha = new NumberField("Temperaturleitfähigkeit (ALPHA)");
-    NumberField deltaX = new NumberField("Delta X");
 
     StrategyPicker strategyPicker = new StrategyPicker();
 
 
     Button startSimulation = new Button("Simulation starten", (e) -> {
+        if (alpha.isInvalid() || zIndex.isInvalid()) {
+            return;
+        }
         BaseConfigEntity config = getConfig();
         QueryParameters queryParams = new QueryParameters(config.toMap());
         e.getSource().getUI().ifPresent(ui -> ui.navigate("simulation", queryParams));
@@ -57,6 +59,13 @@ public class ConfigView extends HorizontalLayout {
         add(length);
         add(width);
         add(height);
+        height.addValueChangeListener((e) -> {
+            zIndex.setMax(height.getValue() - 1);
+            zIndex.setHelperText("Minimal 0, maximal " + (int) (height.getValue() - 1));
+        });
+        zIndex.setMin(0);
+        zIndex.setMax(height.getValue() - 1);
+        zIndex.setHelperText("Minimal 0, maximal " + (int) (height.getValue() - 1));
         add(zIndex);
         add(startTemp);
         add(sideTempFront);
@@ -64,8 +73,9 @@ public class ConfigView extends HorizontalLayout {
         add(sideTempBottom);
         add(sideTempTop);
         add(sideTempRight);
+        alpha.setMax(0.15);
+        alpha.setHelperText("Maximal 0,15");
         add(alpha);
-        add(deltaX);
         add(strategyPicker);
         add(startSimulation);
     }
@@ -90,7 +100,6 @@ public class ConfigView extends HorizontalLayout {
                 .setSideTempTop(sideTempTop.getValue())
                 .setSideTempRight(sideTempRight.getValue())
                 .setAlpha(alpha.getValue())
-                .setDeltaX(deltaX.getValue())
                 .setLeftSideStrategy(strategyEnum)
                 .setSideTempLeft(strategyPicker.sideTempLeft.getValue())
                 .setSideTempLeftCenter(strategyPicker.sideTempLeftCenter.getValue())
@@ -112,7 +121,6 @@ public class ConfigView extends HorizontalLayout {
         sideTempTop.setValue(config.getSideTempTop());
         sideTempRight.setValue(config.getSideTempRight());
         alpha.setValue(config.getAlpha());
-        deltaX.setValue(config.getDeltaX());
 
         if (config instanceof ConstantLeftSideConfigEntity) {
             strategyPicker.sideTempLeftStrategy.setValue("Konstant");

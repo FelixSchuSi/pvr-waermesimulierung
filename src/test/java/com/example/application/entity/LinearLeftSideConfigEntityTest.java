@@ -27,7 +27,6 @@ class LinearLeftSideConfigEntityTest {
                 .setSideTempTop(0.0)
                 .setSideTempRight(0.0)
                 .setAlpha(1.0)
-                .setDeltaX(1.0)
                 .setLeftSideStrategy(LeftSideStrategyEnum.LINEAR)
                 .setSideTempLeftBorder(100.0)
                 .setSideTempLeftCenter(100.0)

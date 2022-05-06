@@ -27,7 +27,6 @@ class SinusLeftSideConfigEntityTest {
                 .setSideTempTop(0.0)
                 .setSideTempRight(0.0)
                 .setAlpha(1.0)
-                .setDeltaX(1.0)
                 .setLeftSideStrategy(LeftSideStrategyEnum.SINUS)
                 .setSideTempLeftBase(100.0)
                 .setSideTempLeftMaxDifference(0.0)

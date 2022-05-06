@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BaseConfigEntity {
-    private final Double deltaT;
-    private final Double gamma;
     @Min(1)
     private int length;
     @Min(1)
@@ -23,9 +21,8 @@ public abstract class BaseConfigEntity {
     private Double sideTempTop;
     private Double sideTempRight;
     private Double alpha;
-    private Double deltaX;
 
-    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double deltaX) {
+    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -37,9 +34,6 @@ public abstract class BaseConfigEntity {
         this.sideTempTop = sideTempTop;
         this.sideTempRight = sideTempRight;
         this.alpha = alpha;
-        this.deltaX = deltaX;
-        this.deltaT = Math.pow(deltaX, 2) / (6 * alpha);
-        this.gamma = (alpha * deltaT) / Math.pow(deltaX, 2);
     }
 
     public static BaseConfigEntity getDefaultConfig() {
@@ -54,8 +48,7 @@ public abstract class BaseConfigEntity {
                 .setSideTempBottom(0.0)
                 .setSideTempTop(0.0)
                 .setSideTempRight(0.0)
-                .setAlpha(1.0)
-                .setDeltaX(1.0)
+                .setAlpha(0.1)
                 .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
                 .setSideTempLeft(100.0)
                 .createConfigEntity();
@@ -74,7 +67,6 @@ public abstract class BaseConfigEntity {
         map.put("sideTempTop", List.of(sideTempTop.toString()));
         map.put("sideTempRight", List.of(sideTempRight.toString()));
         map.put("alpha", List.of(alpha.toString()));
-        map.put("deltaX", List.of(deltaX.toString()));
         return map;
     }
 
@@ -166,22 +158,6 @@ public abstract class BaseConfigEntity {
         this.alpha = alpha;
     }
 
-    public Double getDeltaX() {
-        return deltaX;
-    }
-
-    public void setDeltaX(Double deltaX) {
-        this.deltaX = deltaX;
-    }
-
-    public Double getDeltaT() {
-        return deltaT;
-    }
-
-    public Double getGamma() {
-        return gamma;
-    }
-
     public abstract Double getMinTemp();
 
     public abstract Double getMaxTemp();
@@ -189,8 +165,6 @@ public abstract class BaseConfigEntity {
     @Override
     public String toString() {
         return "BaseConfigEntity{" +
-                "deltaT=" + deltaT +
-                ", gamma=" + gamma +
                 ", length=" + length +
                 ", width=" + width +
                 ", height=" + height +
@@ -202,7 +176,6 @@ public abstract class BaseConfigEntity {
                 ", sideTempTop=" + sideTempTop +
                 ", sideTempRight=" + sideTempRight +
                 ", alpha=" + alpha +
-                ", deltaX=" + deltaX +
                 '}';
     }
 }

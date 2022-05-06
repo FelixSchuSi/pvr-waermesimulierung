@@ -12,7 +12,6 @@ public class ConfigEntityBuilder {
     private Double sideTempTop;
     private Double sideTempRight;
     private Double alpha;
-    private Double deltaX;
     private LeftSideStrategyEnum leftSideStrategy;
 
     /**
@@ -112,11 +111,6 @@ public class ConfigEntityBuilder {
         return this;
     }
 
-    public ConfigEntityBuilder setDeltaX(Double deltaX) {
-        this.deltaX = deltaX;
-        return this;
-    }
-
     public ConfigEntityBuilder setZIndex(int zIndex) {
         this.zIndex = zIndex;
         return this;
@@ -125,12 +119,12 @@ public class ConfigEntityBuilder {
     public BaseConfigEntity createConfigEntity() {
         switch (leftSideStrategy) {
             case SINUS:
-                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftBase, sideTempLeftMaxDifference);
+                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeftBase, sideTempLeftMaxDifference);
             case LINEAR:
-                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeftCenter, sideTempLeftBorder);
+                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeftCenter, sideTempLeftBorder);
             default:
             case CONSTANT:
-                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, deltaX, sideTempLeft);
+                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeft);
         }
 
     }
