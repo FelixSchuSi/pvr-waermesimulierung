@@ -106,6 +106,7 @@ public class ConfigView extends HorizontalLayout {
                 .setSideTempLeftBorder(strategyPicker.sideTempLeftBorder.getValue())
                 .setSideTempLeftBase(strategyPicker.sideTempLeftBase.getValue())
                 .setSideTempLeftMaxDifference(strategyPicker.sideTempLeftMaxDifference.getValue())
+                .setSimulationStepFaktor(strategyPicker.simulationStepFaktor.getValue())
                 .createConfigEntity();
     }
 
@@ -133,6 +134,7 @@ public class ConfigView extends HorizontalLayout {
             strategyPicker.sideTempLeftStrategy.setValue("Sinus");
             strategyPicker.sideTempLeftBase.setValue(((SinusLeftSideConfigEntity) config).getSideTempLeftBase());
             strategyPicker.sideTempLeftMaxDifference.setValue(((SinusLeftSideConfigEntity) config).getSideTempLeftMaxDifference());
+            strategyPicker.simulationStepFaktor.setValue(((SinusLeftSideConfigEntity) config).getSimulationStepFaktor());
         }
     }
 }

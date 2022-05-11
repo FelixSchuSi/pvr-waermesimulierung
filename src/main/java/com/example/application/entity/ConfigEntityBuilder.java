@@ -30,6 +30,7 @@ public class ConfigEntityBuilder {
      */
     private Double sideTempLeftBase;
     private Double sideTempLeftMaxDifference;
+    private Double simulationStepFaktor;
 
     public ConfigEntityBuilder setSideTempLeftBase(Double sideTempLeftBase) {
         this.sideTempLeftBase = sideTempLeftBase;
@@ -40,6 +41,12 @@ public class ConfigEntityBuilder {
         this.sideTempLeftMaxDifference = sideTempLeftMaxDifference;
         return this;
     }
+
+    public ConfigEntityBuilder setSimulationStepFaktor(Double simulationStepFaktor) {
+        this.simulationStepFaktor = simulationStepFaktor;
+        return this;
+    }
+
 
     public ConfigEntityBuilder setSideTempLeft(Double sideTempLeft) {
         this.sideTempLeft = sideTempLeft;
@@ -119,7 +126,7 @@ public class ConfigEntityBuilder {
     public BaseConfigEntity createConfigEntity() {
         switch (leftSideStrategy) {
             case SINUS:
-                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeftBase, sideTempLeftMaxDifference);
+                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeftBase, sideTempLeftMaxDifference, simulationStepFaktor);
             case LINEAR:
                 return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeftCenter, sideTempLeftBorder);
             default:

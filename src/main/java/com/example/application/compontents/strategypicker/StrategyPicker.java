@@ -13,6 +13,7 @@ public class StrategyPicker extends VerticalLayout {
     public NumberField sideTempLeftBorder = new NumberField("Randtemperatur links Rand");
     public NumberField sideTempLeftBase = new NumberField("Basisrandtemperatur links");
     public NumberField sideTempLeftMaxDifference = new NumberField("Maximale Temperaturabweichung");
+    public NumberField simulationStepFaktor = new NumberField("Faktor für #nostrobo");
     public RadioButtonGroup<String> sideTempLeftStrategy = new RadioButtonGroup<>();
 
     public StrategyPicker() {
@@ -28,6 +29,7 @@ public class StrategyPicker extends VerticalLayout {
 
         sideTempLeftBase.setValue((double) 100);
         sideTempLeftMaxDifference.setValue((double) 50);
+        simulationStepFaktor.setValue(0.1);
 
         sideTempLeftStrategy.addValueChangeListener((e) -> this.onClick());
         sideTempLeftStrategy.setValue("Konstant");
@@ -51,6 +53,7 @@ public class StrategyPicker extends VerticalLayout {
             add(sideTempLeftStrategy);
             add(sideTempLeftBase);
             add(sideTempLeftMaxDifference);
+            add(simulationStepFaktor);
         } else {
             removeAll();
             add(sideTempLeftStrategy);

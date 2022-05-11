@@ -8,11 +8,13 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity {
 
     private Double sideTempLeftBase;
     private Double sideTempLeftMaxDifference;
+    private Double simulationStepFaktor;
 
-    public SinusLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double sideTempLeftBase, Double sideTempLeftMaxDifference) {
+    public SinusLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double sideTempLeftBase, Double sideTempLeftMaxDifference, Double simulationStepFaktor) {
         super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha);
         this.sideTempLeftBase = sideTempLeftBase;
         this.sideTempLeftMaxDifference = sideTempLeftMaxDifference;
+        this.simulationStepFaktor = simulationStepFaktor;
     }
 
     public Double getSideTempLeftBase() {
@@ -31,12 +33,21 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity {
         this.sideTempLeftMaxDifference = sideTempLeftMaxDifference;
     }
 
+    public Double getSimulationStepFaktor() {
+        return simulationStepFaktor;
+    }
+
+    public void setSimulationStepFaktor(Double simulationStepFaktor) {
+        this.simulationStepFaktor = simulationStepFaktor;
+    }
+
     @Override
     public String toString() {
         return "SinusLeftSideConfigEntity{" +
                 "sideTempLeftBase=" + sideTempLeftBase +
                 ", sideTempLeftMaxDifference=" + sideTempLeftMaxDifference +
-                "} " + super.toString();
+                ", simulationStepFaktor=" + simulationStepFaktor +
+                '}';
     }
 
     public Map<String, List<String>> toMap() {
@@ -44,8 +55,10 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity {
         map.put("leftSideStrategy", List.of(LeftSideStrategyEnum.SINUS.toString()));
         map.put("sideTempLeftBase", List.of(sideTempLeftBase.toString()));
         map.put("sideTempLeftMaxDifference", List.of(sideTempLeftMaxDifference.toString()));
+        map.put("simulationStepFaktor", List.of(simulationStepFaktor.toString()));
         return map;
     }
+
 
     @Override
     public Double getMinTemp() {

@@ -7,6 +7,7 @@ import com.example.application.service.BaseSimulationService;
 import com.example.application.service.CubeToStringMapper;
 import com.example.application.service.singleThreaded.ConstantSingleThreadedSimulationService;
 import com.example.application.service.singleThreaded.LinearSingleThreadedSimulationService;
+import com.example.application.service.singleThreaded.SinusSingleThreadedSimulationService;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -139,8 +140,10 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 this.simulationService = new ConstantSingleThreadedSimulationService((ConstantLeftSideConfigEntity) config);
             } else if (config instanceof LinearLeftSideConfigEntity) {
                 this.simulationService = new LinearSingleThreadedSimulationService((LinearLeftSideConfigEntity) config);
+            } else if (config instanceof SinusLeftSideConfigEntity) {
+                this.simulationService = new SinusSingleThreadedSimulationService((SinusLeftSideConfigEntity) config);
             } else {
-                throw new NotImplementedException("SinusSimulationStrategy not implemented yet");
+                this.simulationService = null;
             }
         }
 
