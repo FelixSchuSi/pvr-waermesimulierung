@@ -2,12 +2,11 @@ package com.example.application.views.main;
 
 import com.example.application.compontents.canvas.Canvas;
 import com.example.application.compontents.playpausebutton.PlayPauseButton;
-import com.example.application.entity.BaseConfigEntity;
-import com.example.application.entity.ConfigEntityBuilder;
-import com.example.application.entity.LeftSideStrategyEnum;
-import com.example.application.entity.TemperatureScaleDto;
+import com.example.application.entity.*;
+import com.example.application.service.BaseSimulationService;
 import com.example.application.service.CubeToStringMapper;
-import com.example.application.service.SimpleSimulationService;
+import com.example.application.service.singleThreaded.ConstantSingleThreadedSimulationService;
+import com.example.application.service.singleThreaded.LinearSingleThreadedSimulationService;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -16,6 +15,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.*;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 import java.util.Map;
@@ -119,7 +119,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         private final Canvas canvas;
 
         private final BaseConfigEntity config;
-        private final SimpleSimulationService simpleSimulationService;
+        private final BaseSimulationService simulationService;
         private final CubeToStringMapper cubeToStringMapper;
         private final TemperatureScaleDto temperatureScaleDto;
 
@@ -130,11 +130,18 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.ui = ui;
             this.canvas = canvas;
             this.view = view;
-            this.simpleSimulationService = new SimpleSimulationService(config);
             this.temperatureScaleDto = TemperatureScaleDto.fromConfig(config);
             this.cubeToStringMapper = new CubeToStringMapper(config);
             this.config = config;
             this.stepCounter = stepCoutner;
+
+            if (config instanceof ConstantLeftSideConfigEntity) {
+                this.simulationService = new ConstantSingleThreadedSimulationService((ConstantLeftSideConfigEntity) config);
+            } else if (config instanceof LinearLeftSideConfigEntity) {
+                this.simulationService = new LinearSingleThreadedSimulationService((LinearLeftSideConfigEntity) config);
+            } else {
+                throw new NotImplementedException("SinusSimulationStrategy not implemented yet");
+            }
         }
 
         @Override
@@ -143,7 +150,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 ui.access(() -> canvas.setTemperatureScaleData(temperatureScaleDto.toJson()));
                 while (count < 2000) {
                     CompletableFuture<String> nextImage = supplyAsync(() -> {
-                        Double[][][] cube = simpleSimulationService.next();
+                        Double[][][] cube = simulationService.next();
                         return cubeToStringMapper.apply(cube, config.getzIndex());
                     });
                     CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(100, TimeUnit.MILLISECONDS));
