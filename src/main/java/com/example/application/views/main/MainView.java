@@ -16,7 +16,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.*;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 import java.util.Map;
@@ -111,6 +110,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 .setSideTempLeftBorder(getIfPresent.apply("sideTempLeftBorder"))
                 .setSideTempLeftBase(getIfPresent.apply("sideTempLeftBase"))
                 .setSideTempLeftMaxDifference(getIfPresent.apply("sideTempLeftMaxDifference"))
+                .setSimulationStepFaktor(getIfPresent.apply("simulationStepFaktor"))
                 .createConfigEntity();
     }
 

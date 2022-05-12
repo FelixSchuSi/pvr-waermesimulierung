@@ -13,7 +13,7 @@ public class StrategyPicker extends VerticalLayout {
     public NumberField sideTempLeftBorder = new NumberField("Randtemperatur links Rand");
     public NumberField sideTempLeftBase = new NumberField("Basisrandtemperatur links");
     public NumberField sideTempLeftMaxDifference = new NumberField("Maximale Temperaturabweichung");
-    public NumberField simulationStepFaktor = new NumberField("Faktor für #nostrobo");
+    public NumberField simulationStepFaktor = new NumberField("Stauchungsfaktor der Sinuskurve");
     public RadioButtonGroup<String> sideTempLeftStrategy = new RadioButtonGroup<>();
 
     public StrategyPicker() {

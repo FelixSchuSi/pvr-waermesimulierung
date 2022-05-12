@@ -11,9 +11,7 @@ public class SinusSingleThreadedSimulationService extends BaseSingleThreadedSimu
 
     @Override
     public Double[][][] getShell() {
-
         simulationStep++;
-        //System.out.println(simulationStep);
 
         Double[][][] shell = new Double[configEntity.getWidth()][configEntity.getLength()][configEntity.getHeight()];
         SinusLeftSideConfigEntity config = configEntity;
@@ -21,8 +19,7 @@ public class SinusSingleThreadedSimulationService extends BaseSingleThreadedSimu
             for (int y = 0; y < config.getLength(); y++) {
                 for (int z = 0; z < config.getHeight(); z++) {
                     if (y == 0) {
-                        //double simulationStepFaktor = config.getSimulationStepFaktor() * simulationStep;
-                        double simulationStepFaktor = 0.1 * simulationStep;
+                        double simulationStepFaktor = config.getSimulationStepFaktor() * simulationStep;
                         shell[x][y][z] = (config.getSideTempLeftMaxDifference() * Math.sin(simulationStepFaktor) +
                                 config.getSideTempLeftBase());
                     } else if (y == config.getLength() - 1) {
