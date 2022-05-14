@@ -44,4 +44,4 @@ deploy:
     #    - docker kill $(docker ps -q)
     - docker rm $(docker ps -a -q) || echo 'no active containers'
     - docker build -t pvr-waermesimulierung .
-    - docker run -p 80:8080/tcp pvr-waermesimulierung
+    - docker run -d -p 80:8080/tcp pvr-waermesimulierung
