@@ -41,7 +41,7 @@ deploy:
   stage: build
   script:
     - /home/user/.m2/wrapper/dists/apache-maven-3.8.1-bin/2l5mhf2pq2clrde7f7qp1rdt5m/apache-maven-3.8.1/bin/mvn clean install -Pproduction
-    #    - docker kill $(docker ps -q)
-    - docker rm $(docker ps -a -q) || echo 'no active containers'
+    - docker kill $(docker ps -q) || echo 'no active containers'
+    - docker rm $(docker ps -a -q) || echo 'no images'
     - docker build -t pvr-waermesimulierung .
     - docker run -d -p 80:8080/tcp pvr-waermesimulierung
