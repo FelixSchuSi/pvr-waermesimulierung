@@ -17,7 +17,7 @@ stages: # List of stages for jobs, and their order of execution
   - build
   - test
 
-build-job: # This job runs in the build stage, which runs first.
+test:
   tags:
     - pvr-test-runner
   stage: build
@@ -34,3 +34,11 @@ build-job: # This job runs in the build stage, which runs first.
       - metadata.txt
       - measurements.txt
     expire_in: 52 weeks
+
+deploy:
+  tags:
+    - pvr-deployment
+  stage: build
+  script:
+    - /home/user/.m2/wrapper/dists/apache-maven-3.8.1-bin/2l5mhf2pq2clrde7f7qp1rdt5m/apache-maven-3.8.1/bin/mvn spring-boot:stop
+    - /home/user/.m2/wrapper/dists/apache-maven-3.8.1-bin/2l5mhf2pq2clrde7f7qp1rdt5m/apache-maven-3.8.1/bin/mvn spring-boot:start
