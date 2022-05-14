@@ -19,7 +19,7 @@ import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
 @PageTitle("Konfiguration Wärmesimulierung")
 @Route(value = "")
 public class ConfigView extends HorizontalLayout {
-    H1 header = new H1("Konfiguration Wärmesimulierung");
+    H1 header = new H1("TEST Konfiguration Wärmesimulierung");
 
     Paragraph description = new Paragraph("Konfigurieren Sie die Startparameter der Simulation. Durch einen Klick auf 'Simulation starten' kann die Simulation begonnen werden.");
 
