@@ -40,5 +40,7 @@ deploy:
     - pvr-deployment
   stage: build
   script:
+    - echo pwd
+    - echo ls -a
     - /home/user/.m2/wrapper/dists/apache-maven-3.8.1-bin/2l5mhf2pq2clrde7f7qp1rdt5m/apache-maven-3.8.1/bin/mvn spring-boot:stop
     - /home/user/.m2/wrapper/dists/apache-maven-3.8.1-bin/2l5mhf2pq2clrde7f7qp1rdt5m/apache-maven-3.8.1/bin/mvn spring-boot:start
