@@ -8,8 +8,8 @@ public class LinearLeftSideConfigEntity extends BaseConfigEntity {
     private Double sideTempLeftCenter;
     private Double sideTempLeftBorder;
 
-    public LinearLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Double sideTempLeftCenter, Double sideTempLeftBorder) {
-        super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha);
+    public LinearLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, Double sideTempLeftCenter, Double sideTempLeftBorder) {
+        super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount);
         this.sideTempLeftCenter = sideTempLeftCenter;
         this.sideTempLeftBorder = sideTempLeftBorder;
     }

@@ -104,6 +104,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 .setSideTempTop(Double.valueOf(map.get("sideTempTop").get(0)))
                 .setSideTempRight(Double.valueOf(map.get("sideTempRight").get(0)))
                 .setAlpha(Double.valueOf(map.get("alpha").get(0)))
+                .setStepCount(Integer.valueOf(map.get("stepCount").get(0)))
                 .setLeftSideStrategy(LeftSideStrategyEnum.get(map.get("leftSideStrategy").get(0)))
                 .setSideTempLeft(getIfPresent.apply("sideTempLeft"))
                 .setSideTempLeftCenter(getIfPresent.apply("sideTempLeftCenter"))
@@ -151,7 +152,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
         public void run() {
             try {
                 ui.access(() -> canvas.setTemperatureScaleData(temperatureScaleDto.toJson()));
-                while (count < 2000) {
+                while (count < config.getStepCount()) {
                     CompletableFuture<String> nextImage = supplyAsync(() -> {
                         Double[][][] cube = simulationService.next();
                         return cubeToStringMapper.apply(cube, config.getzIndex());

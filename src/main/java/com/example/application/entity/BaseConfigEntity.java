@@ -21,8 +21,9 @@ public abstract class BaseConfigEntity {
     private Double sideTempTop;
     private Double sideTempRight;
     private Double alpha;
+    private Integer stepCount;
 
-    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha) {
+    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -34,6 +35,7 @@ public abstract class BaseConfigEntity {
         this.sideTempTop = sideTempTop;
         this.sideTempRight = sideTempRight;
         this.alpha = alpha;
+        this.stepCount = stepCount;
     }
 
     public static BaseConfigEntity getDefaultConfig() {
@@ -49,6 +51,7 @@ public abstract class BaseConfigEntity {
                 .setSideTempTop(0.0)
                 .setSideTempRight(0.0)
                 .setAlpha(0.1)
+                .setStepCount(2000)
                 .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
                 .setSideTempLeft(100.0)
                 .createConfigEntity();
@@ -67,7 +70,16 @@ public abstract class BaseConfigEntity {
         map.put("sideTempTop", List.of(sideTempTop.toString()));
         map.put("sideTempRight", List.of(sideTempRight.toString()));
         map.put("alpha", List.of(alpha.toString()));
+        map.put("stepCount", List.of(stepCount.toString()));
         return map;
+    }
+
+    public Integer getStepCount() {
+        return stepCount;
+    }
+
+    public void setStepCount(Integer stepCount) {
+        this.stepCount = stepCount;
     }
 
     public int getzIndex() {
@@ -176,6 +188,7 @@ public abstract class BaseConfigEntity {
                 ", sideTempTop=" + sideTempTop +
                 ", sideTempRight=" + sideTempRight +
                 ", alpha=" + alpha +
+                ", stepCount=" + stepCount +
                 '}';
     }
 }

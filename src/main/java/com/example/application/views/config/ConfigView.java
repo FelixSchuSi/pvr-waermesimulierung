@@ -100,6 +100,7 @@ public class ConfigView extends HorizontalLayout {
                 .setSideTempTop(sideTempTop.getValue())
                 .setSideTempRight(sideTempRight.getValue())
                 .setAlpha(alpha.getValue())
+                .setStepCount(getDefaultConfig().getStepCount())
                 .setLeftSideStrategy(strategyEnum)
                 .setSideTempLeft(strategyPicker.sideTempLeft.getValue())
                 .setSideTempLeftCenter(strategyPicker.sideTempLeftCenter.getValue())

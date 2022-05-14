@@ -12,6 +12,7 @@ public class ConfigEntityBuilder {
     private Double sideTempTop;
     private Double sideTempRight;
     private Double alpha;
+    private Integer stepCount;
     private LeftSideStrategyEnum leftSideStrategy;
 
     /**
@@ -123,15 +124,20 @@ public class ConfigEntityBuilder {
         return this;
     }
 
+    public ConfigEntityBuilder setStepCount(Integer stepCount) {
+        this.stepCount = stepCount;
+        return this;
+    }
+
     public BaseConfigEntity createConfigEntity() {
         switch (leftSideStrategy) {
             case SINUS:
-                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeftBase, sideTempLeftMaxDifference, simulationStepFaktor);
+                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, sideTempLeftBase, sideTempLeftMaxDifference, simulationStepFaktor);
             case LINEAR:
-                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeftCenter, sideTempLeftBorder);
+                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, sideTempLeftCenter, sideTempLeftBorder);
             default:
             case CONSTANT:
-                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, sideTempLeft);
+                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, sideTempLeft);
         }
 
     }
