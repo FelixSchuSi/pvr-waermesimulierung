@@ -47,5 +47,8 @@ deploy:
     - /home/user/.m2/wrapper/dists/apache-maven-3.8.1-bin/2l5mhf2pq2clrde7f7qp1rdt5m/apache-maven-3.8.1/bin/mvn clean install
     - touch logfile.log
     - echo "" > logfile.log
-    - npx pm2 restart all
+    - npx pm2 stop all
+    - npx pm2 delete all
     - npx pm2 save
+    - docker build -t pvr-waermesimulierung .
+    - docker run -p 127.0.0.1:80:8080/tcp pvr-waermesimulierung
