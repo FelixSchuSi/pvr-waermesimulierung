@@ -50,7 +50,6 @@ class MyCanvas extends LitElement {
                 image-rendering: pixelated;
                 image-rendering: crisp-edges;
                 height: 50vh;
-                width: 50vh;
             }
             
             .canvas-wrapper {

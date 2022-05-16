@@ -43,6 +43,10 @@ class TemperatureScale extends LitElement {
             .legend > span::before {
                 content: "- ";
             }
+            
+            span {
+                white-space: nowrap;
+            }
         `;
     }
 

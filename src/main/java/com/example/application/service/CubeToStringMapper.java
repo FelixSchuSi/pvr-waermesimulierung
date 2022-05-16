@@ -32,7 +32,7 @@ public class CubeToStringMapper implements BiFunction<Double[][][], Integer, Str
     public String apply(Double[][][] cube, Integer z) {
         List<Double> values = Arrays.stream(cube).flatMap(rect -> Arrays.stream(rect).map(row -> row[z])).collect(Collectors.toList());
         List<Short> colorValues = this.getColorFromValues(values);
-        ImageData imageData = new ImageData(cube.length, cube[0].length, colorValues);
+        ImageData imageData = new ImageData(cube[0].length, cube.length, colorValues);
         return toJson(imageData);
     }
 
