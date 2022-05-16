@@ -49,10 +49,11 @@ class MyCanvas extends LitElement {
                 image-rendering: -webkit-crisp-edges;
                 image-rendering: pixelated;
                 image-rendering: crisp-edges;
+                height: 50vh;
+                width: 50vh;
             }
             
             .canvas-wrapper {
-                height: 50vh;
                 display: flex;
                 flex-wrap: nowrap;
                 transform-origin: 0 0;
@@ -87,19 +88,19 @@ class MyCanvas extends LitElement {
 
     render() {
         return html`
-            <div class="canvas-wrapper" 
+            <div class="canvas-wrapper"
                  @mousedown=${(event) => {
-                    this.mousePosition.initialX = event.clientX - this.mousePosition.xOffset;
-                    this.mousePosition.initialY = event.clientY - this.mousePosition.yOffset;
-                    this.isGrabbing = true
+                     this.mousePosition.initialX = event.clientX - this.mousePosition.xOffset;
+                     this.mousePosition.initialY = event.clientY - this.mousePosition.yOffset;
+                     this.isGrabbing = true
                  }}
                  @wheel=${this.onWheel}
                  ${ref(this.canvasWrapperRef)}
                  style=${styleMap(this.canvasStyleMap)}>
                 <canvas
-                    width="${this.imageDataWidth}px"
-                    height="${this.imageDataHeight}px"
-                    ${ref(this.canvasRef)}
+                        width="${this.imageDataWidth}px"
+                        height="${this.imageDataHeight}px"
+                        ${ref(this.canvasRef)}
                 ></canvas>
                 <temperature-scale .steps=${this.steps}></temperature-scale>
             </div>
