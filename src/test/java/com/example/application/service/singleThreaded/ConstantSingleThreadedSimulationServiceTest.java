@@ -1,12 +1,8 @@
 package com.example.application.service.singleThreaded;
 
 import com.example.application.entity.ConstantLeftSideConfigEntity;
-import helper.CsvReport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.util.stream.Stream;
 
 import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -61,21 +57,5 @@ class ConstantSingleThreadedSimulationServiceTest {
             }
         }
     }
-
-    @Test
-    void measurePerformance() throws IOException {
-        CsvReport report = new CsvReport(Stream.of("totalExecutionTime (ms)", "totalExecutionTime2 (ms)"));
-
-        for (int i = 0; i < 10; i++) {
-            long t0 = System.nanoTime();
-            Double[][][] output = simulationService.next();
-            long t1 = System.nanoTime();
-            assertThat(output).isNotNull();
-            report.appendRow(Stream.of(Long.toString((t1 - t0) / 1000), Long.toString((t1 - t0) / 1000)));
-        }
-
-        report.writeFile("measurements.txt");
-    }
-
 
 }

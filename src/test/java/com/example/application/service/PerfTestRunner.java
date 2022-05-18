@@ -1,8 +1,9 @@
+package com.example.application.service;
+
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConstantLeftSideConfigEntity;
 import com.example.application.entity.LinearLeftSideConfigEntity;
 import com.example.application.entity.SinusLeftSideConfigEntity;
-import com.example.application.service.BaseSimulationService;
 import com.example.application.service.singleThreaded.ConstantSingleThreadedSimulationService;
 import com.example.application.service.singleThreaded.LinearSingleThreadedSimulationService;
 import com.example.application.service.singleThreaded.SinusSingleThreadedSimulationService;

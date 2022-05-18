@@ -32,7 +32,6 @@ test:
   artifacts:
     paths:
       - metadata.txt
-      - measurements.txt
       - ./*.csv
     expire_in: 52 weeks
 

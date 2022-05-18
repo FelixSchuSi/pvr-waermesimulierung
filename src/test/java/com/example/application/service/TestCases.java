@@ -1,3 +1,5 @@
+package com.example.application.service;
+
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
 import com.example.application.entity.LeftSideStrategyEnum;
@@ -22,7 +24,7 @@ public class TestCases {
         map.put("standard", standard);
         map.put("largeStepCount", largeStepCount);
         map.put("smallStepCount", smallStepCount);
-        map.put("largeCuboid", largeCuboid);
+//        map.put("largeCuboid", largeCuboid);
         map.put("smallCuboid", smallCuboid);
         return map;
     }
