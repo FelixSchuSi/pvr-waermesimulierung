@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class PerfTestRunner {
+public class PerformanceTest {
 
     private final Map<String, BaseConfigEntity> testCases = TestCases.all();
     private final int TEST_RERUN_COUNT = 2;
