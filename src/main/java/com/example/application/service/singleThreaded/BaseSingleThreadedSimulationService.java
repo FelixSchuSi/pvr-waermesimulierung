@@ -3,9 +3,12 @@ package com.example.application.service.singleThreaded;
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.service.BaseSimulationService;
 
-public abstract class BaseSingleThreadedSimulationService<E extends BaseConfigEntity> extends BaseSimulationService<E> {
+public abstract class BaseSingleThreadedSimulationService<E extends BaseConfigEntity> implements BaseSimulationService {
+    protected E configEntity;
+    protected Double[][][] oldData;
+
     public BaseSingleThreadedSimulationService(E configEntity) {
-        super(configEntity);
+        this.configEntity = configEntity;
     }
 
     @Override

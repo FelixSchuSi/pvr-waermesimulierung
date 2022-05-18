@@ -33,6 +33,29 @@ public class ConfigEntityBuilder {
     private Double sideTempLeftMaxDifference;
     private Double simulationStepFaktor;
 
+    public static ConfigEntityBuilder defaultConfig() {
+        return new ConfigEntityBuilder()
+                .setLength(100)
+                .setWidth(100)
+                .setHeight(100)
+                .setZIndex(50)
+                .setStartTemp(10.0)
+                .setSideTempFront(0.0)
+                .setSideTempBack(0.0)
+                .setSideTempBottom(0.0)
+                .setSideTempTop(0.0)
+                .setSideTempRight(0.0)
+                .setAlpha(0.1)
+                .setStepCount(2000)
+                .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
+                .setSideTempLeft(100.0)
+                .setSideTempLeftCenter(100.0)
+                .setSideTempLeftBorder(0.0)
+                .setSideTempLeftBase(100.0)
+                .setSideTempLeftMaxDifference(50.0)
+                .setSimulationStepFaktor(0.1);
+    }
+
     public ConfigEntityBuilder setSideTempLeftBase(Double sideTempLeftBase) {
         this.sideTempLeftBase = sideTempLeftBase;
         return this;

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
+
 public abstract class BaseConfigEntity {
     @Min(1)
     private int length;
@@ -39,22 +41,7 @@ public abstract class BaseConfigEntity {
     }
 
     public static BaseConfigEntity getDefaultConfig() {
-        return new ConfigEntityBuilder()
-                .setLength(100)
-                .setWidth(100)
-                .setHeight(100)
-                .setZIndex(50)
-                .setStartTemp(10.0)
-                .setSideTempFront(0.0)
-                .setSideTempBack(0.0)
-                .setSideTempBottom(0.0)
-                .setSideTempTop(0.0)
-                .setSideTempRight(0.0)
-                .setAlpha(0.1)
-                .setStepCount(2000)
-                .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
-                .setSideTempLeft(100.0)
-                .createConfigEntity();
+        return defaultConfig().createConfigEntity();
     }
 
     public Map<String, List<String>> toMap() {
