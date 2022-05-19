@@ -1,7 +1,6 @@
 package com.example.application.service.mutliThreaded;
 
 import com.example.application.entity.ConstantLeftSideConfigEntity;
-import com.example.application.service.singleThreaded.BaseSingleThreadedSimulationService;
 
 public class ConstantMultiThreadedSimulationService extends BaseMultiThreadedSimulationService<ConstantLeftSideConfigEntity> {
     private Double[][][] cachedShell;
@@ -12,7 +11,7 @@ public class ConstantMultiThreadedSimulationService extends BaseMultiThreadedSim
 
     @Override
     public Double[][][] getShell() {
-        if (cachedShell != null) return cachedShell;
+//        if (cachedShell != null) return cachedShell;
 
         Double[][][] shell = new Double[configEntity.getWidth()][configEntity.getLength()][configEntity.getHeight()];
         ConstantLeftSideConfigEntity config = configEntity;

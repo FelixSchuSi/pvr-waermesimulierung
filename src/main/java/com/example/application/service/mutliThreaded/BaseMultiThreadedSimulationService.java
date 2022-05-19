@@ -3,10 +3,6 @@ package com.example.application.service.mutliThreaded;
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.service.BaseSimulationService;
 
-import java.time.Year;
-import java.util.Arrays;
-import java.util.List;
-
 public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEntity> implements BaseSimulationService {
     protected E configEntity;
     protected Double[][][] oldData;
@@ -28,27 +24,28 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
         int y_length = configEntity.getLength();
         int z_height = configEntity.getHeight();
 
-        Double[][][] data = this.getShell();
-
-        Calculate t1 = new Calculate(1, 50, y_length, z_height, data, oldData, alpha);
-        Calculate t2 = new Calculate(49, 100, y_length, z_height, data, oldData, alpha);
+        int length = x_width * y_length * z_height;
+        Calculate t1 = new Calculate(0, (length / 2) - 1, oldData, alpha);
+        Calculate t2 = new Calculate(length / 2, length, oldData, alpha);
 
         t1.setName("Thread1");
         t2.setName("Thread2");
 
+        t1.start();
+        t2.start();
         try {
-            t1.start();
-            t2.start();
-            t2.join();
             t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-            Double[][][] data1 = t1.getData();
-            Double[][][] data2 = t2.getData();
+        Double[][][] data1 = t1.getData();
+        Double[][][] data2 = t2.getData();
 
-            data = this.joinArrays(49, x_width, y_length, z_height, data1, data2);
-            this.oldData = data;
+        Double[][][] data = this.joinArrays(data1, data2);
+        this.oldData = data;
 
-        } catch (InterruptedException ex) {}
 
         return data;
     }
@@ -56,14 +53,21 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
 
     public abstract Double[][][] getShell();
 
-    private Double[][][] joinArrays(int start, int X, int Y, int Z, Double[][][] array1, Double[][][] array2) {
-        for (int i = start; i < X * Y * Z; i++) {
+    private Double[][][] joinArrays(Double[][][] array1, Double[][][] array2) {
+        int X = array1.length;
+        int Y = array1[0].length;
+        int Z = array1[0][0].length;
+
+        Double[][][] output = this.getShell();
+
+        for (int i = 0; i < X * Y * Z; i++) {
             int x = i / (Y * Z);
             int y = (i / Z) % Y;
             int z = i % Z;
-            array1[x][y][z] = array2[x][y][z];
+            if (array1[x][y][z] != null) output[x][y][z] = array1[x][y][z];
+            if (array2[x][y][z] != null) output[x][y][z] = array2[x][y][z];
         }
-        return array1;
+        return output;
     }
 }
 
@@ -73,16 +77,17 @@ class Calculate extends Thread {
     private final int stop;
     private final int Y;
     private final int Z;
-    private final Double data[][][];
+    private final Double[][][] data;
     private final double alpha;
-    private Double[][][] oldData;
+    private final Double[][][] oldData;
 
-    public Calculate(int start, int stop, int Y, int Z, Double[][][] data, Double[][][] oldData, double alpha) {
+    public Calculate(int start, int stop, Double[][][] oldData, double alpha) {
         this.start = start;
         this.stop = stop;
-        this.Y = Y;
-        this.Z = Z;
-        this.data = data;
+        int X = oldData.length;
+        this.Y = oldData[0].length;
+        this.Z = oldData[0][0].length;
+        this.data = new Double[X][Y][Z];
         this.alpha = alpha;
         this.oldData = oldData;
     }
@@ -94,13 +99,12 @@ class Calculate extends Thread {
             int x = i / (Y * Z);
             int y = (i / Z) % Y;
             int z = i % Z;
-            if(x == 0 || y == 0 || z == 0) continue;
-            data[x][y][z] = oldData[x][y][z] + alpha * (oldData[x+1][y][z] + oldData[x-1][y][z] +
-                    oldData[x][y+1][z] + oldData[x][y-1][z] +
-                    oldData[x][y][z+1] + oldData[x][y][z-1] -
+            if (x == 0 || y == 0 || z == 0 || x >= 99 || y >= 99 || z >= 99) continue;
+            data[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
+                    oldData[x][y + 1][z] + oldData[x][y - 1][z] +
+                    oldData[x][y][z + 1] + oldData[x][y][z - 1] -
                     6 * oldData[x][y][z]);
         }
-        System.out.println(Thread.currentThread().getName() + "execution completed.");
     }
 
     public Double[][][] getData() {
