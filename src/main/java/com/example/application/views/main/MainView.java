@@ -5,6 +5,8 @@ import com.example.application.compontents.playpausebutton.PlayPauseButton;
 import com.example.application.entity.*;
 import com.example.application.service.BaseSimulationService;
 import com.example.application.service.CubeToStringMapper;
+import com.example.application.service.mutliThreaded.BaseMultiThreadedSimulationService;
+import com.example.application.service.mutliThreaded.ConstantMultiThreadedSimulationService;
 import com.example.application.service.singleThreaded.ConstantSingleThreadedSimulationService;
 import com.example.application.service.singleThreaded.LinearSingleThreadedSimulationService;
 import com.example.application.service.singleThreaded.SinusSingleThreadedSimulationService;
@@ -138,7 +140,8 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.stepCounter = stepCoutner;
 
             if (config instanceof ConstantLeftSideConfigEntity) {
-                this.simulationService = new ConstantSingleThreadedSimulationService((ConstantLeftSideConfigEntity) config);
+                //Changed Temporary to ConstantMultiThreaded for Testing
+                this.simulationService = new ConstantMultiThreadedSimulationService((ConstantLeftSideConfigEntity) config) {};
             } else if (config instanceof LinearLeftSideConfigEntity) {
                 this.simulationService = new LinearSingleThreadedSimulationService((LinearLeftSideConfigEntity) config);
             } else if (config instanceof SinusLeftSideConfigEntity) {
