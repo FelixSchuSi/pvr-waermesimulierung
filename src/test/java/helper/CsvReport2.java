@@ -21,11 +21,12 @@ public class CsvReport2 {
     }
 
     public void writeFile(String filename) throws IOException {
-        List<List<String>> data = new ArrayList<>(List.of(new ArrayList<>(tableData.keySet())));
+        List<List<String>> data = new ArrayList<>();
+        data.add(new ArrayList<>(tableData.keySet()));
         int maxLength = tableData.values().stream().map(List::size).max(Integer::compareTo).orElse(0);
 
         for (int i = 0; i < maxLength; i++) {
-            data.add(List.of());
+            data.add(new ArrayList<>());
             for (Map.Entry<String, List<String>> entry : tableData.entrySet()) {
                 int columnId = data.get(0).indexOf(entry.getKey());
                 data.get(i + 1).set(columnId, entry.getValue().get(i));
