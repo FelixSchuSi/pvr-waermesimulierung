@@ -28,11 +28,9 @@ public class CsvReport2 {
         for (int i = 0; i < maxLength; i++) {
             data.add(new ArrayList<>());
             for (Map.Entry<String, List<String>> entry : tableData.entrySet()) {
-                int columnId = data.get(0).indexOf(entry.getKey());
-                data.get(i + 1).set(columnId, entry.getValue().get(i));
+                data.get(i + 1).add(entry.getValue().get(i));
             }
         }
-
 
         File csvOutputFile = new File(filename);
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
