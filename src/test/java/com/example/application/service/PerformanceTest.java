@@ -31,7 +31,6 @@ public class PerformanceTest {
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
-//                    System.out.println("step " + step);
                 }
                 System.out.println(testRunName + " rerun " + i);
                 long t1 = System.nanoTime();
@@ -39,7 +38,7 @@ public class PerformanceTest {
             }
         });
         try {
-            report.writeFile(testRunName + ".csv");
+            report.writeFile("performance_measurements.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
