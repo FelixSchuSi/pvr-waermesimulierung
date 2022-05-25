@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Collections.singleton;
+
 public class CsvReport2 {
     private final Map<String, List<String>> tableData = new HashMap<>();
 
@@ -14,7 +16,7 @@ public class CsvReport2 {
         if (tableData.containsKey(column)) {
             tableData.get(column).add(data);
         } else {
-            tableData.put(column, List.of(data));
+            tableData.put(column, new ArrayList<>(singleton(data)));
         }
     }
 

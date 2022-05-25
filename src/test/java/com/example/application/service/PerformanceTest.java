@@ -28,11 +28,12 @@ public class PerformanceTest {
 
             for (int i = 0; i < TEST_RERUN_COUNT; i++) {
                 BaseSimulationService implementation = getImplementation(config);
+                System.out.println(testRunName + " rerun " + i);
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
                 }
-                System.out.println(testRunName + " rerun " + i);
+
                 long t1 = System.nanoTime();
                 report.appendData(testRunName, Long.toString((t1 - t0) / 1000));
             }
