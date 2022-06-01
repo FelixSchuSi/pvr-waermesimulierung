@@ -39,6 +39,8 @@ public class ConfigView extends HorizontalLayout {
 
     NumberField alpha = new NumberField("Temperaturleitfähigkeit (ALPHA)");
 
+    NumberField stepCount = new NumberField("Anzahl Simulationsschritte");
+
     StrategyPicker strategyPicker = new StrategyPicker();
 
 
@@ -76,6 +78,7 @@ public class ConfigView extends HorizontalLayout {
         alpha.setMax(0.15);
         alpha.setHelperText("Maximal 0,15");
         add(alpha);
+        add(stepCount);
         add(strategyPicker);
         add(startSimulation);
     }
@@ -100,7 +103,7 @@ public class ConfigView extends HorizontalLayout {
                 .setSideTempTop(sideTempTop.getValue())
                 .setSideTempRight(sideTempRight.getValue())
                 .setAlpha(alpha.getValue())
-                .setStepCount(getDefaultConfig().getStepCount())
+                .setStepCount(stepCount.getValue().intValue())
                 .setLeftSideStrategy(strategyEnum)
                 .setSideTempLeft(strategyPicker.sideTempLeft.getValue())
                 .setSideTempLeftCenter(strategyPicker.sideTempLeftCenter.getValue())
@@ -123,6 +126,7 @@ public class ConfigView extends HorizontalLayout {
         sideTempTop.setValue(config.getSideTempTop());
         sideTempRight.setValue(config.getSideTempRight());
         alpha.setValue(config.getAlpha());
+        stepCount.setValue(config.getStepCount().doubleValue());
 
         if (config instanceof ConstantLeftSideConfigEntity) {
             strategyPicker.sideTempLeftStrategy.setValue("Konstant");
