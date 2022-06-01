@@ -3,6 +3,7 @@ package com.example.application.views.config;
 import com.example.application.compontents.strategypicker.StrategyPicker;
 import com.example.application.entity.*;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -41,6 +42,8 @@ public class ConfigView extends HorizontalLayout {
 
     NumberField stepCount = new NumberField("Anzahl Simulationsschritte");
 
+    ComboBox<ImplementationEnum> implementationEnumComboBox = new ComboBox<>("Implementierung");
+
     StrategyPicker strategyPicker = new StrategyPicker();
 
 
@@ -54,6 +57,7 @@ public class ConfigView extends HorizontalLayout {
     });
 
     public ConfigView() {
+        implementationEnumComboBox.setItems(ImplementationEnum.getAll());
         setConfig(getDefaultConfig());
         VerticalLayout heading = new VerticalLayout(header, description);
         heading.setPadding(false);
@@ -79,6 +83,9 @@ public class ConfigView extends HorizontalLayout {
         alpha.setHelperText("Maximal 0,15");
         add(alpha);
         add(stepCount);
+
+        implementationEnumComboBox.setItemLabelGenerator(ImplementationEnum::getImplementation);
+        add(implementationEnumComboBox);
         add(strategyPicker);
         add(startSimulation);
     }
@@ -105,6 +112,7 @@ public class ConfigView extends HorizontalLayout {
                 .setAlpha(alpha.getValue())
                 .setStepCount(stepCount.getValue().intValue())
                 .setLeftSideStrategy(strategyEnum)
+                .setImplementationEnum(implementationEnumComboBox.getValue())
                 .setSideTempLeft(strategyPicker.sideTempLeft.getValue())
                 .setSideTempLeftCenter(strategyPicker.sideTempLeftCenter.getValue())
                 .setSideTempLeftBorder(strategyPicker.sideTempLeftBorder.getValue())
@@ -127,6 +135,7 @@ public class ConfigView extends HorizontalLayout {
         sideTempRight.setValue(config.getSideTempRight());
         alpha.setValue(config.getAlpha());
         stepCount.setValue(config.getStepCount().doubleValue());
+        implementationEnumComboBox.setValue(config.getImplementationEnum());
 
         if (config instanceof ConstantLeftSideConfigEntity) {
             strategyPicker.sideTempLeftStrategy.setValue("Konstant");

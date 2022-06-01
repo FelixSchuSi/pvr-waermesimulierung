@@ -5,11 +5,7 @@ import com.example.application.compontents.playpausebutton.PlayPauseButton;
 import com.example.application.entity.*;
 import com.example.application.service.BaseSimulationService;
 import com.example.application.service.CubeToStringMapper;
-import com.example.application.service.mutliThreaded.BaseMultiThreadedSimulationService;
-import com.example.application.service.mutliThreaded.ConstantMultiThreadedSimulationService;
-import com.example.application.service.singleThreaded.ConstantSingleThreadedSimulationService;
-import com.example.application.service.singleThreaded.LinearSingleThreadedSimulationService;
-import com.example.application.service.singleThreaded.SinusSingleThreadedSimulationService;
+import com.example.application.service.ServiceFromConfig;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -107,6 +103,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 .setSideTempRight(Double.valueOf(map.get("sideTempRight").get(0)))
                 .setAlpha(Double.valueOf(map.get("alpha").get(0)))
                 .setStepCount(Integer.valueOf(map.get("stepCount").get(0)))
+                .setImplementationEnum(ImplementationEnum.fromString(map.get("implementation").get(0)))
                 .setLeftSideStrategy(LeftSideStrategyEnum.get(map.get("leftSideStrategy").get(0)))
                 .setSideTempLeft(getIfPresent.apply("sideTempLeft"))
                 .setSideTempLeftCenter(getIfPresent.apply("sideTempLeftCenter"))
@@ -138,17 +135,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.cubeToStringMapper = new CubeToStringMapper(config);
             this.config = config;
             this.stepCounter = stepCoutner;
-
-            if (config instanceof ConstantLeftSideConfigEntity) {
-                //Changed Temporary to ConstantMultiThreaded for Testing
-                this.simulationService = new ConstantMultiThreadedSimulationService((ConstantLeftSideConfigEntity) config) {};
-            } else if (config instanceof LinearLeftSideConfigEntity) {
-                this.simulationService = new LinearSingleThreadedSimulationService((LinearLeftSideConfigEntity) config);
-            } else if (config instanceof SinusLeftSideConfigEntity) {
-                this.simulationService = new SinusSingleThreadedSimulationService((SinusLeftSideConfigEntity) config);
-            } else {
-                this.simulationService = null;
-            }
+            this.simulationService = new ServiceFromConfig().apply(config);
         }
 
         @Override

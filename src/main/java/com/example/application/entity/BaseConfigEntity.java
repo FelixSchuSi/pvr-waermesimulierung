@@ -25,7 +25,9 @@ public abstract class BaseConfigEntity {
     private Double alpha;
     private Integer stepCount;
 
-    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount) {
+    private ImplementationEnum implementationEnum;
+
+    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, ImplementationEnum implementationEnum) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -38,10 +40,19 @@ public abstract class BaseConfigEntity {
         this.sideTempRight = sideTempRight;
         this.alpha = alpha;
         this.stepCount = stepCount;
+        this.implementationEnum = implementationEnum;
     }
 
     public static BaseConfigEntity getDefaultConfig() {
         return defaultConfig().createConfigEntity();
+    }
+
+    public ImplementationEnum getImplementationEnum() {
+        return implementationEnum;
+    }
+
+    public void setImplementationEnum(ImplementationEnum implementationEnum) {
+        this.implementationEnum = implementationEnum;
     }
 
     public Map<String, List<String>> toMap() {
@@ -58,6 +69,7 @@ public abstract class BaseConfigEntity {
         map.put("sideTempRight", List.of(sideTempRight.toString()));
         map.put("alpha", List.of(alpha.toString()));
         map.put("stepCount", List.of(stepCount.toString()));
+        map.put("implementation", List.of(implementationEnum.getImplementation()));
         return map;
     }
 
