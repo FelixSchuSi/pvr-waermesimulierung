@@ -11,21 +11,21 @@ import java.util.Map;
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
 
 public class TestCases {
-    private static final ConfigEntityBuilder standard = defaultConfig();
-    private static final ConfigEntityBuilder largeStepCount = defaultConfig().setStepCount(4000);
-    private static final ConfigEntityBuilder smallStepCount = defaultConfig().setStepCount(100);
-    private static final ConfigEntityBuilder largeCuboid = defaultConfig().setLength(1000).setWidth(1000).setHeight(1000);
-    private static final ConfigEntityBuilder smallCuboid = defaultConfig().setLength(100).setWidth(100).setHeight(100);
+    private static final ConfigEntityBuilder standard = defaultConfig().setStepCount(100);
+    private static final ConfigEntityBuilder largeStepCount = defaultConfig().setStepCount(100).setStepCount(4000);
+    private static final ConfigEntityBuilder smallStepCount = defaultConfig().setStepCount(100).setStepCount(100);
+    private static final ConfigEntityBuilder largeCuboid = defaultConfig().setStepCount(100).setLength(1000).setWidth(1000).setHeight(1000);
+    private static final ConfigEntityBuilder smallCuboid = defaultConfig().setStepCount(100).setLength(100).setWidth(100).setHeight(100);
 
     private TestCases() {
     }
 
     private static Map<String, ConfigEntityBuilder> base() {
         Map<String, ConfigEntityBuilder> map = new HashMap<>();
-//        map.put("standard", standard);
+        map.put("standard", standard);
 //        map.put("largeStepCount", largeStepCount);
 //        map.put("smallStepCount", smallStepCount);
-//        map.put("largeCuboid", largeCuboid);
+        map.put("largeCuboid", largeCuboid);
         map.put("smallCuboid", smallCuboid);
         return map;
     }
