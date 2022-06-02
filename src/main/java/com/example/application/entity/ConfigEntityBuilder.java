@@ -1,6 +1,6 @@
 package com.example.application.entity;
 
-public class ConfigEntityBuilder {
+public class ConfigEntityBuilder implements Cloneable {
     private int length;
     private int width;
     private int height;
@@ -169,5 +169,31 @@ public class ConfigEntityBuilder {
                 return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, implementationEnum, sideTempLeft);
         }
 
+    }
+
+
+    @Override
+    public ConfigEntityBuilder clone() {
+        return new ConfigEntityBuilder()
+                .setLength(length)
+                .setWidth(width)
+                .setHeight(height)
+                .setZIndex(zIndex)
+                .setStartTemp(startTemp)
+                .setSideTempFront(sideTempFront)
+                .setSideTempBack(sideTempBack)
+                .setSideTempBottom(sideTempBottom)
+                .setSideTempTop(sideTempTop)
+                .setSideTempRight(sideTempRight)
+                .setAlpha(alpha)
+                .setStepCount(stepCount)
+                .setLeftSideStrategy(leftSideStrategy)
+                .setImplementationEnum(implementationEnum)
+                .setSideTempLeft(sideTempLeft)
+                .setSideTempLeftCenter(sideTempLeftCenter)
+                .setSideTempLeftBorder(sideTempLeftBorder)
+                .setSideTempLeftBase(sideTempLeftBase)
+                .setSideTempLeftMaxDifference(sideTempLeftMaxDifference)
+                .setSimulationStepFaktor(simulationStepFaktor);
     }
 }

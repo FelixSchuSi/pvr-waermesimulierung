@@ -11,7 +11,7 @@ import java.util.Map;
 public class PerformanceTest {
 
     private final Map<String, BaseConfigEntity> testCases = TestCases.all();
-    private final int TEST_RERUN_COUNT = 2;
+    private final int TEST_RERUN_COUNT = 1;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
@@ -23,6 +23,7 @@ public class PerformanceTest {
                 try {
                     implementation = serviceFromConfig.apply(config);
                 } catch (NotImplementedException e) {
+                    System.out.println(e);
                     continue;
                 }
                 System.out.println(testRunName + " rerun " + i);
