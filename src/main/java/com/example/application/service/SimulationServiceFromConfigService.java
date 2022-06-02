@@ -9,7 +9,7 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.function.Function;
 
-public class ServiceFromConfig implements Function<BaseConfigEntity, BaseSimulationService> {
+public class SimulationServiceFromConfigService implements Function<BaseConfigEntity, BaseSimulationService> {
     @Override
     public BaseSimulationService apply(BaseConfigEntity config) {
         if (config instanceof ConstantLeftSideConfigEntity && config.getImplementationEnum() == ImplementationEnum.SINGLE_THREADED) {

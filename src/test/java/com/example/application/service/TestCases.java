@@ -2,6 +2,7 @@ package com.example.application.service;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
+import com.example.application.entity.ImplementationEnum;
 import com.example.application.entity.LeftSideStrategyEnum;
 
 import java.util.HashMap;
@@ -30,11 +31,16 @@ public class TestCases {
     }
 
     public static Map<String, BaseConfigEntity> all() {
-        Map<String, BaseConfigEntity> map = new HashMap<>();
+        Map<String, ConfigEntityBuilder> base2 = new HashMap<>();
         base().forEach((k, v) -> {
-            map.put(k + "_constant", v.setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT).createConfigEntity());
-            map.put(k + "_linear", v.setLeftSideStrategy(LeftSideStrategyEnum.LINEAR).createConfigEntity());
-            map.put(k + "_sinus", v.setLeftSideStrategy(LeftSideStrategyEnum.SINUS).createConfigEntity());
+            base2.put(k + "_constant", v.setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT));
+            base2.put(k + "_linear", v.setLeftSideStrategy(LeftSideStrategyEnum.LINEAR));
+            base2.put(k + "_sinus", v.setLeftSideStrategy(LeftSideStrategyEnum.SINUS));
+        });
+        Map<String, BaseConfigEntity> map = new HashMap<>();
+        base2.forEach((k, v) -> {
+            map.put(k + "_singlethreaded", v.setImplementationEnum(ImplementationEnum.SINGLE_THREADED).createConfigEntity());
+            map.put(k + "_multithreaded", v.setImplementationEnum(ImplementationEnum.MULTI_THREADED).createConfigEntity());
         });
         return map;
     }

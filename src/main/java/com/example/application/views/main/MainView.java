@@ -5,7 +5,7 @@ import com.example.application.compontents.playpausebutton.PlayPauseButton;
 import com.example.application.entity.*;
 import com.example.application.service.BaseSimulationService;
 import com.example.application.service.CubeToStringMapper;
-import com.example.application.service.ServiceFromConfig;
+import com.example.application.service.SimulationServiceFromConfigService;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -135,7 +135,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
             this.cubeToStringMapper = new CubeToStringMapper(config);
             this.config = config;
             this.stepCounter = stepCoutner;
-            this.simulationService = new ServiceFromConfig().apply(config);
+            this.simulationService = new SimulationServiceFromConfigService().apply(config);
         }
 
         @Override
