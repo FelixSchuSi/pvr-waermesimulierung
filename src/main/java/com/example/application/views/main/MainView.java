@@ -103,6 +103,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                 .setSideTempRight(Double.valueOf(map.get("sideTempRight").get(0)))
                 .setAlpha(Double.valueOf(map.get("alpha").get(0)))
                 .setStepCount(Integer.valueOf(map.get("stepCount").get(0)))
+                .setThreadCount(Integer.valueOf(map.get("threadCount").get(0)))
                 .setImplementationEnum(ImplementationEnum.fromString(map.get("implementation").get(0)))
                 .setLeftSideStrategy(LeftSideStrategyEnum.get(map.get("leftSideStrategy").get(0)))
                 .setSideTempLeft(getIfPresent.apply("sideTempLeft"))

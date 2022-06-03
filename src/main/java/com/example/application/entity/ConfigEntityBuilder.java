@@ -13,6 +13,7 @@ public class ConfigEntityBuilder implements Cloneable {
     private Double sideTempRight;
     private Double alpha;
     private Integer stepCount;
+    private Integer threadCount;
     private LeftSideStrategyEnum leftSideStrategy;
     private ImplementationEnum implementationEnum;
     /**
@@ -47,6 +48,7 @@ public class ConfigEntityBuilder implements Cloneable {
                 .setSideTempRight(0.0)
                 .setAlpha(0.1)
                 .setStepCount(2000)
+                .setThreadCount(2)
                 .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT)
                 .setImplementationEnum(ImplementationEnum.SINGLE_THREADED)
                 .setSideTempLeft(100.0)
@@ -158,15 +160,20 @@ public class ConfigEntityBuilder implements Cloneable {
         return this;
     }
 
+    public ConfigEntityBuilder setThreadCount(Integer threadCount) {
+        this.threadCount = threadCount;
+        return this;
+    }
+
     public BaseConfigEntity createConfigEntity() {
         switch (leftSideStrategy) {
             case SINUS:
-                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, implementationEnum, sideTempLeftBase, sideTempLeftMaxDifference, simulationStepFaktor);
+                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeftBase, sideTempLeftMaxDifference, simulationStepFaktor);
             case LINEAR:
-                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, implementationEnum, sideTempLeftCenter, sideTempLeftBorder);
+                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeftCenter, sideTempLeftBorder);
             default:
             case CONSTANT:
-                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, implementationEnum, sideTempLeft);
+                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeft);
         }
 
     }
@@ -187,6 +194,7 @@ public class ConfigEntityBuilder implements Cloneable {
                 .setSideTempRight(sideTempRight)
                 .setAlpha(alpha)
                 .setStepCount(stepCount)
+                .setThreadCount(threadCount)
                 .setLeftSideStrategy(leftSideStrategy)
                 .setImplementationEnum(implementationEnum)
                 .setSideTempLeft(sideTempLeft)

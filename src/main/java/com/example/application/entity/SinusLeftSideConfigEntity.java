@@ -10,8 +10,8 @@ public class SinusLeftSideConfigEntity extends BaseConfigEntity {
     private Double sideTempLeftMaxDifference;
     private Double simulationStepFaktor;
 
-    public SinusLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, ImplementationEnum implementationEnum, Double sideTempLeftBase, Double sideTempLeftMaxDifference, Double simulationStepFaktor) {
-        super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, implementationEnum);
+    public SinusLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, Integer threadCount, ImplementationEnum implementationEnum, Double sideTempLeftBase, Double sideTempLeftMaxDifference, Double simulationStepFaktor) {
+        super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum);
         this.sideTempLeftBase = sideTempLeftBase;
         this.sideTempLeftMaxDifference = sideTempLeftMaxDifference;
         this.simulationStepFaktor = simulationStepFaktor;

@@ -1,9 +1,9 @@
 package com.example.application.views.config;
 
+import com.example.application.compontents.implementationpicker.ImplementationPicker;
 import com.example.application.compontents.strategypicker.StrategyPicker;
 import com.example.application.entity.*;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -37,13 +37,9 @@ public class ConfigView extends HorizontalLayout {
     NumberField sideTempBottom = new NumberField("Randtemperatur unten (RTU)");
     NumberField sideTempTop = new NumberField("Randtemperatur oben (RTO)");
     NumberField sideTempRight = new NumberField("Randtemperatur rechts (RTR)");
-
     NumberField alpha = new NumberField("Temperaturleitfähigkeit (ALPHA)");
-
     NumberField stepCount = new NumberField("Anzahl Simulationsschritte");
-
-    ComboBox<ImplementationEnum> implementationEnumComboBox = new ComboBox<>("Implementierung");
-
+    ImplementationPicker implementationPicker = new ImplementationPicker();
     StrategyPicker strategyPicker = new StrategyPicker();
 
 
@@ -57,7 +53,6 @@ public class ConfigView extends HorizontalLayout {
     });
 
     public ConfigView() {
-        implementationEnumComboBox.setItems(ImplementationEnum.getAll());
         setConfig(getDefaultConfig());
         VerticalLayout heading = new VerticalLayout(header, description);
         heading.setPadding(false);
@@ -83,9 +78,7 @@ public class ConfigView extends HorizontalLayout {
         alpha.setHelperText("Maximal 0,15");
         add(alpha);
         add(stepCount);
-
-        implementationEnumComboBox.setItemLabelGenerator(ImplementationEnum::getImplementation);
-        add(implementationEnumComboBox);
+        add(implementationPicker);
         add(strategyPicker);
         add(startSimulation);
     }
@@ -111,8 +104,9 @@ public class ConfigView extends HorizontalLayout {
                 .setSideTempRight(sideTempRight.getValue())
                 .setAlpha(alpha.getValue())
                 .setStepCount(stepCount.getValue().intValue())
+                .setThreadCount(implementationPicker.threadCount.getValue().intValue())
                 .setLeftSideStrategy(strategyEnum)
-                .setImplementationEnum(implementationEnumComboBox.getValue())
+                .setImplementationEnum(implementationPicker.implementationEnumComboBox.getValue())
                 .setSideTempLeft(strategyPicker.sideTempLeft.getValue())
                 .setSideTempLeftCenter(strategyPicker.sideTempLeftCenter.getValue())
                 .setSideTempLeftBorder(strategyPicker.sideTempLeftBorder.getValue())
@@ -135,7 +129,8 @@ public class ConfigView extends HorizontalLayout {
         sideTempRight.setValue(config.getSideTempRight());
         alpha.setValue(config.getAlpha());
         stepCount.setValue(config.getStepCount().doubleValue());
-        implementationEnumComboBox.setValue(config.getImplementationEnum());
+        implementationPicker.threadCount.setValue(config.getThreadCount().doubleValue());
+        implementationPicker.implementationEnumComboBox.setValue(config.getImplementationEnum());
 
         if (config instanceof ConstantLeftSideConfigEntity) {
             strategyPicker.sideTempLeftStrategy.setValue("Konstant");

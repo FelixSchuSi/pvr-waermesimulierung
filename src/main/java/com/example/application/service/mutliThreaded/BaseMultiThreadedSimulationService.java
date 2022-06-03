@@ -10,17 +10,17 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static java.util.concurrent.CompletableFuture.allOf;
 import static java.util.concurrent.CompletableFuture.runAsync;
 
 public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEntity> implements BaseSimulationService {
     protected final E configEntity;
-    protected final int threadCount = 2;
-    protected final ExecutorService executor = Executors.newFixedThreadPool(2);
+    protected final ExecutorService executor;
     protected Double[][][] oldData;
 
     public BaseMultiThreadedSimulationService(E configEntity) {
         this.configEntity = configEntity;
+        this.executor = Executors.newFixedThreadPool(configEntity.getThreadCount());
+        System.out.println(configEntity.getThreadCount());
     }
 
     /**
@@ -59,7 +59,7 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
         int length = x_width * y_length * z_height;
         Double[][][] newData = this.getShell();
 
-        List<List<Integer>> indexes = getIndexes(threadCount, length);
+        List<List<Integer>> indexes = getIndexes(configEntity.getThreadCount(), length);
         CompletableFuture[] futures = indexes.stream().map((startAndEndIndex) -> {
             int startIndex = startAndEndIndex.get(0);
             int endIndex = startAndEndIndex.get(1);
@@ -68,7 +68,7 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
 
         // Warten bis alle Threads fertig durchgelaufen sind.
         // Das Ergebnis wurde bereits in die Variable `newData` geschrieben.
-        allOf(futures);
+        CompletableFuture.allOf(futures);
 
         this.oldData = newData;
         return newData;

@@ -23,11 +23,13 @@ public abstract class BaseConfigEntity {
     private Double sideTempTop;
     private Double sideTempRight;
     private Double alpha;
+    @Min(1)
     private Integer stepCount;
-
+    @Min(1)
+    private Integer threadCount;
     private ImplementationEnum implementationEnum;
 
-    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, ImplementationEnum implementationEnum) {
+    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, Integer threadCount, ImplementationEnum implementationEnum) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -41,10 +43,19 @@ public abstract class BaseConfigEntity {
         this.alpha = alpha;
         this.stepCount = stepCount;
         this.implementationEnum = implementationEnum;
+        this.threadCount = threadCount;
     }
 
     public static BaseConfigEntity getDefaultConfig() {
         return defaultConfig().createConfigEntity();
+    }
+
+    public Integer getThreadCount() {
+        return threadCount;
+    }
+
+    public void setThreadCount(Integer threadCount) {
+        this.threadCount = threadCount;
     }
 
     public ImplementationEnum getImplementationEnum() {
@@ -69,6 +80,7 @@ public abstract class BaseConfigEntity {
         map.put("sideTempRight", List.of(sideTempRight.toString()));
         map.put("alpha", List.of(alpha.toString()));
         map.put("stepCount", List.of(stepCount.toString()));
+        map.put("threadCount", List.of(threadCount.toString()));
         map.put("implementation", List.of(implementationEnum.getImplementation()));
         return map;
     }
@@ -176,7 +188,7 @@ public abstract class BaseConfigEntity {
     @Override
     public String toString() {
         return "BaseConfigEntity{" +
-                ", length=" + length +
+                "length=" + length +
                 ", width=" + width +
                 ", height=" + height +
                 ", zIndex=" + zIndex +
@@ -188,6 +200,8 @@ public abstract class BaseConfigEntity {
                 ", sideTempRight=" + sideTempRight +
                 ", alpha=" + alpha +
                 ", stepCount=" + stepCount +
+                ", threadCount=" + threadCount +
+                ", implementationEnum=" + implementationEnum +
                 '}';
     }
 }
