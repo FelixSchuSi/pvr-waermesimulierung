@@ -33,7 +33,7 @@ public class PerformanceTest {
                 }
 
                 long t1 = System.nanoTime();
-                report.appendData(testRunName, Long.toString((t1 - t0) / 1000));
+                report.appendData(testRunName + " (ms)", Long.toString((t1 - t0) / 1000000));
             }
         });
         try {
