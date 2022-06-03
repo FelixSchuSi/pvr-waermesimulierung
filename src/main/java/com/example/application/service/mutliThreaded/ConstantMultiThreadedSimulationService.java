@@ -11,7 +11,7 @@ public class ConstantMultiThreadedSimulationService extends BaseMultiThreadedSim
 
     @Override
     public Double[][][] getShell() {
-//        if (cachedShell != null) return cachedShell;
+        if (cachedShell != null) return cachedShell;
 
         Double[][][] shell = new Double[configEntity.getWidth()][configEntity.getLength()][configEntity.getHeight()];
         ConstantLeftSideConfigEntity config = configEntity;
