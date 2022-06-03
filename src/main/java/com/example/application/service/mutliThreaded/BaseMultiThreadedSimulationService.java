@@ -20,7 +20,6 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
     public BaseMultiThreadedSimulationService(E configEntity) {
         this.configEntity = configEntity;
         this.executor = Executors.newFixedThreadPool(configEntity.getThreadCount());
-        System.out.println(configEntity.getThreadCount());
     }
 
     /**

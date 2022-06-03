@@ -12,35 +12,31 @@ import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
 
 public class TestCases {
     private static final ConfigEntityBuilder standard = defaultConfig().setStepCount(100);
-    private static final ConfigEntityBuilder largeStepCount = defaultConfig().setStepCount(100).setStepCount(4000);
-    private static final ConfigEntityBuilder smallStepCount = defaultConfig().setStepCount(100).setStepCount(100);
     private static final ConfigEntityBuilder largeCuboid = defaultConfig().setStepCount(100).setLength(300).setWidth(300).setHeight(300);
     private static final ConfigEntityBuilder smallCuboid = defaultConfig().setStepCount(100).setLength(50).setWidth(50).setHeight(50);
-
-    private TestCases() {
-    }
+    private static final ConfigEntityBuilder twoThreads = defaultConfig().setStepCount(100).setThreadCount(2).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder threeThreads = defaultConfig().setStepCount(100).setThreadCount(3).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder fourThreads = defaultConfig().setStepCount(100).setThreadCount(4).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder fiveThreads = defaultConfig().setStepCount(100).setThreadCount(5).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
 
     private static Map<String, ConfigEntityBuilder> base() {
         Map<String, ConfigEntityBuilder> map = new HashMap<>();
         map.put("standard", standard);
-//        map.put("largeStepCount", largeStepCount);
-//        map.put("smallStepCount", smallStepCount);
         map.put("largeCuboid", largeCuboid);
         map.put("smallCuboid", smallCuboid);
+        map.put("twoThreads", twoThreads);
+        map.put("threeThreads", threeThreads);
+        map.put("fourThreads", fourThreads);
+        map.put("fiveThreads", fiveThreads);
         return map;
     }
 
     public static Map<String, BaseConfigEntity> all() {
-        Map<String, ConfigEntityBuilder> base2 = new HashMap<>();
-        base().forEach((k, v) -> {
-            base2.put(k + "_constant", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT));
-//            base2.put(k + "_linear", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.LINEAR));
-//            base2.put(k + "_sinus", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.SINUS));
-        });
         Map<String, BaseConfigEntity> map = new HashMap<>();
-        base2.forEach((k, v) -> {
-            map.put(k + "_singlethreaded", v.clone().setImplementationEnum(ImplementationEnum.SINGLE_THREADED).createConfigEntity());
-            map.put(k + "_multithreaded", v.clone().setImplementationEnum(ImplementationEnum.MULTI_THREADED).createConfigEntity());
+        base().forEach((k, v) -> {
+            map.put(k + "_constant", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT).createConfigEntity());
+            map.put(k + "_linear", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.LINEAR).createConfigEntity());
+            map.put(k + "_sinus", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.SINUS).createConfigEntity());
         });
         return map;
     }
