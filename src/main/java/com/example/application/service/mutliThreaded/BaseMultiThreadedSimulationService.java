@@ -25,8 +25,9 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
         int z_height = configEntity.getHeight();
 
         int length = x_width * y_length * z_height;
-        Calculate t1 = new Calculate(0, (length / 2) - 1, oldData, alpha);
-        Calculate t2 = new Calculate(length / 2, length, oldData, alpha);
+        Double[][][] newData = this.getShell();
+        Calculate t1 = new Calculate(0, (length / 2) - 1, oldData, alpha, newData);
+        Calculate t2 = new Calculate(length / 2, length, oldData, alpha, newData);
 
         t1.setName("Thread1");
         t2.setName("Thread2");
@@ -40,14 +41,8 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
             throw new RuntimeException(e);
         }
 
-        Double[][][] data1 = t1.getData();
-        Double[][][] data2 = t2.getData();
-
-        Double[][][] data = this.joinArrays(data1, data2);
-        this.oldData = data;
-
-
-        return data;
+        this.oldData = newData;
+        return newData;
     }
 
 
@@ -72,43 +67,35 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
 }
 
 class Calculate extends Thread {
-
     private final int start;
     private final int stop;
     private final int Y;
     private final int Z;
-    private final Double[][][] data;
+    private final Double[][][] newData;
     private final double alpha;
     private final Double[][][] oldData;
 
-    public Calculate(int start, int stop, Double[][][] oldData, double alpha) {
+    public Calculate(int start, int stop, Double[][][] oldData, double alpha, Double[][][] newData) {
         this.start = start;
         this.stop = stop;
-        int X = oldData.length;
         this.Y = oldData[0].length;
         this.Z = oldData[0][0].length;
-        this.data = new Double[X][Y][Z];
+        this.newData = newData;
         this.alpha = alpha;
         this.oldData = oldData;
     }
 
     @Override
     public void run() {
-        //Start Calculation
         for (int i = start; i < stop; i++) {
             int x = i / (Y * Z);
             int y = (i / Z) % Y;
             int z = i % Z;
             if (x == 0 || y == 0 || z == 0 || x >= 99 || y >= 99 || z >= 99) continue;
-            data[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
+            newData[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
                     oldData[x][y + 1][z] + oldData[x][y - 1][z] +
                     oldData[x][y][z + 1] + oldData[x][y][z - 1] -
                     6 * oldData[x][y][z]);
         }
     }
-
-    public Double[][][] getData() {
-        return data;
-    }
-
 }
