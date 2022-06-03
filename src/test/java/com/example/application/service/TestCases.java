@@ -14,8 +14,8 @@ public class TestCases {
     private static final ConfigEntityBuilder standard = defaultConfig().setStepCount(100);
     private static final ConfigEntityBuilder largeStepCount = defaultConfig().setStepCount(100).setStepCount(4000);
     private static final ConfigEntityBuilder smallStepCount = defaultConfig().setStepCount(100).setStepCount(100);
-    private static final ConfigEntityBuilder largeCuboid = defaultConfig().setStepCount(100).setLength(800).setWidth(800).setHeight(800);
-    private static final ConfigEntityBuilder smallCuboid = defaultConfig().setStepCount(100).setLength(100).setWidth(100).setHeight(100);
+    private static final ConfigEntityBuilder largeCuboid = defaultConfig().setStepCount(100).setLength(300).setWidth(300).setHeight(300);
+    private static final ConfigEntityBuilder smallCuboid = defaultConfig().setStepCount(100).setLength(50).setWidth(50).setHeight(50);
 
     private TestCases() {
     }
@@ -34,8 +34,8 @@ public class TestCases {
         Map<String, ConfigEntityBuilder> base2 = new HashMap<>();
         base().forEach((k, v) -> {
             base2.put(k + "_constant", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT));
-            base2.put(k + "_linear", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.LINEAR));
-            base2.put(k + "_sinus", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.SINUS));
+//            base2.put(k + "_linear", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.LINEAR));
+//            base2.put(k + "_sinus", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.SINUS));
         });
         Map<String, BaseConfigEntity> map = new HashMap<>();
         base2.forEach((k, v) -> {

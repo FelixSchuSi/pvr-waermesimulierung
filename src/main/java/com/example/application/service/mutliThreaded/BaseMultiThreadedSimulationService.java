@@ -3,12 +3,44 @@ package com.example.application.service.mutliThreaded;
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.service.BaseSimulationService;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static java.util.concurrent.CompletableFuture.allOf;
+import static java.util.concurrent.CompletableFuture.runAsync;
+
 public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEntity> implements BaseSimulationService {
-    protected E configEntity;
+    protected final E configEntity;
+    protected final int threadCount = 2;
+    protected final ExecutorService executor = Executors.newFixedThreadPool(2);
     protected Double[][][] oldData;
 
     public BaseMultiThreadedSimulationService(E configEntity) {
         this.configEntity = configEntity;
+    }
+
+    /**
+     * Teilt den gesamten Indexbereich des Quaders in n gleichgroße Teilbereiche ein.
+     *
+     * @param n        Die Anzahl der gewünschten Teilbereiche (In der Regel durch die Thread anzahl bestimmt)
+     * @param cubeSize Die Länge des Quaders
+     * @return Liste von start- und endindizes
+     */
+    public static List<List<Integer>> getIndexes(int n, int cubeSize) {
+        int maxIndex = cubeSize - 1;
+        int stepSize = (int) Math.ceil((cubeSize - 1.0) / n);
+        return IntStream.range(0, n)
+                .boxed()
+                .map(i -> {
+                    int startIndex = i == 0 ? 0 : i * stepSize + 1;
+                    int endIndex = Math.min((i + 1) * stepSize, maxIndex);
+                    return List.of(startIndex, endIndex);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -26,20 +58,17 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
 
         int length = x_width * y_length * z_height;
         Double[][][] newData = this.getShell();
-        Calculate t1 = new Calculate(0, (length / 2) - 1, oldData, alpha, newData);
-        Calculate t2 = new Calculate(length / 2, length, oldData, alpha, newData);
 
-        t1.setName("Thread1");
-        t2.setName("Thread2");
+        List<List<Integer>> indexes = getIndexes(threadCount, length);
+        CompletableFuture[] futures = indexes.stream().map((startAndEndIndex) -> {
+            int startIndex = startAndEndIndex.get(0);
+            int endIndex = startAndEndIndex.get(1);
+            return runAsync(new Calculate(startIndex, endIndex, oldData, alpha, newData), executor);
+        }).toArray(CompletableFuture[]::new);
 
-        t1.start();
-        t2.start();
-        try {
-            t1.join();
-            t2.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        // Warten bis alle Threads fertig durchgelaufen sind.
+        // Das Ergebnis wurde bereits in die Variable `newData` geschrieben.
+        allOf(futures);
 
         this.oldData = newData;
         return newData;
@@ -48,7 +77,7 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
     public abstract Double[][][] getShell();
 }
 
-class Calculate extends Thread {
+class Calculate implements Runnable {
     private final int start;
     private final int stop;
     private final int Y;
