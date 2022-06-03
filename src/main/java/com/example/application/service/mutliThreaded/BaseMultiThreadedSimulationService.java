@@ -45,25 +45,7 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
         return newData;
     }
 
-
     public abstract Double[][][] getShell();
-
-    private Double[][][] joinArrays(Double[][][] array1, Double[][][] array2) {
-        int X = array1.length;
-        int Y = array1[0].length;
-        int Z = array1[0][0].length;
-
-        Double[][][] output = this.getShell();
-
-        for (int i = 0; i < X * Y * Z; i++) {
-            int x = i / (Y * Z);
-            int y = (i / Z) % Y;
-            int z = i % Z;
-            if (array1[x][y][z] != null) output[x][y][z] = array1[x][y][z];
-            if (array2[x][y][z] != null) output[x][y][z] = array2[x][y][z];
-        }
-        return output;
-    }
 }
 
 class Calculate extends Thread {
