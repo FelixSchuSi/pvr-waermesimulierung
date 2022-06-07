@@ -33,6 +33,7 @@ test:
     paths:
       - metadata.txt
       - ./*.csv
+      - ./visualization/*.pdf
     expire_in: 52 weeks
 
 deploy:
