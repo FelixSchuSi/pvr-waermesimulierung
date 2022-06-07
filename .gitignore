@@ -21,3 +21,6 @@ webpack.generated.js
 
 # Messungen sollen nur von der CI-Pipeline durchgeführt werden.
 *.csv
+
+# Virtuelle Python Umgebung
+visualization/.venv/

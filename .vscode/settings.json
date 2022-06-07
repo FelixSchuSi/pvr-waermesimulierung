@@ -1,3 +1,5 @@
 {
-    "lit-plugin.strict": true
+    "lit-plugin.strict": true,
+    "python.defaultInterpreterPath": "./visualization/.venv/bin/python",
+    "python.pythonPath": "./visualization/.venv/bin/python",
 }
