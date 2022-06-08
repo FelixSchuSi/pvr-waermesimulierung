@@ -22,8 +22,8 @@ public class TestCases {
     private static Map<String, ConfigEntityBuilder> base() {
         Map<String, ConfigEntityBuilder> map = new HashMap<>();
         map.put("standard", standard);
-        map.put("largeCuboid", largeCuboid);
-        map.put("smallCuboid", smallCuboid);
+//        map.put("largeCuboid", largeCuboid);
+//        map.put("smallCuboid", smallCuboid);
         map.put("twoThreads", twoThreads);
         map.put("threeThreads", threeThreads);
         map.put("fourThreads", fourThreads);

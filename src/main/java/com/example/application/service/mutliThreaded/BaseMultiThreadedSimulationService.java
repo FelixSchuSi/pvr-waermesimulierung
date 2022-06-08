@@ -5,6 +5,7 @@ import com.example.application.service.BaseSimulationService;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
         int z_height = configEntity.getHeight();
 
         int length = x_width * y_length * z_height;
-        Double[][][] newData = this.getShell();
+        Double[][][] newData = new Double[x_width][y_length][z_height];
 
         List<List<Integer>> indexes = getIndexes(configEntity.getThreadCount(), length);
         CompletableFuture[] futures = indexes.stream().map((startAndEndIndex) -> {
@@ -67,7 +68,11 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
 
         // Warten bis alle Threads fertig durchgelaufen sind.
         // Das Ergebnis wurde bereits in die Variable `newData` geschrieben.
-        CompletableFuture.allOf(futures);
+        try {
+            CompletableFuture.allOf(futures).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
 
         this.oldData = newData;
         return newData;
@@ -79,6 +84,7 @@ public abstract class BaseMultiThreadedSimulationService<E extends BaseConfigEnt
 class Calculate implements Runnable {
     private final int start;
     private final int stop;
+    private final int X;
     private final int Y;
     private final int Z;
     private final Double[][][] newData;
@@ -88,6 +94,7 @@ class Calculate implements Runnable {
     public Calculate(int start, int stop, Double[][][] oldData, double alpha, Double[][][] newData) {
         this.start = start;
         this.stop = stop;
+        this.X = oldData.length;
         this.Y = oldData[0].length;
         this.Z = oldData[0][0].length;
         this.newData = newData;
@@ -97,15 +104,20 @@ class Calculate implements Runnable {
 
     @Override
     public void run() {
-        for (int i = start; i < stop; i++) {
+        for (int i = start; i <= stop; i++) {
             int x = i / (Y * Z);
             int y = (i / Z) % Y;
             int z = i % Z;
-            if (x == 0 || y == 0 || z == 0 || x >= 99 || y >= 99 || z >= 99) continue;
-            newData[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
-                    oldData[x][y + 1][z] + oldData[x][y - 1][z] +
-                    oldData[x][y][z + 1] + oldData[x][y][z - 1] -
-                    6 * oldData[x][y][z]);
+
+            // Die Schale hat eine konstante Temperatur und sollte demnach nicht verändert werden.
+            if (x <= 0 || y <= 0 || z <= 0 || x >= X - 1 || y >= Y - 1 || z >= Z - 1) {
+                newData[x][y][z] = oldData[x][y][z];
+            } else {
+                newData[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
+                        oldData[x][y + 1][z] + oldData[x][y - 1][z] +
+                        oldData[x][y][z + 1] + oldData[x][y][z - 1] -
+                        6 * oldData[x][y][z]);
+            }
         }
     }
 }
