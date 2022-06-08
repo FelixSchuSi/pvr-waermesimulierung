@@ -24,16 +24,19 @@ public abstract class BaseSingleThreadedSimulationService<E extends BaseConfigEn
         int y_length = configEntity.getLength();
         int z_height = configEntity.getHeight();
 
-        Double[][][] data = this.getShell();
+        Double[][][] data = new Double[x_width][y_length][z_height];
 
-        //Start Calculation
-        for (int x = 1; x < x_width - 1; x++) {
-            for (int y = 1; y < y_length - 1; y++) {
-                for (int z = 1; z < z_height - 1; z++) {
-                    data[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
-                            oldData[x][y + 1][z] + oldData[x][y - 1][z] +
-                            oldData[x][y][z + 1] + oldData[x][y][z - 1] -
-                            6 * oldData[x][y][z]);
+        for (int x = 0; x < x_width; x++) {
+            for (int y = 0; y < y_length; y++) {
+                for (int z = 0; z < z_height; z++) {
+                    if (x == 0 || y == 0 || z == 0 || x == x_width - 1 || y == y_length - 1 || z == z_height - 1) {
+                        data[x][y][z] = oldData[x][y][z];
+                    } else {
+                        data[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
+                                oldData[x][y + 1][z] + oldData[x][y - 1][z] +
+                                oldData[x][y][z + 1] + oldData[x][y][z - 1] -
+                                6 * oldData[x][y][z]);
+                    }
                 }
             }
         }
