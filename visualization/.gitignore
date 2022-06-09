@@ -1,0 +1,3 @@
+# Von Pyhton generierte Diagramme sollen nicht in git eingecheckt werden,
+# sondern nach jedem push von der pipeline generiert und als Artefakt bereitgestellt werden
+*.pdf
