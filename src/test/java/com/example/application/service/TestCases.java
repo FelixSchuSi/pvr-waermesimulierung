@@ -25,9 +25,9 @@ public class TestCases {
 //        map.put("largeCuboid", largeCuboid);
 //        map.put("smallCuboid", smallCuboid);
         map.put("twoThreads", twoThreads);
-        map.put("threeThreads", threeThreads);
-        map.put("fourThreads", fourThreads);
-        map.put("fiveThreads", fiveThreads);
+//        map.put("threeThreads", threeThreads);
+//        map.put("fourThreads", fourThreads);
+//        map.put("fiveThreads", fiveThreads);
         return map;
     }
 
@@ -35,8 +35,8 @@ public class TestCases {
         Map<String, BaseConfigEntity> map = new HashMap<>();
         base().forEach((k, v) -> {
             map.put(k + "_constant", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT).createConfigEntity());
-            map.put(k + "_linear", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.LINEAR).createConfigEntity());
-            map.put(k + "_sinus", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.SINUS).createConfigEntity());
+//            map.put(k + "_linear", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.LINEAR).createConfigEntity());
+//            map.put(k + "_sinus", v.clone().setLeftSideStrategy(LeftSideStrategyEnum.SINUS).createConfigEntity());
         });
         return map;
     }
