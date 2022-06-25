@@ -1,4 +1,4 @@
-package com.example.application.service;
+package com.example.application.measurements.threadCount;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
@@ -10,24 +10,26 @@ import java.util.Map;
 
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
 
-public class TestCases {
-    private static final ConfigEntityBuilder standard = defaultConfig().setStepCount(100);
-    private static final ConfigEntityBuilder largeCuboid = defaultConfig().setStepCount(100).setLength(300).setWidth(300).setHeight(300);
-    private static final ConfigEntityBuilder smallCuboid = defaultConfig().setStepCount(100).setLength(50).setWidth(50).setHeight(50);
-    private static final ConfigEntityBuilder twoThreads = defaultConfig().setStepCount(100).setThreadCount(2).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
-    private static final ConfigEntityBuilder threeThreads = defaultConfig().setStepCount(100).setThreadCount(3).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
-    private static final ConfigEntityBuilder fourThreads = defaultConfig().setStepCount(100).setThreadCount(4).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
-    private static final ConfigEntityBuilder fiveThreads = defaultConfig().setStepCount(100).setThreadCount(5).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+public class ThreadCountTestCases {
+    private static final ConfigEntityBuilder singleThread = defaultConfig().setStepCount(2000);
+    private static final ConfigEntityBuilder twoThreads = defaultConfig().setStepCount(2000).setThreadCount(2).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder threeThreads = defaultConfig().setStepCount(2000).setThreadCount(3).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder fourThreads = defaultConfig().setStepCount(2000).setThreadCount(4).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder fiveThreads = defaultConfig().setStepCount(2000).setThreadCount(5).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder sixThreads = defaultConfig().setStepCount(2000).setThreadCount(6).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder sevenThreads = defaultConfig().setStepCount(2000).setThreadCount(7).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+    private static final ConfigEntityBuilder eightThreads = defaultConfig().setStepCount(2000).setThreadCount(8).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
 
     private static Map<String, ConfigEntityBuilder> base() {
         Map<String, ConfigEntityBuilder> map = new HashMap<>();
-        map.put("standard", standard);
-//        map.put("largeCuboid", largeCuboid);
-//        map.put("smallCuboid", smallCuboid);
+        map.put("singleThread", singleThread);
         map.put("twoThreads", twoThreads);
         map.put("threeThreads", threeThreads);
         map.put("fourThreads", fourThreads);
         map.put("fiveThreads", fiveThreads);
+        map.put("sixThreads", sixThreads);
+        map.put("sevenThreads", sevenThreads);
+        map.put("eightThreads", eightThreads);
         return map;
     }
 
