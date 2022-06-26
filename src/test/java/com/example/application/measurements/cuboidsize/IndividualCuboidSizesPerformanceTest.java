@@ -6,8 +6,6 @@ import com.example.application.service.BaseSimulationService;
 import com.example.application.service.SimulationServiceFromConfigService;
 import helper.CsvReport;
 import org.apache.commons.lang.NotImplementedException;
-import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -18,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CuboidSizePerformanceTest {
+public class IndividualCuboidSizesPerformanceTest {
 
     private final Map<String, BaseConfigEntity> testCases = CuboidSizeTestCases.all();
     private final int TEST_RERUN_COUNT = 32;
@@ -55,7 +53,7 @@ public class CuboidSizePerformanceTest {
             report.appendRow(row.stream());
         });
         try {
-            report.writeFile("cuboid_size_measurements.csv");
+            report.writeFile("individual_cuboid_sizes_measurements.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
