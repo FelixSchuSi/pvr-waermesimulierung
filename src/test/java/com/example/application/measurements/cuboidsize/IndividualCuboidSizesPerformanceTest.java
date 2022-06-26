@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 
 public class IndividualCuboidSizesPerformanceTest {
 
-    private final Map<String, BaseConfigEntity> testCases = CuboidSizeTestCases.all();
+    private final Map<String, BaseConfigEntity> testCases = IndividualCuboidSizesTestCases.all();
     private final int TEST_RERUN_COUNT = 32;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
