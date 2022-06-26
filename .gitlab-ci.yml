@@ -16,6 +16,16 @@
 stages: # List of stages for jobs, and their order of execution
   - build
   - test
+  - visualization
+
+visualization:
+  stage: build
+  image: ipython/ipython
+  script:
+    - ipython -c "%run ./visualization/ThreadCount.ipynb"
+  artifacts:
+    paths:
+      - ./visualization/*.pdf
 
 test:
   tags:
@@ -29,6 +39,7 @@ test:
     - pwd >> metadata.txt
     - ls -a >> metadata.txt
     - echo "Compile complete."
+
   artifacts:
     paths:
       - metadata.txt

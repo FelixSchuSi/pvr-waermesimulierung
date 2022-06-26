@@ -3,10 +3,8 @@ package com.example.application.measurements.threadCount;
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.service.BaseSimulationService;
 import com.example.application.service.SimulationServiceFromConfigService;
-import com.example.application.service.TestCases;
 import helper.CsvReport;
 import org.apache.commons.lang3.NotImplementedException;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -18,8 +16,8 @@ import java.util.stream.IntStream;
 
 public class ThreadCountPerformanceTest {
 
-    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCases.all();
-    private final int TEST_RERUN_COUNT = 10;
+    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesLinear.all();
+    private final int TEST_RERUN_COUNT = 32;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
