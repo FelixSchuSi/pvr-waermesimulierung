@@ -1,4 +1,4 @@
-package com.example.application.measurements.cuboidsize;
+package com.example.application.measurements.cuboidSize;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
@@ -10,21 +10,29 @@ import java.util.Map;
 
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
 
-public class IndividualCuboidSizesTestCases {
-    private IndividualCuboidSizesTestCases() {
+public class CuboidSizeTestCases {
+    private CuboidSizeTestCases() {
     }
 
     public static Map<String, BaseConfigEntity> all() {
         Map<String, BaseConfigEntity> map = new HashMap<>();
-        List<Integer> steps = List.of(100, 200, 400);
+        List<Integer> steps = List.of(50, 100, 215, 271, 310, 341, 368, 391, 400);
 
-        steps.forEach(x -> steps.forEach(y -> steps.forEach(z -> map.put("" + x + "x" + y + "x" + z,
+//        steps.forEach(x -> steps.forEach(y -> steps.forEach(z -> map.put("" + x + "x" + y + "x" + z,
+//                getBaseConfigEntityBuilder()
+//                        .setLength(x)
+//                        .setWidth(y)
+//                        .setHeight(z)
+//                        .createConfigEntity()
+//        ))));
+
+        steps.forEach(x -> map.put("" + x + "x" + x + "x" + x,
                 getBaseConfigEntityBuilder()
                         .setLength(x)
-                        .setWidth(y)
-                        .setHeight(z)
+                        .setWidth(x)
+                        .setHeight(x)
                         .createConfigEntity()
-        ))));
+        ));
 
         return map;
     }
