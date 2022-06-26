@@ -1,4 +1,4 @@
-package com.example.application.measurements.cuboidsize;
+package com.example.application.measurements.cuboidSize;
 
 
 import com.example.application.entity.BaseConfigEntity;
