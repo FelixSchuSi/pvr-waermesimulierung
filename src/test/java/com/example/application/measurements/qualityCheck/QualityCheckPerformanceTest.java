@@ -1,4 +1,4 @@
-package com.example.application.measurements.cuboidsize;
+package com.example.application.measurements.qualityCheck;
 
 
 import com.example.application.entity.BaseConfigEntity;
@@ -16,22 +16,22 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class IndividualCuboidSizesPerformanceTest {
+public class QualityCheckPerformanceTest {
 
-    private final Map<String, BaseConfigEntity> testCases = CuboidSizeTestCases.all();
-    private final int TEST_RERUN_COUNT = 32;
+    private final Map<String, BaseConfigEntity> testCases = QualityCheckTestCases.all();
+    private final int TEST_RERUN_COUNT = 100;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
     void runAll() {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
-        List<String> columns = new ArrayList<>(List.of("runName", "length", "width", "height"));
+        List<String> columns = new ArrayList<>(List.of("runName"));
         columns.addAll(numberStrings);
         CsvReport report = new CsvReport(columns.stream());
         int totalRunCount = testCases.size() * TEST_RERUN_COUNT;
         AtomicInteger currentRunCount = new AtomicInteger(1);
         testCases.forEach((testRunName, config) -> {
-            List<String> row = new ArrayList<>(List.of(testRunName, "" + config.getLength(), "" + config.getWidth(), "" + config.getHeight()));
+            List<String> row = new ArrayList<>(List.of(testRunName));
             for (int i = 0; i < TEST_RERUN_COUNT; i++) {
                 BaseSimulationService implementation;
                 try {
@@ -53,7 +53,7 @@ public class IndividualCuboidSizesPerformanceTest {
             report.appendRow(row.stream());
         });
         try {
-            report.writeFile("individual_cuboid_sizes_measurements.csv");
+            report.writeFile("quality_check_measurements.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,4 +1,4 @@
-package com.example.application.measurements.cuboidsize;
+package com.example.application.measurements.cuboidSize;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
@@ -16,7 +16,7 @@ public class IndividualCuboidSizesTestCases {
 
     public static Map<String, BaseConfigEntity> all() {
         Map<String, BaseConfigEntity> map = new HashMap<>();
-        List<Integer> steps = List.of(50, 100, 200, 400);
+        List<Integer> steps = List.of(100, 200, 400);
 
         steps.forEach(x -> steps.forEach(y -> steps.forEach(z -> map.put("" + x + "x" + y + "x" + z,
                 getBaseConfigEntityBuilder()
@@ -30,6 +30,6 @@ public class IndividualCuboidSizesTestCases {
     }
 
     private static ConfigEntityBuilder getBaseConfigEntityBuilder() {
-        return defaultConfig().setStepCount(5).setThreadCount(8).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+        return defaultConfig().setStepCount(50).setThreadCount(8).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
     }
 }

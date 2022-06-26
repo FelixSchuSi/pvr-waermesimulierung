@@ -1,4 +1,4 @@
-package com.example.application.measurements.cuboidsize;
+package com.example.application.measurements.cuboidSize;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
@@ -38,6 +38,6 @@ public class CuboidSizeTestCases {
     }
 
     private static ConfigEntityBuilder getBaseConfigEntityBuilder() {
-        return defaultConfig().setStepCount(5).setThreadCount(8).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+        return defaultConfig().setStepCount(50).setThreadCount(8).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
     }
 }

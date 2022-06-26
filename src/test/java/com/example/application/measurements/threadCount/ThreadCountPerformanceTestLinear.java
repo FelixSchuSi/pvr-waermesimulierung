@@ -1,37 +1,34 @@
-package com.example.application.measurements.cuboidsize;
-
+package com.example.application.measurements.threadCount;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.service.BaseSimulationService;
 import com.example.application.service.SimulationServiceFromConfigService;
 import helper.CsvReport;
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CuboidSizePerformanceTest {
+public class ThreadCountPerformanceTestLinear {
 
-    private final Map<String, BaseConfigEntity> testCases = CuboidSizeTestCases.all();
+    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesLinear.all();
     private final int TEST_RERUN_COUNT = 32;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
     void runAll() {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
-        List<String> columns = new ArrayList<>(List.of("runName", "length", "width", "height"));
+        List<String> columns = new ArrayList<>(List.of("runName", "threadCount", "implementationStrategy"));
         columns.addAll(numberStrings);
         CsvReport report = new CsvReport(columns.stream());
-        int totalRunCount = testCases.size() * TEST_RERUN_COUNT;
-        AtomicInteger currentRunCount = new AtomicInteger(1);
+        System.out.println("ThreadCountTestLinear - Start");
         testCases.forEach((testRunName, config) -> {
-            List<String> row = new ArrayList<>(List.of(testRunName, "" + config.getLength(), "" + config.getWidth(), "" + config.getHeight()));
+            List<String> row = new ArrayList<>(List.of(testRunName, config.getThreadCount().toString(), config.getImplementationEnum().getImplementation()));
             for (int i = 0; i < TEST_RERUN_COUNT; i++) {
                 BaseSimulationService implementation;
                 try {
@@ -40,8 +37,7 @@ public class CuboidSizePerformanceTest {
                     System.out.println(e);
                     continue;
                 }
-                System.out.println(currentRunCount + "/" + totalRunCount + " " + testRunName + " rerun " + i);
-                currentRunCount.getAndIncrement();
+                //System.out.println(testRunName + " rerun " + i);
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
@@ -52,8 +48,9 @@ public class CuboidSizePerformanceTest {
             }
             report.appendRow(row.stream());
         });
+        System.out.println("ThreadCountTestLinear - Ende");
         try {
-            report.writeFile("cuboid_size_measurements.csv");
+            report.writeFile("thread_count_performance_measurements_linear.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

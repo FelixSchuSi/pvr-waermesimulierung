@@ -29,6 +29,7 @@ test:
     - pwd >> metadata.txt
     - ls -a >> metadata.txt
     - echo "Compile complete."
+
   artifacts:
     paths:
       - metadata.txt
