@@ -16,16 +16,6 @@
 stages: # List of stages for jobs, and their order of execution
   - build
   - test
-  - visualization
-
-visualization:
-  stage: build
-  image: ipython/ipython
-  script:
-    - ipython -c "%run ./visualization/ThreadCount.ipynb"
-  artifacts:
-    paths:
-      - ./visualization/*.pdf
 
 test:
   tags:
