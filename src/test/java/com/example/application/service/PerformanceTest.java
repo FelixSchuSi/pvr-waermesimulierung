@@ -3,6 +3,8 @@ package com.example.application.service;
 import com.example.application.entity.BaseConfigEntity;
 import helper.CsvReport;
 import org.apache.commons.lang3.NotImplementedException;
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class PerformanceTest {
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
+    @Disabled
     void runAll() {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
         List<String> columns = new ArrayList<>(List.of("runName", "threadCount", "implementationStrategy"));

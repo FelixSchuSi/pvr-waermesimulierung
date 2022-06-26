@@ -6,6 +6,8 @@ import com.example.application.service.BaseSimulationService;
 import com.example.application.service.SimulationServiceFromConfigService;
 import helper.CsvReport;
 import org.apache.commons.lang.NotImplementedException;
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
