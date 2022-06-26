@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 public class ThreadCountPerformanceTest {
 
-    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesLinear.all();
+    private  Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesLinear.all();
     private final int TEST_RERUN_COUNT = 32;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
@@ -25,6 +25,10 @@ public class ThreadCountPerformanceTest {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
         List<String> columns = new ArrayList<>(List.of("runName", "threadCount", "implementationStrategy"));
         columns.addAll(numberStrings);
+
+        testCases.putAll(ThreadCountTestCasesConstant.all());
+        testCases.putAll(ThreadCountTestCasesSinus.all());
+
         CsvReport report = new CsvReport(columns.stream());
         testCases.forEach((testRunName, config) -> {
             List<String> row = new ArrayList<>(List.of(testRunName, config.getThreadCount().toString(), config.getImplementationEnum().getImplementation()));
