@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ThreadCountPerformanceTest {
+public class ThreadCountPerformanceTestLinear {
 
-    private  Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesLinear.all();
+    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesLinear.all();
     private final int TEST_RERUN_COUNT = 32;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
@@ -25,11 +25,8 @@ public class ThreadCountPerformanceTest {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
         List<String> columns = new ArrayList<>(List.of("runName", "threadCount", "implementationStrategy"));
         columns.addAll(numberStrings);
-
-        testCases.putAll(ThreadCountTestCasesConstant.all());
-        testCases.putAll(ThreadCountTestCasesSinus.all());
-
         CsvReport report = new CsvReport(columns.stream());
+        System.out.println("ThreadCountTestLinear - Start");
         testCases.forEach((testRunName, config) -> {
             List<String> row = new ArrayList<>(List.of(testRunName, config.getThreadCount().toString(), config.getImplementationEnum().getImplementation()));
             for (int i = 0; i < TEST_RERUN_COUNT; i++) {
@@ -40,7 +37,7 @@ public class ThreadCountPerformanceTest {
                     System.out.println(e);
                     continue;
                 }
-                System.out.println(testRunName + " rerun " + i);
+                //System.out.println(testRunName + " rerun " + i);
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
@@ -51,8 +48,9 @@ public class ThreadCountPerformanceTest {
             }
             report.appendRow(row.stream());
         });
+        System.out.println("ThreadCountTestLinear - Ende");
         try {
-            report.writeFile("thread_count_performance_measurements.csv");
+            report.writeFile("thread_count_performance_measurements_linear.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

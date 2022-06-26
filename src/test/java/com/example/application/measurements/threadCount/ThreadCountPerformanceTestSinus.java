@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ThreadCountPerformanceTest {
+public class ThreadCountPerformanceTestSinus {
 
-    private  Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesLinear.all();
+    private  Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesSinus.all();
     private final int TEST_RERUN_COUNT = 32;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
@@ -30,6 +30,7 @@ public class ThreadCountPerformanceTest {
         testCases.putAll(ThreadCountTestCasesSinus.all());
 
         CsvReport report = new CsvReport(columns.stream());
+        System.out.println("ThreadCountTestSinus - Start");
         testCases.forEach((testRunName, config) -> {
             List<String> row = new ArrayList<>(List.of(testRunName, config.getThreadCount().toString(), config.getImplementationEnum().getImplementation()));
             for (int i = 0; i < TEST_RERUN_COUNT; i++) {
@@ -40,7 +41,7 @@ public class ThreadCountPerformanceTest {
                     System.out.println(e);
                     continue;
                 }
-                System.out.println(testRunName + " rerun " + i);
+                //System.out.println(testRunName + " rerun " + i);
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
@@ -51,8 +52,9 @@ public class ThreadCountPerformanceTest {
             }
             report.appendRow(row.stream());
         });
+        System.out.println("ThreadCountTestSinus - Ende");
         try {
-            report.writeFile("thread_count_performance_measurements.csv");
+            report.writeFile("thread_count_performance_measurements_sinus.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
