@@ -11,7 +11,7 @@ import java.util.Map;
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
 
 public class ThreadCountTestCases {
-    private static final ConfigEntityBuilder singleThread = defaultConfig().setStepCount(100);
+    private static final ConfigEntityBuilder singleThread = defaultConfig().setStepCount(100).setHeight(250).setLength(250).setWidth(250);
     private static final ConfigEntityBuilder twoThreads = defaultConfig().setStepCount(100).setThreadCount(2).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
     private static final ConfigEntityBuilder threeThreads = defaultConfig().setStepCount(100).setThreadCount(3).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
     private static final ConfigEntityBuilder fourThreads = defaultConfig().setStepCount(100).setThreadCount(4).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
