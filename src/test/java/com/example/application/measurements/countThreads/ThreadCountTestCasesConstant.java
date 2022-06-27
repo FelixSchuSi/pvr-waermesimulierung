@@ -1,4 +1,4 @@
-package com.example.application.measurements.threadCount;
+package com.example.application.measurements.countThreads;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
