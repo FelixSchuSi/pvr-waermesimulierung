@@ -1,4 +1,4 @@
-package com.example.application.measurements.countThreads;
+package com.example.application.measurements.ThreadsCount;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
 
-public class ThreadCountTestCasesConstant {
+public class   ThreadCountTestCasesConstant {
     private static final ConfigEntityBuilder singleThread = defaultConfig().setStepCount(50).setThreadCount(1).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.SINGLE_THREADED);
     private static final ConfigEntityBuilder twoThreads = defaultConfig().setStepCount(50).setThreadCount(2).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
     private static final ConfigEntityBuilder threeThreads = defaultConfig().setStepCount(50).setThreadCount(3).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);

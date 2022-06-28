@@ -1,4 +1,4 @@
-package com.example.application.measurements.countThreads;
+package com.example.application.measurements.ThreadsCount;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.service.BaseSimulationService;
@@ -11,10 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ThreadCountPerformanceTestConstant {
+public class ThreadCountConstantPerformanceTest {
 
     private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesConstant.all();
     private final int TEST_RERUN_COUNT = 32;
@@ -26,6 +27,8 @@ public class ThreadCountPerformanceTestConstant {
         List<String> columns = new ArrayList<>(List.of("runName", "threadCount", "implementationStrategy"));
         columns.addAll(numberStrings);
         CsvReport report = new CsvReport(columns.stream());
+        int totalRunCount = testCases.size() * TEST_RERUN_COUNT;
+        AtomicInteger currentRunCount = new AtomicInteger(1);
         testCases.forEach((testRunName, config) -> {
             List<String> row = new ArrayList<>(List.of(testRunName, config.getThreadCount().toString(), config.getImplementationEnum().getImplementation()));
             for (int i = 0; i < TEST_RERUN_COUNT; i++) {
@@ -36,7 +39,8 @@ public class ThreadCountPerformanceTestConstant {
                     System.out.println(e);
                     continue;
                 }
-                System.out.println(testRunName + " rerun " + i);
+                System.out.println(currentRunCount + "/" + totalRunCount + " " + testRunName + " rerun " + i);
+                currentRunCount.getAndIncrement();
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
