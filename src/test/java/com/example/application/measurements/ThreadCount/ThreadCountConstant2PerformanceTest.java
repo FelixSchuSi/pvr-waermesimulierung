@@ -15,9 +15,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ThreadCountConstantPerformanceTest {
+public class ThreadCountConstant2PerformanceTest {
 
-    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesConstant.all();
+    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCases2Constant.all();
     private final int TEST_RERUN_COUNT = 100;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
