@@ -4,11 +4,9 @@ Die Anwendung ist unter dieser Adresse verfügbar: http://stud-fb09-560/ (Eine V
 erforderlich).
 
 ## Live-Demo
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="./live_demo.mp4" type="video/mp4">
-  </video>
-</figure>
+Auch im repo unter ./live_demo.mp4 erreichbar
+
+https://user-images.githubusercontent.com/47390169/176757686-9a546889-6ec2-4956-8a41-e00ae3000ec8.mp4
 
 ## Voraussetzungen
 - Java 11 (OpenJDK Temurin-11.0.14.1 wurde verwendet)
