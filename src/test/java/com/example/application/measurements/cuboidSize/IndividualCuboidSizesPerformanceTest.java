@@ -7,6 +7,7 @@ import com.example.application.service.SimulationServiceFromConfigService;
 import helper.CsvReport;
 import org.apache.commons.lang.NotImplementedException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.application.measurements.threadCount;
+package com.example.application.measurements.ThreadCount;
 
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.service.BaseSimulationService;
@@ -11,13 +11,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ThreadCountPerformanceTestSinus {
+public class ThreadCountConstant2PerformanceTest {
 
-    private  Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesSinus.all();
-    private final int TEST_RERUN_COUNT = 32;
+    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCases2Constant.all();
+    private final int TEST_RERUN_COUNT = 100;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
@@ -25,12 +26,9 @@ public class ThreadCountPerformanceTestSinus {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
         List<String> columns = new ArrayList<>(List.of("runName", "threadCount", "implementationStrategy"));
         columns.addAll(numberStrings);
-
-        testCases.putAll(ThreadCountTestCasesConstant.all());
-        testCases.putAll(ThreadCountTestCasesSinus.all());
-
         CsvReport report = new CsvReport(columns.stream());
-        System.out.println("ThreadCountTestSinus - Start");
+        int totalRunCount = testCases.size() * TEST_RERUN_COUNT;
+        AtomicInteger currentRunCount = new AtomicInteger(1);
         testCases.forEach((testRunName, config) -> {
             List<String> row = new ArrayList<>(List.of(testRunName, config.getThreadCount().toString(), config.getImplementationEnum().getImplementation()));
             for (int i = 0; i < TEST_RERUN_COUNT; i++) {
@@ -41,7 +39,8 @@ public class ThreadCountPerformanceTestSinus {
                     System.out.println(e);
                     continue;
                 }
-                //System.out.println(testRunName + " rerun " + i);
+                System.out.println(currentRunCount + "/" + totalRunCount + " " + testRunName + " rerun " + i);
+                currentRunCount.getAndIncrement();
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
@@ -52,9 +51,8 @@ public class ThreadCountPerformanceTestSinus {
             }
             report.appendRow(row.stream());
         });
-        System.out.println("ThreadCountTestSinus - Ende");
         try {
-            report.writeFile("thread_count_performance_measurements_sinus.csv");
+            report.writeFile("thread_count_constant.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

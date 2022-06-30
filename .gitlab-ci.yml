@@ -28,6 +28,7 @@ test:
     - whoami >> metadata.txt
     - pwd >> metadata.txt
     - ls -a >> metadata.txt
+    - lscpu >> metadata.txt
     - echo "Compile complete."
 
   artifacts:
