@@ -4,18 +4,20 @@ Die Anwendung ist unter dieser Adresse verfügbar: http://stud-fb09-560/ (Eine V
 erforderlich).
 
 ## Live-Demo
+
 Auch im repo unter ./live_demo.mp4 erreichbar
 
 https://user-images.githubusercontent.com/47390169/176757686-9a546889-6ec2-4956-8a41-e00ae3000ec8.mp4
 
 ## Voraussetzungen
+
 - Java 11 (OpenJDK Temurin-11.0.14.1 wurde verwendet)
-- Maven (Apache Maven 3.8.1 wurde verwendet)
 
 ## Startanleitung
 
-1. Abhängigkeiten installieren mit `mvn install`
+Diese Anwendung wurde als fat jar gebaut, wodurch alle Abhängigkeiten in der .jar Datei entahlten sind und kein
+Installieren von Abhängigkeiten notwendig ist.
 
-2. Anwendung starten mit `mvn`
+1. Anwendung starten mit `java -jar pvr-waermesimulierung-fatjar.jar`
 
-3. Die Anwendung ist jetzt unter http://localhost:8080 erreichbar
+2. Die Anwendung ist jetzt unter http://localhost:8080 erreichbar
