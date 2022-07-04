@@ -21,11 +21,14 @@ public class QualityCheckTestCases {
     }
 
     private static ConfigEntityBuilder getBaseConfigEntityBuilder() {
-        //  -Xms2048m -Xmx6144 -Xmn2048m
+        // -ea -Xms2048m -Xmx12288m -Xmn2048m
+        // Ohne Zusatzparameter hat die JVM bei mir eine maximale Speichergr von 4215275520 bytes (~ 4GB)
+        // Nach der Optimierung: 422^3 geht noch, 423^3 schlägt fehl.
+        // Vor der Optimierung: 413^3 geht noch, 414^3 schlägt fehl.
         return defaultConfig().setStepCount(5)
-                .setWidth(800)
-                .setHeight(800)
-                .setLength(800)
+                .setWidth(422)
+                .setHeight(422)
+                .setLength(422)
                 .setImplementationEnum(ImplementationEnum.SINGLE_THREADED)
                 .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT);
     }
