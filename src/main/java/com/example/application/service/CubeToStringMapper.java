@@ -23,17 +23,43 @@ public class CubeToStringMapper implements BiFunction<Double[][][], Integer, Str
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final FluidColormap colormap;
 
+    private final int displayX;
+    private final int displayY;
+    private final int displayZ;
+    private final int displayWidth;
+    private final int displayLength;
+    private final int displayHeight;
+
     public CubeToStringMapper(BaseConfigEntity config) {
         this.colormap = Colormaps.fluidColormap(Colormaps.get("Inferno"));
         colormap.set(config.getMinTemp().floatValue(), config.getMaxTemp().floatValue(), false);
+        this.displayX = config.getDisplayX();
+        this.displayY = 0;
+        this.displayZ = config.getzIndex();
+        this.displayWidth = config.getDisplayWidth();
+        this.displayLength = config.getDisplayLength();
+        this.displayHeight = config.getDisplayHeight();
     }
 
     @Override
     public String apply(Double[][][] cube, Integer z) {
-        List<Double> values = Arrays.stream(cube).flatMap(rect -> Arrays.stream(rect).map(row -> row[z])).collect(Collectors.toList());
+        Double[][] rect = getDisplayRect(cube);
+        List<Double> values = Arrays.stream(rect).flatMap(Arrays::stream).collect(Collectors.toList());
         List<Short> colorValues = this.getColorFromValues(values);
-        ImageData imageData = new ImageData(cube[0].length, cube.length, colorValues);
+        ImageData imageData = new ImageData(displayWidth, displayLength, colorValues);
         return toJson(imageData);
+    }
+
+    private Double[][] getDisplayRect(Double[][][] cube) {
+        Double[][] rect = new Double[displayWidth][displayLength];
+        int rectX = 0;
+        for (int x = displayX; x < displayX + displayWidth; x++) {
+            for (int y = 0; y < displayLength; y++) {
+                rect[rectX][y] = cube[x][y][displayZ];
+            }
+            rectX++;
+        }
+        return rect;
     }
 
     private List<Short> getColorFromValues(List<Double> values) {
@@ -46,6 +72,7 @@ public class CubeToStringMapper implements BiFunction<Double[][][], Integer, Str
             return Stream.of(r, g, b, a);
         }).collect(Collectors.toList());
     }
+
 
     private String toJson(ImageData imageData) {
         try {
