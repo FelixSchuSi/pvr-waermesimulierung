@@ -5,7 +5,6 @@ import com.example.application.service.BaseSimulationService;
 import com.example.application.service.SimulationServiceFromConfigService;
 import helper.CsvReport;
 import org.apache.commons.lang3.NotImplementedException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,14 +15,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ThreadCountConstantPerformanceTest {
+public class SequenziellToParallelTest {
 
-    private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCasesConstant.all();
-    private final int TEST_RERUN_COUNT = 100;
+    private final Map<String, BaseConfigEntity> testCases = SequenziellToParallel.all();
+    private final int TEST_RERUN_COUNT = 30;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
-    @Disabled
     void runAll() {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
         List<String> columns = new ArrayList<>(List.of("runName", "threadCount", "implementationStrategy"));
@@ -54,7 +52,7 @@ public class ThreadCountConstantPerformanceTest {
             report.appendRow(row.stream());
         });
         try {
-            report.writeFile("thread_count_constant.csv");
+            report.writeFile("seq_to_parallel.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
