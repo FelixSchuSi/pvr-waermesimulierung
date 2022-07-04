@@ -21,3 +21,7 @@ Installieren von Abhängigkeiten notwendig ist.
 1. Anwendung starten mit `java -jar pvr-waermesimulierung-fatjar.jar`
 
 2. Die Anwendung ist jetzt unter http://localhost:8080 erreichbar
+
+### (optional) .jar file selbst bauen
+
+.jar file kann mit `mvn clean install -Pproduction -DskipTests` gebaut werden und liegt dann im target Ordner.
