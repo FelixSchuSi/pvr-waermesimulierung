@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 public class ConstantLeftSideConfigEntity extends BaseConfigEntity {
     private Double sideTempLeft;
 
-    public ConstantLeftSideConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, Integer threadCount, ImplementationEnum implementationEnum, Double sideTempLeft) {
-        super(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum);
+    public ConstantLeftSideConfigEntity(int length, int width, int height, Integer displayLength, Integer displayWidth, Integer displayHeight, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, Integer threadCount, ImplementationEnum implementationEnum, Double sideTempLeft) {
+        super(length, width, height, displayLength, displayWidth, displayHeight, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum);
         this.sideTempLeft = sideTempLeft;
     }
 

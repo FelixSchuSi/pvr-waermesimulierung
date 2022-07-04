@@ -5,6 +5,9 @@ public class ConfigEntityBuilder implements Cloneable {
     private int width;
     private int height;
     private int zIndex;
+    private Integer displayLength;
+    private Integer displayWidth;
+    private Integer displayHeight;
     private Double startTemp;
     private Double sideTempFront;
     private Double sideTempBack;
@@ -39,6 +42,9 @@ public class ConfigEntityBuilder implements Cloneable {
                 .setLength(100)
                 .setWidth(100)
                 .setHeight(100)
+                .setDisplayLength(50)
+                .setDisplayWidth(50)
+                .setDisplayHeight(50)
                 .setZIndex(50)
                 .setStartTemp(10.0)
                 .setSideTempFront(0.0)
@@ -57,6 +63,21 @@ public class ConfigEntityBuilder implements Cloneable {
                 .setSideTempLeftBase(100.0)
                 .setSideTempLeftMaxDifference(50.0)
                 .setSimulationStepFaktor(0.1);
+    }
+
+    public ConfigEntityBuilder setDisplayLength(Integer displayLength) {
+        this.displayLength = displayLength;
+        return this;
+    }
+
+    public ConfigEntityBuilder setDisplayWidth(Integer displayWidth) {
+        this.displayWidth = displayWidth;
+        return this;
+    }
+
+    public ConfigEntityBuilder setDisplayHeight(Integer displayHeight) {
+        this.displayHeight = displayHeight;
+        return this;
     }
 
     public ConfigEntityBuilder setImplementationEnum(ImplementationEnum implementationEnum) {
@@ -168,12 +189,12 @@ public class ConfigEntityBuilder implements Cloneable {
     public BaseConfigEntity createConfigEntity() {
         switch (leftSideStrategy) {
             case SINUS:
-                return new SinusLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeftBase, sideTempLeftMaxDifference, simulationStepFaktor);
+                return new SinusLeftSideConfigEntity(length, width, height, displayLength, displayWidth, displayHeight, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeftBase, sideTempLeftMaxDifference, simulationStepFaktor);
             case LINEAR:
-                return new LinearLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeftCenter, sideTempLeftBorder);
+                return new LinearLeftSideConfigEntity(length, width, height, displayLength, displayWidth, displayHeight, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeftCenter, sideTempLeftBorder);
             default:
             case CONSTANT:
-                return new ConstantLeftSideConfigEntity(length, width, height, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeft);
+                return new ConstantLeftSideConfigEntity(length, width, height, displayLength, displayWidth, displayHeight, zIndex, startTemp, sideTempFront, sideTempBack, sideTempBottom, sideTempTop, sideTempRight, alpha, stepCount, threadCount, implementationEnum, sideTempLeft);
         }
 
     }

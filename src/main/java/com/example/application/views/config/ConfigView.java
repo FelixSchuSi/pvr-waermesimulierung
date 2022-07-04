@@ -21,13 +21,18 @@ import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
 @Route(value = "")
 public class ConfigView extends HorizontalLayout {
     H1 header = new H1("Konfiguration Wärmesimulierung");
-
     Paragraph description = new Paragraph("Konfigurieren Sie die Startparameter der Simulation. Durch einen Klick auf 'Simulation starten' kann die Simulation begonnen werden.");
 
     // dimensions
     NumberField length = new NumberField("Länge (QL)");
     NumberField width = new NumberField("Breite (QB)");
     NumberField height = new NumberField("Höhe (QH)");
+
+    NumberField displayLength = new NumberField("Anzeigelänge");
+
+    NumberField displayWidth = new NumberField("Anzeigebreite");
+
+    NumberField displayHeight = new NumberField("Anzeigehöhe");
     NumberField zIndex = new NumberField("Z-Index des Quaderschnitts");
 
     // temps
@@ -41,7 +46,6 @@ public class ConfigView extends HorizontalLayout {
     NumberField stepCount = new NumberField("Anzahl Simulationsschritte");
     ImplementationPicker implementationPicker = new ImplementationPicker();
     StrategyPicker strategyPicker = new StrategyPicker();
-
 
     Button startSimulation = new Button("Simulation starten", (e) -> {
         if (alpha.isInvalid() || zIndex.isInvalid()) {
@@ -60,6 +64,9 @@ public class ConfigView extends HorizontalLayout {
         add(length);
         add(width);
         add(height);
+        add(displayLength);
+        add(displayWidth);
+        add(displayHeight);
         height.addValueChangeListener((e) -> {
             zIndex.setMax(height.getValue() - 1);
             zIndex.setHelperText("Minimal 0, maximal " + (int) (height.getValue() - 1));
@@ -95,6 +102,9 @@ public class ConfigView extends HorizontalLayout {
                 .setLength(length.getValue().intValue())
                 .setWidth(width.getValue().intValue())
                 .setHeight(height.getValue().intValue())
+                .setDisplayLength(displayLength.getValue().intValue())
+                .setDisplayWidth(displayWidth.getValue().intValue())
+                .setDisplayHeight(displayHeight.getValue().intValue())
                 .setZIndex(zIndex.getValue().intValue())
                 .setStartTemp(startTemp.getValue())
                 .setSideTempFront(sideTempFront.getValue())
@@ -120,6 +130,9 @@ public class ConfigView extends HorizontalLayout {
         length.setValue((double) config.getLength());
         width.setValue((double) config.getWidth());
         height.setValue((double) config.getHeight());
+        displayLength.setValue((double) config.getDisplayLength());
+        displayWidth.setValue((double) config.getDisplayWidth());
+        displayHeight.setValue((double) config.getDisplayHeight());
         zIndex.setValue((double) config.getzIndex());
         startTemp.setValue(config.getStartTemp());
         sideTempFront.setValue(config.getSideTempFront());

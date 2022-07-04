@@ -29,7 +29,15 @@ public abstract class BaseConfigEntity {
     private Integer threadCount;
     private ImplementationEnum implementationEnum;
 
-    public BaseConfigEntity(int length, int width, int height, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, Integer threadCount, ImplementationEnum implementationEnum) {
+    private Integer displayLength;
+
+    private Integer displayWidth;
+
+    private Integer displayHeight;
+
+    private Integer displayX;
+
+    public BaseConfigEntity(int length, int width, int height, Integer displayLength, Integer displayWidth, Integer displayHeight, int zIndex, Double startTemp, Double sideTempFront, Double sideTempBack, Double sideTempBottom, Double sideTempTop, Double sideTempRight, Double alpha, Integer stepCount, Integer threadCount, ImplementationEnum implementationEnum) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -44,10 +52,46 @@ public abstract class BaseConfigEntity {
         this.stepCount = stepCount;
         this.implementationEnum = implementationEnum;
         this.threadCount = threadCount;
+        this.displayLength = displayLength;
+        this.displayWidth = displayWidth;
+        this.displayHeight = displayHeight;
+        this.displayX = this.width / 2 - this.displayWidth / 2;
     }
 
     public static BaseConfigEntity getDefaultConfig() {
         return defaultConfig().createConfigEntity();
+    }
+
+    public Integer getDisplayLength() {
+        return displayLength;
+    }
+
+    public void setDisplayLength(Integer displayLength) {
+        this.displayLength = displayLength;
+    }
+
+    public Integer getDisplayWidth() {
+        return displayWidth;
+    }
+
+    public void setDisplayWidth(Integer displayWidth) {
+        this.displayWidth = displayWidth;
+    }
+
+    public Integer getDisplayHeight() {
+        return displayHeight;
+    }
+
+    public void setDisplayHeight(Integer displayHeight) {
+        this.displayHeight = displayHeight;
+    }
+
+    public Integer getDisplayX() {
+        return displayX;
+    }
+
+    public void setDisplayX(Integer displayX) {
+        this.displayX = displayX;
     }
 
     public Integer getThreadCount() {
@@ -82,6 +126,10 @@ public abstract class BaseConfigEntity {
         map.put("stepCount", List.of(stepCount.toString()));
         map.put("threadCount", List.of(threadCount.toString()));
         map.put("implementation", List.of(implementationEnum.getImplementation()));
+        map.put("displayLength", List.of(Integer.toString(displayLength)));
+        map.put("displayWidth", List.of(Integer.toString(displayWidth)));
+        map.put("displayHeight", List.of(Integer.toString(displayHeight)));
+        map.put("displayX", List.of(Integer.toString(displayX)));
         return map;
     }
 
@@ -202,6 +250,10 @@ public abstract class BaseConfigEntity {
                 ", stepCount=" + stepCount +
                 ", threadCount=" + threadCount +
                 ", implementationEnum=" + implementationEnum +
+                ", displayLength=" + displayLength +
+                ", displayWidth=" + displayWidth +
+                ", displayHeight=" + displayHeight +
+                ", displayX=" + displayX +
                 '}';
     }
 }
