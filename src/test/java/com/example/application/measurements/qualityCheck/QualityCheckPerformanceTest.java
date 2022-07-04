@@ -6,7 +6,6 @@ import com.example.application.service.BaseSimulationService;
 import com.example.application.service.SimulationServiceFromConfigService;
 import helper.CsvReport;
 import org.apache.commons.lang.NotImplementedException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -20,12 +19,14 @@ import java.util.stream.IntStream;
 public class QualityCheckPerformanceTest {
 
     private final Map<String, BaseConfigEntity> testCases = QualityCheckTestCases.all();
-    private final int TEST_RERUN_COUNT = 100;
+    private final int TEST_RERUN_COUNT = 5;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
-    @Disabled
+//    @Disabled
     void runAll() {
+        System.out.println("Maximum memory " + Runtime.getRuntime().maxMemory() + " Current memory" + Runtime.getRuntime().totalMemory());
+
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
         List<String> columns = new ArrayList<>(List.of("runName"));
         columns.addAll(numberStrings);
@@ -44,12 +45,14 @@ public class QualityCheckPerformanceTest {
                 }
                 System.out.println(currentRunCount + "/" + totalRunCount + " " + testRunName + " rerun " + i);
                 currentRunCount.getAndIncrement();
+
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
                 }
 
                 long t1 = System.nanoTime();
+                System.out.println("Maximum memory " + Runtime.getRuntime().maxMemory() + " Current memory" + Runtime.getRuntime().totalMemory());
                 row.add(Long.toString((t1 - t0) / 1000000));
             }
             report.appendRow(row.stream());

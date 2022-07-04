@@ -9,11 +9,15 @@ public class SinusSingleThreadedSimulationService extends BaseSingleThreadedSimu
         super(configEntity);
     }
 
-    @Override
-    public Double[][][] getShell() {
-        simulationStep++;
+    public Double[][][] getSinusShell(Double[][][] shell) {
+        boolean isInitialRun = shell == null;
+        if (isInitialRun) {
+            shell = new Double[configEntity.getWidth()][configEntity.getLength()][configEntity.getHeight()];
+            simulationStep = 1;
+        } else {
+            simulationStep++;
+        }
 
-        Double[][][] shell = new Double[configEntity.getWidth()][configEntity.getLength()][configEntity.getHeight()];
         SinusLeftSideConfigEntity config = configEntity;
         for (int x = 0; x < config.getWidth(); x++) {
             for (int y = 0; y < config.getLength(); y++) {
@@ -32,7 +36,7 @@ public class SinusSingleThreadedSimulationService extends BaseSingleThreadedSimu
                         shell[x][y][z] = config.getSideTempFront();
                     } else if (x == 0) {
                         shell[x][y][z] = config.getSideTempBack();
-                    } else {
+                    } else if (isInitialRun) {
                         shell[x][y][z] = config.getStartTemp();
                     }
                 }
@@ -43,9 +47,10 @@ public class SinusSingleThreadedSimulationService extends BaseSingleThreadedSimu
 
     @Override
     public Double[][][] next() {
-        if (this.oldData == null) {
-            this.oldData = this.getShell();
-            return this.oldData;
+        if (oldData == null) {
+            oldData = this.getSinusShell(null);
+            data = this.getSinusShell(null);
+            return oldData;
         }
 
         double alpha = configEntity.getAlpha();
@@ -54,7 +59,7 @@ public class SinusSingleThreadedSimulationService extends BaseSingleThreadedSimu
         int y_length = configEntity.getLength();
         int z_height = configEntity.getHeight();
 
-        Double[][][] data = this.getShell();
+        data = this.getSinusShell(data);
 
         for (int x = 0; x < x_width; x++) {
             for (int y = 0; y < y_length; y++) {
@@ -72,7 +77,15 @@ public class SinusSingleThreadedSimulationService extends BaseSingleThreadedSimu
             }
         }
 
-        this.oldData = data;
-        return data;
+        Double[][][] temp = oldData;
+        oldData = data;
+        data = temp;
+
+        return oldData;
+    }
+
+    @Override
+    public Double[][][] getShell() {
+        return new Double[0][][];
     }
 }

@@ -3,6 +3,7 @@ package com.example.application.measurements.qualityCheck;
 import com.example.application.entity.BaseConfigEntity;
 import com.example.application.entity.ConfigEntityBuilder;
 import com.example.application.entity.ImplementationEnum;
+import com.example.application.entity.LeftSideStrategyEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,12 @@ public class QualityCheckTestCases {
     }
 
     private static ConfigEntityBuilder getBaseConfigEntityBuilder() {
-        return defaultConfig().setStepCount(100).setThreadCount(8).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+        //  -Xms2048m -Xmx6144 -Xmn2048m
+        return defaultConfig().setStepCount(5)
+                .setWidth(800)
+                .setHeight(800)
+                .setLength(800)
+                .setImplementationEnum(ImplementationEnum.SINGLE_THREADED)
+                .setLeftSideStrategy(LeftSideStrategyEnum.CONSTANT);
     }
 }

@@ -3,16 +3,12 @@ package com.example.application.service.singleThreaded;
 import com.example.application.entity.ConstantLeftSideConfigEntity;
 
 public class ConstantSingleThreadedSimulationService extends BaseSingleThreadedSimulationService<ConstantLeftSideConfigEntity> {
-    private Double[][][] cachedShell;
-
     public ConstantSingleThreadedSimulationService(ConstantLeftSideConfigEntity configEntity) {
         super(configEntity);
     }
 
     @Override
     public Double[][][] getShell() {
-        if (cachedShell != null) return cachedShell;
-
         Double[][][] shell = new Double[configEntity.getWidth()][configEntity.getLength()][configEntity.getHeight()];
         ConstantLeftSideConfigEntity config = configEntity;
         for (int x = 0; x < config.getWidth(); x++) {
@@ -36,7 +32,6 @@ public class ConstantSingleThreadedSimulationService extends BaseSingleThreadedS
                 }
             }
         }
-        cachedShell = shell;
         return shell;
     }
 }

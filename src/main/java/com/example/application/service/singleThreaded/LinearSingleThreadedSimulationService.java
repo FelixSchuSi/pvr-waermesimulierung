@@ -5,16 +5,12 @@ import com.example.application.entity.LinearLeftSideConfigEntity;
 import static java.lang.Math.*;
 
 public class LinearSingleThreadedSimulationService extends BaseSingleThreadedSimulationService<LinearLeftSideConfigEntity> {
-    private Double[][][] cachedShell;
-
     public LinearSingleThreadedSimulationService(LinearLeftSideConfigEntity configEntity) {
         super(configEntity);
     }
 
     @Override
     public Double[][][] getShell() {
-        if (cachedShell != null) return cachedShell;
-
         Double[][][] shell = new Double[configEntity.getWidth()][configEntity.getLength()][configEntity.getHeight()];
         LinearLeftSideConfigEntity config = configEntity;
         int xCenter = (int) ceil(config.getWidth() / 2.0) - 1;
@@ -44,7 +40,6 @@ public class LinearSingleThreadedSimulationService extends BaseSingleThreadedSim
                 }
             }
         }
-        cachedShell = shell;
         return shell;
     }
 }

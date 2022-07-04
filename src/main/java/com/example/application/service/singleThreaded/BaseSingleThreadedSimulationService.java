@@ -6,6 +6,7 @@ import com.example.application.service.BaseSimulationService;
 public abstract class BaseSingleThreadedSimulationService<E extends BaseConfigEntity> implements BaseSimulationService {
     protected E configEntity;
     protected Double[][][] oldData;
+    protected Double[][][] data;
 
     public BaseSingleThreadedSimulationService(E configEntity) {
         this.configEntity = configEntity;
@@ -13,9 +14,10 @@ public abstract class BaseSingleThreadedSimulationService<E extends BaseConfigEn
 
     @Override
     public Double[][][] next() {
-        if (this.oldData == null) {
-            this.oldData = this.getShell();
-            return this.oldData;
+        if (oldData == null || data == null) {
+            oldData = this.getShell();
+            data = this.getShell();
+            return oldData;
         }
 
         double alpha = configEntity.getAlpha();
@@ -24,13 +26,11 @@ public abstract class BaseSingleThreadedSimulationService<E extends BaseConfigEn
         int y_length = configEntity.getLength();
         int z_height = configEntity.getHeight();
 
-        Double[][][] data = new Double[x_width][y_length][z_height];
-
         for (int x = 0; x < x_width; x++) {
             for (int y = 0; y < y_length; y++) {
                 for (int z = 0; z < z_height; z++) {
                     if (x == 0 || y == 0 || z == 0 || x == x_width - 1 || y == y_length - 1 || z == z_height - 1) {
-                        data[x][y][z] = oldData[x][y][z];
+                        continue;
                     } else {
                         data[x][y][z] = oldData[x][y][z] + alpha * (oldData[x + 1][y][z] + oldData[x - 1][y][z] +
                                 oldData[x][y + 1][z] + oldData[x][y - 1][z] +
@@ -41,8 +41,11 @@ public abstract class BaseSingleThreadedSimulationService<E extends BaseConfigEn
             }
         }
 
-        this.oldData = data;
-        return data;
+        Double[][][] temp = oldData;
+        oldData = data;
+        data = temp;
+
+        return oldData;
     }
 
     public abstract Double[][][] getShell();

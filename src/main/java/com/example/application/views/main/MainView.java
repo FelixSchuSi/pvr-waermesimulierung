@@ -148,7 +148,7 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver {
                         Double[][][] cube = simulationService.next();
                         return cubeToStringMapper.apply(cube, config.getzIndex());
                     });
-                    CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(100, TimeUnit.MILLISECONDS));
+                    CompletableFuture<String> wait = supplyAsync(() -> "", delayedExecutor(1, TimeUnit.MILLISECONDS));
                     allOf(nextImage, wait).get();
                     view.shouldPlay.get();
                     String finishedImage = nextImage.get();
