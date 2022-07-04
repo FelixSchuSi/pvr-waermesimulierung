@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 public class ThreadCountConstant2PerformanceTest {
 
     private final Map<String, BaseConfigEntity> testCases = ThreadCountTestCases2Constant.all();
-    private final int TEST_RERUN_COUNT = 100;
+    private final int TEST_RERUN_COUNT = 30;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
@@ -52,7 +52,7 @@ public class ThreadCountConstant2PerformanceTest {
             report.appendRow(row.stream());
         });
         try {
-            report.writeFile("thread_count_constant.csv");
+            report.writeFile("thread_count_constant_2.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

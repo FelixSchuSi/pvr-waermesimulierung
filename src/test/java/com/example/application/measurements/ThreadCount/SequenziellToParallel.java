@@ -10,16 +10,14 @@ import java.util.Map;
 
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
 
-public class ThreadCountTestCases2Constant {
-    private static final ConfigEntityBuilder nineThreads = defaultConfig().setStepCount(50).setThreadCount(9).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
-    private static final ConfigEntityBuilder tenThreads = defaultConfig().setStepCount(50).setThreadCount(10).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
-    private static final ConfigEntityBuilder elevenThreads = defaultConfig().setStepCount(50).setThreadCount(11).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+public class SequenziellToParallel {
+    private static final ConfigEntityBuilder oneThreadsSeq = defaultConfig().setStepCount(50).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.SINGLE_THREADED);
+    private static final ConfigEntityBuilder oneThreadsPar = defaultConfig().setStepCount(50).setThreadCount(1).setHeight(250).setLength(250).setWidth(250).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
 
     private static Map<String, ConfigEntityBuilder> base() {
         Map<String, ConfigEntityBuilder> map = new HashMap<>();
-        map.put("nineThreads", nineThreads);
-        map.put("tenThreads", tenThreads);
-        map.put("elevenThreads", elevenThreads);
+        map.put("oneThreadsSeq", oneThreadsSeq);
+        map.put("oneThreadsPar", oneThreadsPar);
         return map;
     }
 
