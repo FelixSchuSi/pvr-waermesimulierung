@@ -6,6 +6,7 @@ import com.example.application.entity.LeftSideStrategyEnum;
 import com.example.application.service.mutliThreaded.ConstantMultiThreadedSimulationService;
 import com.example.application.service.singleThreaded.ConstantSingleThreadedSimulationService;
 import org.assertj.core.data.Offset;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
@@ -28,6 +29,7 @@ public class ConstantSimulationTest {
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
+    @Disabled
     void constantSimulationTest() {
         ConstantSingleThreadedSimulationService singleThreadedService = (ConstantSingleThreadedSimulationService) serviceFromConfig.apply(singleThreadedConfig);
         ConstantMultiThreadedSimulationService multiThreadedService = (ConstantMultiThreadedSimulationService) serviceFromConfig.apply(multiThreadedConfig);

@@ -1,6 +1,7 @@
 package com.example.application.entity;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,6 +16,7 @@ class ConstantLeftSideConfigEntityTest {
     private static ConstantLeftSideConfigEntity config;
 
     @BeforeAll
+    @Disabled
     static void beforeAll() {
         config = (ConstantLeftSideConfigEntity) getDefaultConfig();
     }
@@ -50,6 +52,7 @@ class ConstantLeftSideConfigEntityTest {
     }
 
     @ParameterizedTest
+    @Disabled
     @MethodSource("getMinTempParameters")
     void getMinTemp(Double sideTempLeft,
                     Double startTemp,
@@ -72,6 +75,7 @@ class ConstantLeftSideConfigEntityTest {
     }
 
     @ParameterizedTest
+    @Disabled
     @MethodSource("getMaxTempParameters")
     void getMaxTemp(Double sideTempLeft,
                     Double startTemp,

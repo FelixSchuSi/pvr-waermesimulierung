@@ -2,6 +2,7 @@ package com.example.application.service.singleThreaded;
 
 import com.example.application.entity.ConstantLeftSideConfigEntity;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.example.application.entity.BaseConfigEntity.getDefaultConfig;
@@ -25,6 +26,7 @@ class ConstantSingleThreadedSimulationServiceTest {
     }
 
     @Test
+    @Disabled
     void firstImageSizeOK() {
         Double[][][] firstImage = simulationService.next();
         assertThat(firstImage.length).isEqualTo(config.getWidth());
@@ -33,6 +35,7 @@ class ConstantSingleThreadedSimulationServiceTest {
     }
 
     @Test
+    @Disabled
     void firstImageConentOK() {
         Double[][][] firstImage = simulationService.next();
         for (int x = 0; x < config.getWidth(); x++) {

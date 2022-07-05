@@ -6,6 +6,7 @@ import com.example.application.entity.LeftSideStrategyEnum;
 import com.example.application.service.mutliThreaded.SinusMultiThreadedSimulationService;
 import com.example.application.service.singleThreaded.SinusSingleThreadedSimulationService;
 import org.assertj.core.data.Offset;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.example.application.entity.ConfigEntityBuilder.defaultConfig;
@@ -28,6 +29,7 @@ public class SinusSimulationTest {
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
+    @Disabled
     void sinusSimulationTest() {
         SinusSingleThreadedSimulationService singleThreadedService = (SinusSingleThreadedSimulationService) serviceFromConfig.apply(singleThreadedConfig);
         SinusMultiThreadedSimulationService multiThreadedService = (SinusMultiThreadedSimulationService) serviceFromConfig.apply(multiThreadedConfig);

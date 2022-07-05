@@ -6,7 +6,6 @@ import com.example.application.service.BaseSimulationService;
 import com.example.application.service.SimulationServiceFromConfigService;
 import helper.CsvReport;
 import org.apache.commons.lang.NotImplementedException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -20,11 +19,10 @@ import java.util.stream.IntStream;
 public class QualityCheckPerformanceTest {
 
     private final Map<String, BaseConfigEntity> testCases = QualityCheckTestCases.all();
-    private final int TEST_RERUN_COUNT = 100;
+    private final int TEST_RERUN_COUNT = 1000;
     private final SimulationServiceFromConfigService serviceFromConfig = new SimulationServiceFromConfigService();
 
     @Test
-    @Disabled
     void runAll() {
         List<String> numberStrings = IntStream.range(0, TEST_RERUN_COUNT).boxed().map(Object::toString).collect(Collectors.toList());
         List<String> columns = new ArrayList<>(List.of("runName"));
