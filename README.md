@@ -1,7 +1,6 @@
 # pvr-waermesimulierung
 
-Die Anwendung ist unter dieser Adresse verfügbar: http://stud-fb09-560/ (Eine Verbindung in das FH-Netz ist
-erforderlich).
+Parallele Wärmesimulierung erstellt von Jannick Bergjan und Felix Schulze Sindern
 
 ## Live-Demo
 
@@ -21,3 +20,11 @@ Installieren von Abhängigkeiten notwendig ist.
 1. Anwendung starten mit `java -jar pvr-waermesimulierung-fatjar.jar`
 
 2. Die Anwendung ist jetzt unter http://localhost:8080 erreichbar
+
+<details>
+<summary><b>(Optional) Anwendung selbst bauen</b></summary>
+
+1. mvn clean install -Pproduction -DskipTests
+2. cp target/mytodo-1.0-SNAPSHOT.jar pvr-waermesimulierung-fatjar.jar
+
+</details>
