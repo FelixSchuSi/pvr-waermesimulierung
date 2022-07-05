@@ -20,7 +20,7 @@ error-screenshots/
 webpack.generated.js
 
 # Messungen sollen nur von der CI-Pipeline durchgeführt werden.
-*.csv
+# *.csv
 
 # Virtuelle Python Umgebung
 visualization/.venv/
