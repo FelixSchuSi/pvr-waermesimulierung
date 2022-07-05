@@ -42,6 +42,12 @@ public class QualityCheckPerformanceTest {
                 }
                 System.out.println(currentRunCount + "/" + totalRunCount + " " + testRunName + " rerun " + i);
                 currentRunCount.getAndIncrement();
+
+                // 20 Steps warmup
+                for (int step = 0; step < 20; step++) {
+                    implementation.next();
+                }
+
                 long t0 = System.nanoTime();
                 for (int step = 0; step < config.getStepCount(); step++) {
                     implementation.next();
