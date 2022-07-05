@@ -20,6 +20,6 @@ public class QualityCheckTestCases {
     }
 
     private static ConfigEntityBuilder getBaseConfigEntityBuilder() {
-        return defaultConfig().setStepCount(2000).setThreadCount(8).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
+        return defaultConfig().setStepCount(1000).setThreadCount(8).setImplementationEnum(ImplementationEnum.MULTI_THREADED);
     }
 }
