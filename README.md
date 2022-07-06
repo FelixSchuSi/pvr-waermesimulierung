@@ -6,7 +6,7 @@ Parallele Wärmesimulierung erstellt von Jannick Bergjan und Felix Schulze Sinde
 
 Auch im repo unter ./live_demo.mp4 erreichbar
 
-https://user-images.githubusercontent.com/47390169/176757686-9a546889-6ec2-4956-8a41-e00ae3000ec8.mp4
+https://user-images.githubusercontent.com/47390169/177590996-062f2a50-93c5-41e1-acc7-0954a3655415.mp4
 
 ## Voraussetzungen
 

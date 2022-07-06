@@ -1,5 +1,6 @@
 package com.example.application.service.mutliThreaded;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,6 +21,7 @@ class BaseMultiThreadedSimulationServiceTest {
     }
 
     @ParameterizedTest
+    @Disabled
     @MethodSource("indexCreatorTestParameters")
     void indexCreatorTest(int threadCount, int cubeSize, List<List<Integer>> expectedResult) {
         List<List<Integer>> receivedResult = BaseMultiThreadedSimulationService.getIndexes(threadCount, cubeSize);
