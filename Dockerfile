@@ -1,3 +1,3 @@
 FROM adoptopenjdk/openjdk11:latest
-COPY target/mytodo-1.0-SNAPSHOT.jar target/mytodo-1.0-SNAPSHOT.jar
-CMD ["java", "-jar", "target/mytodo-1.0-SNAPSHOT.jar"]
+COPY pvr-waermesimulierung-fatjar.jar pvr-waermesimulierung-fatjar.jar
+CMD ["java", "-jar", "pvr-waermesimulierung-fatjar.jar"]
