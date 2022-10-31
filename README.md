@@ -19,7 +19,7 @@ The Service is now available at http://localhost:8080!
 <details>
 <summary><b>(Optional) Build the `.jar` file yourself</b></summary>
 
-1. mvn clean install -Pproduction -DskipTests
-2. cp target/mytodo-1.0-SNAPSHOT.jar pvr-waermesimulierung-fatjar.jar
+1. `mvn clean install -Pproduction -DskipTests`
+2. `cp target/mytodo-1.0-SNAPSHOT.jar pvr-waermesimulierung-fatjar.jar`
 
 </details>
